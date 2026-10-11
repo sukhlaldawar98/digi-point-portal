@@ -1,216 +1,157 @@
-
 <!DOCTYPE html>
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Digi Point | Digital Services</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Digi Point Portal</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#f3f6fb;color:#172b4d}
-header{background:#0756a5;color:white;padding:20px 15px}
-header h1{margin:0;font-size:28px}
-header p{margin:8px 0 0}
-nav{background:white;padding:13px;display:flex;gap:18px;flex-wrap:wrap}
-nav a{color:#0756a5;text-decoration:none;font-weight:bold}
-.hero{padding:30px 18px;background:linear-gradient(135deg,#0756a5,#1689dc);color:white}
-.hero h2{font-size:27px;margin-top:0}
-.search{width:100%;padding:13px;border:0;border-radius:8px;font-size:16px}
-.container{padding:20px 15px;max-width:1000px;margin:auto}
-h2.section{font-size:22px}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.card{background:white;border-radius:12px;padding:17px 10px;text-align:center;box-shadow:0 2px 9px #0000000c}
-.card .ico{font-size:30px}
-.card h3{font-size:15px;margin:10px 0}
-.card a{display:inline-block;background:#0756a5;color:white;padding:9px 12px;border-radius:6px;text-decoration:none;font-size:13px}
-.info{background:white;padding:18px;border-radius:12px;line-height:1.7}
-footer{margin-top:25px;background:#082d52;color:white;text-align:center;padding:22px 12px}
-.auth-box{background:white;padding:18px;border-radius:12px;max-width:500px;box-shadow:0 2px 9px #0000000c}
-.auth-box label{display:block;margin-top:12px;font-weight:bold}
-.auth-box input{display:block;width:100%;padding:12px;margin-top:6px;border:1px solid #ccd5e0;border-radius:7px;font-size:16px}
-.auth-box button{padding:12px;margin:12px 5px 0 0;border:0;border-radius:7px;background:#0756a5;color:white;font-size:15px;cursor:pointer}
-.auth-box button:disabled{opacity:.6}
-#auth-message{overflow-wrap:anywhere}
-@media(min-width:650px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+body{margin:0;font-family:Arial,sans-serif;background:#f1f5fb;color:#17243a}
+header{background:#123a72;color:white;text-align:center;padding:22px 12px}
+main{max-width:850px;width:94%;margin:24px auto}
+.card{background:white;padding:22px;margin-bottom:20px;border-radius:14px;box-shadow:0 4px 16px #0001}
+input{width:100%;padding:13px;margin:10px 0;border:1px solid #ccd5e2;border-radius:8px;font-size:16px}
+button{background:#1456a0;color:white;border:0;padding:12px 16px;border-radius:8px;margin:4px;cursor:pointer}
+button:disabled{opacity:.5}
+.link{color:#1456a0;text-decoration:underline;cursor:pointer}
+.hidden{display:none!important}
+#message{overflow-wrap:anywhere}
+.services{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:12px}
+.service{padding:16px;background:#f5f8ff;border:1px solid #dce5f4;border-radius:10px}
+footer{text-align:center;color:#657286;padding:20px}
 </style>
 </head>
 <body>
-
 <header>
-<h1>🔷 Digi Point</h1>
-<p>Aapka Apna Digital Services Portal</p>
+<h1>💻 Digi Point Portal</h1>
+<p>Digital Services | आपका अपना सेवा पोर्टल</p>
 </header>
 
-<nav>
-<a href="#">Home</a>
-<a href="#services">All Services</a>
-<a href="#schemes">Yojana</a>
-<a href="#contact">Contact</a>
-<a href="#login">Agent Login</a>
-</nav>
-
-<section class="hero">
-<h2>Digital Seva, Ab Aapke Paas!</h2>
-<p>सरकारी योजनाओं और डिजिटल सेवाओं की जानकारी एक ही जगह।</p>
-<input class="search" id="search" placeholder="सर्विस खोजें..." oninput="filterServices()">
+<main>
+<section id="loginPanel" class="card">
+<h2 id="heading">Login करें</h2>
+<form id="authForm">
+<input id="email" type="email" placeholder="Email Address" autocomplete="email" required>
+<input id="password" type="password" placeholder="Password (कम से कम 6 अक्षर)" minlength="6" autocomplete="current-password" required>
+<button id="submitButton" type="submit">Login</button>
+</form>
+<p id="forgotLine"><span class="link" id="forgot">पासवर्ड भूल गए?</span></p>
+<p><span id="switchText">नया अकाउंट बनाना है?</span> <span class="link" id="switchMode">Sign Up करें</span></p>
+<p id="message" role="status"></p>
 </section>
 
-<main class="container">
-<h2 class="section" id="services">हमारी डिजिटल सेवाएँ</h2>
-
-<div class="grid" id="serviceGrid">
-<div class="card"><div class="ico">🪪</div><h3>PAN Card</h3><a href="https://www.onlineservices.nsdl.com/" target="_blank" rel="noopener">Open Service</a></div>
-<div class="card"><div class="ico">🌾</div><h3>PM Kisan</h3><a href="https://pmkisan.gov.in/" target="_blank" rel="noopener">Open Service</a></div>
-<div class="card"><div class="ico">👩</div><h3>सरकारी योजनाएँ</h3><a href="https://www.myscheme.gov.in/" target="_blank" rel="noopener">Open Service</a></div>
-<div class="card"><div class="ico">💡</div><h3>बिजली बिल</h3><a href="#contact">जानकारी लें</a></div>
-<div class="card"><div class="ico">🏦</div><h3>बैंकिंग सेवाएँ</h3><a href="#contact">जानकारी लें</a></div>
-<div class="card"><div class="ico">📱</div><h3>मोबाइल रिचार्ज</h3><a href="#contact">जानकारी लें</a></div>
-<div class="card"><div class="ico">📄</div><h3>दस्तावेज़ सेवाएँ</h3><a href="#contact">जानकारी लें</a></div>
-<div class="card"><div class="ico">🧑‍💻</div><h3>ऑनलाइन आवेदन</h3><a href="#contact">जानकारी लें</a></div>
+<section id="dashboard" class="hidden">
+<div class="card">
+<h2>आपका Dashboard</h2>
+<p>लॉगिन ईमेल: <strong id="userEmail"></strong></p>
+<button id="logout">Logout</button>
 </div>
-
-<section id="schemes">
-<h2 class="section">सरकारी योजनाएँ</h2>
-<div class="info">यहाँ सरकारी योजनाओं की जानकारी और आधिकारिक वेबसाइटों के लिंक उपलब्ध होंगे। आवेदन करने से पहले पात्रता और नियम आधिकारिक पोर्टल पर जाँचें।</div>
-</section>
-
-<section id="login">
-<h2 class="section">Agent Login / नया अकाउंट</h2>
-<div class="auth-box">
-<p>अपना ईमेल और पासवर्ड डालें। पहली बार हैं तो नया अकाउंट बनाएँ।</p>
-
-<label for="auth-email">ईमेल पता</label>
-<input id="auth-email" type="email" placeholder="example@gmail.com" autocomplete="email">
-
-<label for="auth-password">पासवर्ड</label>
-<input id="auth-password" type="password" placeholder="कम से कम 6 अक्षर" autocomplete="current-password">
-
-<button type="button" id="signup-btn">नया अकाउंट बनाएँ</button>
-<button type="button" id="login-btn">लॉगिन करें</button>
-<button type="button" id="logout-btn" hidden>लॉगआउट</button>
-
-<p id="auth-message" role="status" aria-live="polite">लॉगिन करने के लिए ईमेल और पासवर्ड भरें।</p>
-<p id="auth-user"></p>
+<div class="card">
+<h2>Digital Services</h2>
+<div class="services">
+<div class="service"><h3>PM Kisan</h3><p>किसान योजना</p><button data-url="https://pmkisan.gov.in/" class="openService">पोर्टल खोलें</button></div>
+<div class="service"><h3>Ladli Behna</h3><p>योजना की जानकारी</p><button data-url="https://cmladlibahna.mp.gov.in/" class="openService">पोर्टल खोलें</button></div>
+<div class="service"><h3>Aadhaar</h3><p>आधिकारिक वेबसाइट</p><button data-url="https://myaadhaar.uidai.gov.in/" class="openService">पोर्टल खोलें</button></div>
+<div class="service"><h3>Bank of Baroda</h3><p>बैंकिंग वेबसाइट</p><button data-url="https://www.bankofbaroda.in/" class="openService">पोर्टल खोलें</button></div>
 </div>
-</section>
-
-<section id="contact">
-<h2 class="section">संपर्क करें</h2>
-<div class="info">Digi Point Digital Services<br>अपनी दुकान का मोबाइल नंबर और पता यहाँ जोड़ें।</div>
+</div>
 </section>
 </main>
-
-<footer>© 2026 Digi Point | Digital Services Portal</footer>
-
-<script>
-function filterServices(){
-  const q=document.getElementById('search').value.toLowerCase();
-  document.querySelectorAll('#serviceGrid .card').forEach(card=>{
-    card.style.display=card.innerText.toLowerCase().includes(q)?'block':'none';
-  });
-}
-</script>
+<footer>© <span id="year"></span> Digi Point Portal</footer>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
 import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut,
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+ getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+ sendPasswordResetEmail, onAuthStateChanged, signOut
+} from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBRXAcmw_cIEMEUcCZ-RGlhMeDqcEJtnFs",
-  authDomain: "digi-point-portal-bf8ed.firebaseapp.com",
-  projectId: "digi-point-portal-bf8ed",
-  storageBucket: "digi-point-portal-bf8ed.firebasestorage.app",
-  messagingSenderId: "8242639848",
-  appId: "1:8242639848:web:32529f76cc47c30176aa5d"
+ apiKey: "AIzaSyBRXAcmw_cIEMEUcCZ-RGlhMeDqcEJtnFs",
+ authDomain: "digi-point-portal-bf8ed.firebaseapp.com",
+ projectId: "digi-point-portal-bf8ed",
+ storageBucket: "digi-point-portal-bf8ed.firebasestorage.app",
+ messagingSenderId: "8242639848",
+ appId: "1:8242639848:web:32529f76cc47c30176aa5d"
 };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const $ = id => document.getElementById(id);
+let signupMode = false;
 
-const emailInput = document.getElementById("auth-email");
-const passwordInput = document.getElementById("auth-password");
-const message = document.getElementById("auth-message");
-const userText = document.getElementById("auth-user");
-const signupBtn = document.getElementById("signup-btn");
-const loginBtn = document.getElementById("login-btn");
-const logoutBtn = document.getElementById("logout-btn");
-
-function showError(error){
-  const errors = {
-    "auth/email-already-in-use":"यह ईमेल पहले से रजिस्टर्ड है। लॉगिन करें।",
-    "auth/invalid-email":"कृपया सही ईमेल पता लिखें।",
-    "auth/weak-password":"पासवर्ड कम से कम 6 अक्षरों का होना चाहिए।",
-    "auth/invalid-credential":"ईमेल या पासवर्ड गलत है।",
-    "auth/network-request-failed":"इंटरनेट कनेक्शन जाँचें और फिर प्रयास करें।",
-    "auth/too-many-requests":"बहुत बार प्रयास हुआ है। कुछ देर बाद कोशिश करें।",
-    "auth/operation-not-allowed":"Firebase में Email/Password Sign-in चालू करें।",
-    "auth/unauthorized-domain":"Firebase Authentication में वेबसाइट का डोमेन जोड़ें।"
-  };
-  message.textContent = errors[error.code] || "समस्या हुई। कृपया दोबारा प्रयास करें।";
+function say(text){$("message").textContent=text}
+function setMode(signup){
+ signupMode=signup;
+ $("heading").textContent=signup?"नया अकाउंट बनाएँ":"Login करें";
+ $("submitButton").textContent=signup?"Sign Up":"Login";
+ $("switchText").textContent=signup?"पहले से अकाउंट है?":"नया अकाउंट बनाना है?";
+ $("switchMode").textContent=signup?"Login करें":"Sign Up करें";
+ $("forgotLine").classList.toggle("hidden",signup);
+ $("password").autocomplete=signup?"new-password":"current-password";
+ say("");
+}
+function errorText(e){
+ const errors={
+ "auth/invalid-email":"ईमेल पता सही नहीं है।",
+ "auth/invalid-credential":"ईमेल या पासवर्ड गलत है।",
+ "auth/user-not-found":"यह अकाउंट नहीं मिला।",
+ "auth/email-already-in-use":"इस ईमेल से अकाउंट पहले से बना है।",
+ "auth/weak-password":"पासवर्ड मजबूत रखें।",
+ "auth/too-many-requests":"बहुत प्रयास हुए हैं। कुछ देर बाद कोशिश करें।",
+ "auth/network-request-failed":"इंटरनेट कनेक्शन जाँचें।",
+ "auth/operation-not-allowed":"Firebase में Email/Password लॉगिन चालू करें।"
+ };
+ return errors[e.code]||"समस्या: "+e.message;
 }
 
-signupBtn.addEventListener("click", async ()=>{
-  const email = emailInput.value.trim();
-  const password = passwordInput.value;
-  if(!email || !password){
-    message.textContent = "ईमेल और पासवर्ड दोनों भरें।";
-    return;
+$("switchMode").addEventListener("click",()=>setMode(!signupMode));
+
+$("authForm").addEventListener("submit",async event=>{
+ event.preventDefault();
+ const button=$("submitButton");
+ button.disabled=true;
+ say("कृपया प्रतीक्षा करें...");
+ try{
+  const email=$("email").value.trim();
+  const password=$("password").value;
+  if(signupMode){
+   await createUserWithEmailAndPassword(auth,email,password);
+   say("अकाउंट बन गया!");
+  }else{
+   await signInWithEmailAndPassword(auth,email,password);
+   say("लॉगिन सफल!");
   }
-  signupBtn.disabled = true;
-  message.textContent = "अकाउंट बनाया जा रहा है...";
-  try{
-    await createUserWithEmailAndPassword(auth,email,password);
-    message.textContent = "अकाउंट बन गया! आप लॉगिन हैं।";
-  }catch(error){
-    showError(error);
-  }finally{
-    signupBtn.disabled = false;
-  }
+ }catch(e){say(errorText(e))}
+ finally{button.disabled=false}
 });
 
-loginBtn.addEventListener("click", async ()=>{
-  const email = emailInput.value.trim();
-  const password = passwordInput.value;
-  if(!email || !password){
-    message.textContent = "ईमेल और पासवर्ड दोनों भरें।";
-    return;
-  }
-  loginBtn.disabled = true;
-  message.textContent = "लॉगिन हो रहा है...";
-  try{
-    await signInWithEmailAndPassword(auth,email,password);
-    message.textContent = "लॉगिन सफल हुआ!";
-  }catch(error){
-    showError(error);
-  }finally{
-    loginBtn.disabled = false;
-  }
-});
-
-logoutBtn.addEventListener("click", async ()=>{
-  try{
-    await signOut(auth);
-    message.textContent = "आप लॉगआउट हो गए हैं।";
-  }catch(error){
-    showError(error);
-  }
+$("forgot").addEventListener("click",async()=>{
+ const email=$("email").value.trim();
+ if(!email){say("पहले अपना ईमेल पता डालें।");$("email").focus();return}
+ try{
+  await sendPasswordResetEmail(auth,email);
+  say("पासवर्ड रीसेट करने का लिंक ईमेल पर भेज दिया गया है।");
+ }catch(e){say(errorText(e))}
 });
 
 onAuthStateChanged(auth,user=>{
-  signupBtn.hidden = !!user;
-  loginBtn.hidden = !!user;
-  logoutBtn.hidden = !user;
-  emailInput.disabled = !!user;
-  passwordInput.disabled = !!user;
-  userText.textContent = user ? "लॉगिन ईमेल: " + user.email : "";
+ $("loginPanel").classList.toggle("hidden",!!user);
+ $("dashboard").classList.toggle("hidden",!user);
+ if(user)$("userEmail").textContent=user.email||"";
 });
-</script>
 
+$("logout").addEventListener("click",async()=>{
+ try{await signOut(auth);setMode(false);say("आप लॉगआउट हो गए हैं।")}
+ catch(e){say(errorText(e))}
+});
+
+document.querySelectorAll(".openService").forEach(button=>{
+ button.addEventListener("click",()=>{
+  window.open(button.dataset.url,"_blank","noopener,noreferrer");
+ });
+});
+$("year").textContent=new Date().getFullYear();
+</script>
 </body>
 </html>
