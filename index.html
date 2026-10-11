@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="hi">
 <head>
@@ -24,14 +25,22 @@ h2.section{font-size:22px}
 .card a{display:inline-block;background:#0756a5;color:white;padding:9px 12px;border-radius:6px;text-decoration:none;font-size:13px}
 .info{background:white;padding:18px;border-radius:12px;line-height:1.7}
 footer{margin-top:25px;background:#082d52;color:white;text-align:center;padding:22px 12px}
+.auth-box{background:white;padding:18px;border-radius:12px;max-width:500px;box-shadow:0 2px 9px #0000000c}
+.auth-box label{display:block;margin-top:12px;font-weight:bold}
+.auth-box input{display:block;width:100%;padding:12px;margin-top:6px;border:1px solid #ccd5e0;border-radius:7px;font-size:16px}
+.auth-box button{padding:12px;margin:12px 5px 0 0;border:0;border-radius:7px;background:#0756a5;color:white;font-size:15px;cursor:pointer}
+.auth-box button:disabled{opacity:.6}
+#auth-message{overflow-wrap:anywhere}
 @media(min-width:650px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
 </style>
 </head>
 <body>
+
 <header>
 <h1>🔷 Digi Point</h1>
 <p>Aapka Apna Digital Services Portal</p>
 </header>
+
 <nav>
 <a href="#">Home</a>
 <a href="#services">All Services</a>
@@ -39,13 +48,16 @@ footer{margin-top:25px;background:#082d52;color:white;text-align:center;padding:
 <a href="#contact">Contact</a>
 <a href="#login">Agent Login</a>
 </nav>
+
 <section class="hero">
 <h2>Digital Seva, Ab Aapke Paas!</h2>
 <p>सरकारी योजनाओं और डिजिटल सेवाओं की जानकारी एक ही जगह।</p>
 <input class="search" id="search" placeholder="सर्विस खोजें..." oninput="filterServices()">
 </section>
+
 <main class="container">
 <h2 class="section" id="services">हमारी डिजिटल सेवाएँ</h2>
+
 <div class="grid" id="serviceGrid">
 <div class="card"><div class="ico">🪪</div><h3>PAN Card</h3><a href="https://www.onlineservices.nsdl.com/" target="_blank" rel="noopener">Open Service</a></div>
 <div class="card"><div class="ico">🌾</div><h3>PM Kisan</h3><a href="https://pmkisan.gov.in/" target="_blank" rel="noopener">Open Service</a></div>
@@ -56,27 +68,149 @@ footer{margin-top:25px;background:#082d52;color:white;text-align:center;padding:
 <div class="card"><div class="ico">📄</div><h3>दस्तावेज़ सेवाएँ</h3><a href="#contact">जानकारी लें</a></div>
 <div class="card"><div class="ico">🧑‍💻</div><h3>ऑनलाइन आवेदन</h3><a href="#contact">जानकारी लें</a></div>
 </div>
+
 <section id="schemes">
 <h2 class="section">सरकारी योजनाएँ</h2>
 <div class="info">यहाँ सरकारी योजनाओं की जानकारी और आधिकारिक वेबसाइटों के लिंक उपलब्ध होंगे। आवेदन करने से पहले पात्रता और नियम आधिकारिक पोर्टल पर जाँचें।</div>
 </section>
+
 <section id="login">
-<h2 class="section">Agent Login</h2>
-<div class="info">एजेंट लॉगिन सुविधा जल्द उपलब्ध होगी। यह शुरुआती होम पेज है; लॉगिन सिस्टम अभी जोड़ा नहीं गया है।</div>
+<h2 class="section">Agent Login / नया अकाउंट</h2>
+<div class="auth-box">
+<p>अपना ईमेल और पासवर्ड डालें। पहली बार हैं तो नया अकाउंट बनाएँ।</p>
+
+<label for="auth-email">ईमेल पता</label>
+<input id="auth-email" type="email" placeholder="example@gmail.com" autocomplete="email">
+
+<label for="auth-password">पासवर्ड</label>
+<input id="auth-password" type="password" placeholder="कम से कम 6 अक्षर" autocomplete="current-password">
+
+<button type="button" id="signup-btn">नया अकाउंट बनाएँ</button>
+<button type="button" id="login-btn">लॉगिन करें</button>
+<button type="button" id="logout-btn" hidden>लॉगआउट</button>
+
+<p id="auth-message" role="status" aria-live="polite">लॉगिन करने के लिए ईमेल और पासवर्ड भरें।</p>
+<p id="auth-user"></p>
+</div>
 </section>
+
 <section id="contact">
 <h2 class="section">संपर्क करें</h2>
 <div class="info">Digi Point Digital Services<br>अपनी दुकान का मोबाइल नंबर और पता यहाँ जोड़ें।</div>
 </section>
 </main>
+
 <footer>© 2026 Digi Point | Digital Services Portal</footer>
+
 <script>
 function filterServices(){
-const q=document.getElementById('search').value.toLowerCase();
-document.querySelectorAll('#serviceGrid .card').forEach(card=>{
-card.style.display=card.innerText.toLowerCase().includes(q)?'block':'none';
-});
+  const q=document.getElementById('search').value.toLowerCase();
+  document.querySelectorAll('#serviceGrid .card').forEach(card=>{
+    card.style.display=card.innerText.toLowerCase().includes(q)?'block':'none';
+  });
 }
 </script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBRXAcmw_cIEMEUcCZ-RGlhMeDqcEJtnFs",
+  authDomain: "digi-point-portal-bf8ed.firebaseapp.com",
+  projectId: "digi-point-portal-bf8ed",
+  storageBucket: "digi-point-portal-bf8ed.firebasestorage.app",
+  messagingSenderId: "8242639848",
+  appId: "1:8242639848:web:32529f76cc47c30176aa5d"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+const emailInput = document.getElementById("auth-email");
+const passwordInput = document.getElementById("auth-password");
+const message = document.getElementById("auth-message");
+const userText = document.getElementById("auth-user");
+const signupBtn = document.getElementById("signup-btn");
+const loginBtn = document.getElementById("login-btn");
+const logoutBtn = document.getElementById("logout-btn");
+
+function showError(error){
+  const errors = {
+    "auth/email-already-in-use":"यह ईमेल पहले से रजिस्टर्ड है। लॉगिन करें।",
+    "auth/invalid-email":"कृपया सही ईमेल पता लिखें।",
+    "auth/weak-password":"पासवर्ड कम से कम 6 अक्षरों का होना चाहिए।",
+    "auth/invalid-credential":"ईमेल या पासवर्ड गलत है।",
+    "auth/network-request-failed":"इंटरनेट कनेक्शन जाँचें और फिर प्रयास करें।",
+    "auth/too-many-requests":"बहुत बार प्रयास हुआ है। कुछ देर बाद कोशिश करें।",
+    "auth/operation-not-allowed":"Firebase में Email/Password Sign-in चालू करें।",
+    "auth/unauthorized-domain":"Firebase Authentication में वेबसाइट का डोमेन जोड़ें।"
+  };
+  message.textContent = errors[error.code] || "समस्या हुई। कृपया दोबारा प्रयास करें।";
+}
+
+signupBtn.addEventListener("click", async ()=>{
+  const email = emailInput.value.trim();
+  const password = passwordInput.value;
+  if(!email || !password){
+    message.textContent = "ईमेल और पासवर्ड दोनों भरें।";
+    return;
+  }
+  signupBtn.disabled = true;
+  message.textContent = "अकाउंट बनाया जा रहा है...";
+  try{
+    await createUserWithEmailAndPassword(auth,email,password);
+    message.textContent = "अकाउंट बन गया! आप लॉगिन हैं।";
+  }catch(error){
+    showError(error);
+  }finally{
+    signupBtn.disabled = false;
+  }
+});
+
+loginBtn.addEventListener("click", async ()=>{
+  const email = emailInput.value.trim();
+  const password = passwordInput.value;
+  if(!email || !password){
+    message.textContent = "ईमेल और पासवर्ड दोनों भरें।";
+    return;
+  }
+  loginBtn.disabled = true;
+  message.textContent = "लॉगिन हो रहा है...";
+  try{
+    await signInWithEmailAndPassword(auth,email,password);
+    message.textContent = "लॉगिन सफल हुआ!";
+  }catch(error){
+    showError(error);
+  }finally{
+    loginBtn.disabled = false;
+  }
+});
+
+logoutBtn.addEventListener("click", async ()=>{
+  try{
+    await signOut(auth);
+    message.textContent = "आप लॉगआउट हो गए हैं।";
+  }catch(error){
+    showError(error);
+  }
+});
+
+onAuthStateChanged(auth,user=>{
+  signupBtn.hidden = !!user;
+  loginBtn.hidden = !!user;
+  logoutBtn.hidden = !user;
+  emailInput.disabled = !!user;
+  passwordInput.disabled = !!user;
+  userText.textContent = user ? "लॉगिन ईमेल: " + user.email : "";
+});
+</script>
+
 </body>
 </html>
