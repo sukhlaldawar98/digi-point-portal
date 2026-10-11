@@ -84,6 +84,54 @@
     }
     @media (prefers-reduced-motion: reduce) { .hero-slide { transition:none; } }
 
+  
+    .admin-stats { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:9px; margin:16px 0; }
+    .admin-stat { padding:12px 8px; border-radius:12px; background:#eef4fb; text-align:center; }
+    .admin-stat span { display:block; font-size:12px; color:#536477; }
+    .admin-stat strong { display:block; font-size:25px; color:#123568; margin-top:4px; }
+    .pending-stat { background:#fff4d6; } .approved-stat { background:#e3f8eb; } .rejected-stat { background:#ffebeb; }
+    .status-filters { display:flex; gap:7px; flex-wrap:wrap; margin:12px 0; }
+    .status-filters button { padding:8px 12px; font-size:14px; }
+    .status-filters button.active { background:#123568; color:white; }
+    .retailer { padding:14px; border:1px solid #dbe3ed; border-radius:13px; margin:12px 0; background:#fff; }
+    .retailer p { overflow-wrap:anywhere; line-height:1.55; }
+    .status-pill { display:inline-block; padding:4px 9px; border-radius:20px; font-size:12px; font-weight:700; background:#fff4d6; }
+    .status-pill.approved { background:#e3f8eb; color:#126b38; } .status-pill.rejected { background:#ffebeb; color:#a52222; }
+    .retailer-actions { display:flex; flex-wrap:wrap; gap:7px; }
+    .retailer-actions button { padding:8px 11px; font-size:14px; }
+    .activity-item { padding:11px 12px; border-bottom:1px solid #e3e9f0; line-height:1.5; overflow-wrap:anywhere; }
+    @media(max-width:480px) { .admin-stats {grid-template-columns:repeat(2,minmax(0,1fr));} }
+
+  
+    .admin-shell { padding:0 !important; overflow:hidden; background:#f4f7fc; border-radius:22px; border:1px solid #e1e9f3; }
+    .admin-top { display:flex; align-items:center; justify-content:space-between; gap:14px; padding:22px; color:#fff; background:linear-gradient(125deg,#102d55,#1766a8); }
+    .admin-top h2 { color:#fff; margin:4px 0; font-size:26px; }
+    .admin-top p { margin:0; color:#d9e9fb; font-size:14px; }
+    .admin-eyebrow { font-size:10px; letter-spacing:1.7px; font-weight:800; color:#9edaff; }
+    .refresh-admin { border:1px solid #ffffff55; background:#ffffff18; color:white; border-radius:13px; font-size:27px; width:48px; height:48px; padding:0; }
+    .admin-status-grid { padding:16px; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:11px; }
+    .admin-status-card { min-width:0; text-align:left; border:1px solid #e2e9f1; background:white; color:#1c2a40; padding:14px; border-radius:17px; box-shadow:0 4px 14px #0f29450a; position:relative; }
+    .admin-status-card .status-symbol { width:31px; height:31px; display:flex; align-items:center; justify-content:center; border-radius:10px; font-weight:800; font-size:19px; margin-bottom:10px; }
+    .admin-status-card .status-label { display:block; font-size:13px; color:#536477; font-weight:700; }
+    .admin-status-card strong { display:block; font-size:29px; line-height:1.25; margin:3px 0; color:#17263b; }
+    .admin-status-card small { color:#7b8796; font-size:11px; }
+    .approved-card .status-symbol {background:#ddf7e8;color:#16824a;} .pending-card .status-symbol {background:#fff1cc;color:#a96c00;}
+    .rejected-card .status-symbol {background:#ffe4e4;color:#c13d3d;} .active-card .status-symbol {background:#dff1ff;color:#1a70bd;}
+    .inactive-card .status-symbol {background:#e8ebf0;color:#667386;}
+    .admin-status-card.active-filter { border:2px solid #2878c9; box-shadow:0 0 0 3px #2878c918; }
+    .admin-list-panel { background:#fff; padding:20px 16px; border-top:1px solid #e3eaf3; }
+    .admin-list-heading h3 { margin:0 0 5px; color:#152c4d; font-size:20px; }
+    .admin-list-heading p { margin:0 0 15px; color:#69788b; font-size:13px; }
+    .admin-search-label { font-size:13px; font-weight:700; }
+    .retailer { padding:15px; border:1px solid #e1e8f0; border-radius:15px; margin:12px 0; background:#fff; }
+    .retailer h3 { margin:0 0 8px; font-size:18px; color:#153b67; }
+    .retailer p { white-space:pre-line; font-size:13px; color:#536477; overflow-wrap:anywhere; line-height:1.65; }
+    .retailer-actions { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
+    .retailer-actions button { padding:9px 12px; font-size:13px; border-radius:10px; }
+    .status-pill { display:inline-block; padding:5px 10px; border-radius:20px; font-size:12px; font-weight:800; background:#fff1cc; color:#8a5b00; }
+    .status-pill.approved {background:#ddf7e8;color:#167444;} .status-pill.rejected {background:#ffe4e4;color:#b02f2f;}
+    @media(min-width:600px) { .admin-status-grid {grid-template-columns:repeat(3,minmax(0,1fr));} }
+
   </style>
 </head>
 <body>
@@ -178,15 +226,27 @@
   </section>
   <section id="dashboardSection" class="hidden">
     <div class="card"><h2 id="welcomeHeading">Dashboard</h2><p id="accountInfo"></p><button class="secondary logoutButton" type="button">Logout</button></div>
-    <section id="adminPanel" class="card hidden"><h2>Admin Dashboard</h2><p>Retailer Registration की जाँच करें और Approve या Reject करें।</p><button id="refreshRetailersButton" type="button">सूची Refresh करें</button><div id="adminMessage" class="message" role="status"></div><div id="retailerList"></div></section>
-    <section id="servicesPanel" class="card hidden"><h2>Digital Services</h2><p>सेवा खोलने के लिए नीचे दिए गए लिंक पर क्लिक करें।</p>
-      <div class="service-grid">
-        <a class="service-link" href="https://pmkisan.gov.in/" target="_blank" rel="noopener noreferrer">PM Kisan</a>
-        <a class="service-link" href="https://cmladlibahna.mp.gov.in/" target="_blank" rel="noopener noreferrer">Ladli Behna</a>
-        <a class="service-link" href="https://myaadhaar.uidai.gov.in/" target="_blank" rel="noopener noreferrer">My Aadhaar</a>
-        <a class="service-link" href="https://www.bankofbaroda.in/" target="_blank" rel="noopener noreferrer">Bank of Baroda</a>
-      </div><p><small>ये बाहरी वेबसाइटें हैं। उनका Login और उनकी सेवाओं के नियम अलग हैं।</small></p>
+    <section id="adminPanel" class="admin-shell hidden">
+      <div class="admin-top">
+        <div><span class="admin-eyebrow">DIGI POINT PORTAL</span><h2>Admin Dashboard</h2><p>Retailer accounts manage करें</p></div>
+        <button id="refreshRetailersButton" class="refresh-admin" type="button" aria-label="Refresh retailer list">↻</button>
+      </div>
+      <div class="admin-status-grid">
+        <button class="admin-status-card approved-card" type="button" data-filter="approved"><span class="status-symbol">✓</span><span class="status-label">Approval</span><strong id="countApproved">0</strong><small>स्वीकृत Retailer</small></button>
+        <button class="admin-status-card pending-card active-filter" type="button" data-filter="pending"><span class="status-symbol">◷</span><span class="status-label">Pending</span><strong id="countPending">0</strong><small>मंजूरी बाकी</small></button>
+        <button class="admin-status-card rejected-card" type="button" data-filter="rejected"><span class="status-symbol">×</span><span class="status-label">Reject</span><strong id="countRejected">0</strong><small>अस्वीकृत Retailer</small></button>
+        <button class="admin-status-card active-card" type="button" data-filter="active"><span class="status-symbol">●</span><span class="status-label">Active</span><strong id="countActive">0</strong><small>सक्रिय अकाउंट</small></button>
+        <button class="admin-status-card inactive-card" type="button" data-filter="inactive"><span class="status-symbol">Ⅱ</span><span class="status-label">Inactive</span><strong id="countInactive">0</strong><small>निष्क्रिय अकाउंट</small></button>
+      </div>
+      <div class="admin-list-panel">
+        <div class="admin-list-heading"><div><h3 id="retailerListTitle">Pending Retailers</h3><p>Retailer चुनें और उसका Status बदलें</p></div></div>
+        <label class="admin-search-label" for="retailerSearch">Retailer खोजें</label>
+        <input id="retailerSearch" type="search" placeholder="नाम, मोबाइल या Email">
+        <div id="adminMessage" class="message" role="status"></div>
+        <div id="retailerList"></div>
+      </div>
     </section>
+    
   </section>
   <section id="aboutPortal" class="card nav-anchor"><h2>हमारे बारे में</h2><p>Digi Point Portal पर डिजिटल सेवाओं और सरकारी योजनाओं की शुरुआती जानकारी एक जगह देखने के लिए उपलब्ध है। यह पोर्टल सरकारी वेबसाइट नहीं है। आवेदन या अंतिम जानकारी के लिए संबंधित आधिकारिक वेबसाइट देखें।</p></section>
   <section id="contactPortal" class="card nav-anchor"><h2>Contact</h2><p>पोर्टल या रजिस्ट्रेशन से संबंधित सहायता के लिए अपने पोर्टल Admin से संपर्क करें।</p></section>
@@ -282,7 +342,7 @@ document.addEventListener("keydown", event => {
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth,onAuthStateChanged,signInWithEmailAndPassword,createUserWithEmailAndPassword,sendPasswordResetEmail,signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore,doc,getDoc,setDoc,collection,getDocs,updateDoc,serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore,doc,getDoc,setDoc,collection,getDocs,updateDoc,addDoc,serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBRXAcmw_cIEMEUcCZ-RGlhMeDqcEJtnFs",
@@ -323,14 +383,108 @@ finally{busy=false;setButton($("registerButton"),false,"Register करें");
 $("forgotButton").addEventListener("click",async()=>{const email=$("loginEmail").value.trim();if(!email){message("authMessage","पहले Email लिखें, फिर पासवर्ड भूल गए पर क्लिक करें।","error");return;}
 try{await sendPasswordResetEmail(auth,email);message("authMessage","यदि इस Email पर अकाउंट है, तो Password Reset लिंक भेज दिया गया है।","ok",true);}
 catch(error){message("authMessage",authErrorText(error),"error",true);}});
-async function loadAdminRetailers(){hideMessage("adminMessage");$("retailerList").textContent="Retailer सूची लोड हो रही है...";
-try{const snapshot=await getDocs(collection(db,"retailers")),list=$("retailerList");list.replaceChildren();if(snapshot.empty){list.textContent="अभी कोई Retailer Registration नहीं है।";return;}
-snapshot.forEach(item=>{const data=item.data(),box=document.createElement("div");box.className="retailer";const details=document.createElement("p");details.textContent="नाम: "+(data.name||"—")+" | मोबाइल: "+(data.phone||"—")+" | Email: "+(data.email||"—")+" | Status: "+(data.status||"—");box.appendChild(details);
-if(data.status!=="approved"){const b=document.createElement("button");b.className="success";b.textContent="Approve";b.addEventListener("click",()=>changeRetailerStatus(item.id,"approved",b));box.appendChild(b);}
-if(data.status!=="rejected"){const b=document.createElement("button");b.className="danger";b.textContent="Reject";b.addEventListener("click",()=>changeRetailerStatus(item.id,"rejected",b));box.appendChild(b);}list.appendChild(box);});}
-catch(error){$("retailerList").textContent="";message("adminMessage","Retailer सूची नहीं खुली। Firestore Rules जाँचें। "+(error.message||""),"error");}}
-async function changeRetailerStatus(uid,status,button){button.disabled=true;try{await updateDoc(doc(db,"retailers",uid),{status});message("adminMessage","Retailer status अपडेट हो गया: "+status,"ok");await loadAdminRetailers();}
-catch(error){button.disabled=false;message("adminMessage","Status अपडेट नहीं हुआ। Firestore Rules जाँचें। "+(error.message||""),"error");}}
+let cachedRetailers = [];
+let activeRetailerFilter = "pending";
+function prettyStatus(status) {
+  if (status === "approved") return "Approval";
+  if (status === "rejected") return "Reject";
+  return "Pending";
+}
+function isRetailerActive(data) {
+  if (typeof data.active === "boolean") return data.active;
+  return data.status === "approved";
+}
+function renderRetailerList() {
+  const list=$("retailerList"); list.replaceChildren();
+  const counts={pending:0,approved:0,rejected:0,active:0,inactive:0};
+  cachedRetailers.forEach(r=>{
+    const s=["pending","approved","rejected"].includes(r.status)?r.status:"pending";
+    counts[s]++;
+    if(isRetailerActive(r)) counts.active++; else counts.inactive++;
+  });
+  $("countPending").textContent=counts.pending;
+  $("countApproved").textContent=counts.approved;
+  $("countRejected").textContent=counts.rejected;
+  $("countActive").textContent=counts.active;
+  $("countInactive").textContent=counts.inactive;
+  const titles={pending:"Pending Retailers",approved:"Approved Retailers",rejected:"Rejected Retailers",active:"Active Retailers",inactive:"Inactive Retailers"};
+  $("retailerListTitle").textContent=titles[activeRetailerFilter]||"Pending Retailers";
+  document.querySelectorAll("#adminPanel [data-filter]").forEach(b=>b.classList.toggle("active-filter",b.dataset.filter===activeRetailerFilter));
+  const term=$("retailerSearch").value.trim().toLowerCase();
+  const shown=cachedRetailers.filter(r=>{
+    const status=["pending","approved","rejected"].includes(r.status)?r.status:"pending";
+    const active=isRetailerActive(r);
+    const statusMatch=activeRetailerFilter==="active"?active:activeRetailerFilter==="inactive"?!active:status===activeRetailerFilter;
+    return statusMatch && [r.name,r.phone,r.email,r.uid].join(" ").toLowerCase().includes(term);
+  });
+  if(!shown.length){list.textContent="इस श्रेणी में कोई Retailer नहीं मिला।";return;}
+  shown.forEach(data=>{
+    const box=document.createElement("div");box.className="retailer";
+    const title=document.createElement("h3");title.textContent=data.name||"Retailer";
+    const details=document.createElement("p");
+    details.textContent="Retailer ID: "+data.uid+"\nमोबाइल: "+(data.phone||"—")+"\nEmail: "+(data.email||"—")+"\nRegistration: "+(data.createdAtText||"तारीख उपलब्ध नहीं");
+    const status=document.createElement("span");
+    status.className="status-pill "+(data.status||"pending");
+    status.textContent="Approval Status: "+prettyStatus(data.status)+" | "+(isRetailerActive(data)?"Active":"Inactive");
+    const actions=document.createElement("div");actions.className="retailer-actions";
+    [["approved","Approval"],["pending","Pending"],["rejected","Reject"]].forEach(([next,label])=>{
+      const b=document.createElement("button");b.type="button";b.textContent=label;
+      b.className=next==="approved"?"success":next==="rejected"?"danger":"secondary";
+      b.disabled=data.status===next;
+      b.addEventListener("click",()=>changeRetailerStatus(data.uid,next,b,data.name||data.email||data.uid));
+      actions.appendChild(b);
+    });
+    const toggle=document.createElement("button");toggle.type="button";
+    toggle.className=isRetailerActive(data)?"danger":"success";
+    toggle.textContent=isRetailerActive(data)?"Deactivate":"Activate";
+    toggle.addEventListener("click",()=>changeRetailerActive(data.uid,!isRetailerActive(data),toggle,data.name||data.email||data.uid));
+    actions.appendChild(toggle);
+    box.append(title,details,status,actions);list.appendChild(box);
+  });
+}
+async function loadAdminRetailers(){
+  hideMessage("adminMessage");$("retailerList").textContent="Retailer सूची लोड हो रही है...";
+  try{
+    const snapshot=await getDocs(collection(db,"retailers"));
+    cachedRetailers=snapshot.docs.map(item=>{
+      const data=item.data();let createdAtText="तारीख उपलब्ध नहीं";
+      if(data.createdAt&&typeof data.createdAt.toDate==="function")createdAtText=data.createdAt.toDate().toLocaleString("hi-IN");
+      return {...data,uid:item.id,createdAtText};
+    }).sort((a,b)=>(a.name||"").localeCompare(b.name||""));
+    renderRetailerList();
+  }catch(error){$("retailerList").textContent="";message("adminMessage","Retailer सूची नहीं खुली। Firestore Rules जाँचें। "+(error.message||""),"error");}
+}
+async function recordAdminActivity(uid,name,action,oldValue,newValue){
+  await addDoc(collection(db,"adminActivity"),{
+    adminUid:auth.currentUser.uid,adminEmail:auth.currentUser.email||"",
+    retailerUid:uid,retailerName:name||"",action,oldStatus:oldValue||"",
+    newStatus:newValue||"",createdAt:serverTimestamp()
+  });
+}
+async function changeRetailerStatus(uid,status,button,retailerName){
+  button.disabled=true;
+  try{
+    const previous=cachedRetailers.find(r=>r.uid===uid);
+    await updateDoc(doc(db,"retailers",uid),{status});
+    try{await recordAdminActivity(uid,retailerName,"status_changed",previous?.status||"unknown",status);}catch(_){}
+    message("adminMessage",retailerName+" का Status "+prettyStatus(status)+" कर दिया गया।","ok");
+    await loadAdminRetailers();
+  }catch(error){button.disabled=false;message("adminMessage","Status अपडेट नहीं हुआ। Firestore Rules जाँचें। "+(error.message||""),"error");}
+}
+async function changeRetailerActive(uid,active,button,retailerName){
+  button.disabled=true;
+  try{
+    const previous=cachedRetailers.find(r=>r.uid===uid);
+    await updateDoc(doc(db,"retailers",uid),{active});
+    try{await recordAdminActivity(uid,retailerName,"active_changed",String(isRetailerActive(previous||{})),String(active));}catch(_){}
+    message("adminMessage",retailerName+" अकाउंट "+(active?"Active":"Inactive")+" कर दिया गया।","ok");
+    await loadAdminRetailers();
+  }catch(error){button.disabled=false;message("adminMessage","Active/Inactive अपडेट नहीं हुआ। Firestore Rules में active field की अनुमति जोड़ें। "+(error.message||""),"error");}
+}
+$("retailerSearch").addEventListener("input",renderRetailerList);
+document.querySelectorAll("#adminPanel [data-filter]").forEach(button=>button.addEventListener("click",()=>{
+  activeRetailerFilter=button.dataset.filter;renderRetailerList();
+}));
 $("refreshRetailersButton").addEventListener("click",loadAdminRetailers);
 async function renderUser(user){if(!user){showOnly("authSection");$("adminPanel").classList.add("hidden");$("servicesPanel").classList.add("hidden");return;}showOnly(null);
 try{const adminSnap=await getDoc(doc(db,"admins",user.uid));if(adminSnap.exists()){showOnly("dashboardSection");$("welcomeHeading").textContent="Admin Dashboard";$("accountInfo").textContent="Admin: "+user.email;$("adminPanel").classList.remove("hidden");$("servicesPanel").classList.remove("hidden");await loadAdminRetailers();return;}
