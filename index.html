@@ -51,6 +51,39 @@
     footer { text-align:center; padding:20px; color:#617086; }
     small { color:#536477; }
     @media (max-width:480px) { header h1 {font-size:27px;} .hero h2 {font-size:24px;} .card {padding:18px;} .topnav a {padding:9px 10px;} }
+  
+    .hero-carousel { position:relative; min-height:280px; overflow:hidden; border-radius:24px; box-shadow:0 10px 28px #0b2a4a16; background:#e8f5ff; }
+    .hero-slide { position:absolute; inset:0; display:flex; align-items:center; justify-content:space-between; gap:10px; padding:28px 42px; opacity:0; visibility:hidden; transform:translateX(18px); transition:opacity .65s ease, transform .65s ease, visibility .65s; }
+    .hero-slide.active { position:relative; opacity:1; visibility:visible; transform:translateX(0); }
+    .slide-one { background:linear-gradient(120deg,#e6f6ff 0%,#aee5ff 55%,#51b7ec 100%); color:#10345d; }
+    .slide-two { background:linear-gradient(120deg,#fff3dc 0%,#ffd99a 54%,#ff9c4b 100%); color:#17345a; }
+    .slide-three { background:linear-gradient(120deg,#dff9f4 0%,#a4e5d8 55%,#55bf9d 100%); color:#103d3a; }
+    .slide-copy { max-width:68%; position:relative; z-index:1; }
+    .slide-kicker { display:inline-block; font-size:12px; letter-spacing:1.4px; font-weight:800; opacity:.75; margin-bottom:10px; }
+    .hero-slide h2 { margin:0 0 12px; font-size:clamp(25px,4vw,39px); line-height:1.22; }
+    .hero-slide p { margin:0; font-size:clamp(15px,2vw,19px); line-height:1.55; }
+    .slide-art { display:grid; grid-template-columns:repeat(2, minmax(48px,1fr)); gap:10px; width:30%; max-width:200px; transform:rotate(-3deg); }
+    .slide-art span { display:flex; justify-content:center; align-items:center; min-height:68px; border-radius:18px; font-size:34px; background:#ffffffb8; border:1px solid #ffffffc9; box-shadow:0 7px 16px #14385812; }
+    .slide-art span:first-child { grid-column:span 2; font-size:44px; min-height:82px; }
+    .carousel-arrow { position:absolute; top:50%; transform:translateY(-50%); width:36px; height:42px; border:0; border-radius:12px; background:#10345dbd; color:#fff; font-size:30px; line-height:1; cursor:pointer; z-index:3; padding:0; }
+    .carousel-arrow.prev { left:10px; } .carousel-arrow.next { right:10px; }
+    .carousel-dots { position:absolute; left:0; right:0; bottom:12px; display:flex; justify-content:center; gap:8px; z-index:4; }
+    .carousel-dots button { width:9px; height:9px; padding:0; border:0; border-radius:50%; background:#ffffffc9; cursor:pointer; }
+    .carousel-dots button.active { width:24px; border-radius:10px; background:#124b91; }
+    @media (max-width:600px) {
+      .hero-carousel { min-height:300px; border-radius:20px; }
+      .hero-slide { padding:24px 28px 40px; align-items:flex-start; }
+      .slide-copy { max-width:72%; }
+      .hero-slide h2 { font-size:25px; }
+      .hero-slide p { font-size:15px; }
+      .slide-art { width:28%; grid-template-columns:1fr; gap:7px; margin-top:22px; }
+      .slide-art span, .slide-art span:first-child { grid-column:auto; min-height:48px; font-size:25px; }
+      .slide-art span:first-child { min-height:58px; }
+      .carousel-arrow { width:30px; height:36px; font-size:25px; }
+      .carousel-arrow.prev { left:6px; } .carousel-arrow.next { right:6px; }
+    }
+    @media (prefers-reduced-motion: reduce) { .hero-slide { transition:none; } }
+
   </style>
 </head>
 <body>
@@ -61,7 +94,41 @@
   </nav>
 </header>
 <main>
-  <section id="home" class="hero nav-anchor"><h2>आपकी डिजिटल सेवाएँ, एक ही जगह</h2><p>सभी सेवाओं की जानकारी यहाँ देखें। सेवा पर क्लिक करने से उसकी जानकारी खुलेगी। सेवाओं का उपयोग करने के लिए जरूरत के अनुसार Login करें।</p></section>
+  <section id="home" class="hero nav-anchor">
+  <div class="hero-carousel" id="heroCarousel" aria-label="Digi Point Portal highlights">
+    <article class="hero-slide slide-one active">
+      <div class="slide-copy">
+        <span class="slide-kicker">DIGI POINT PORTAL</span>
+        <h2>सरकारी योजनाओं की सही जानकारी, आपके नज़दीक</h2>
+        <p>योजना की जानकारी • पात्रता • जरूरी दस्तावेज़ • आवेदन प्रक्रिया</p>
+      </div>
+      <div class="slide-art" aria-hidden="true"><span>🌾</span><span>👨‍👩‍👧</span><span>📱</span></div>
+    </article>
+    <article class="hero-slide slide-two">
+      <div class="slide-copy">
+        <span class="slide-kicker">DIGITAL SERVICES</span>
+        <h2>आधार से बैंकिंग तक, डिजिटल सेवाओं की जानकारी</h2>
+        <p>आसान हिंदी में समझें कि कौन-सी सेवा आपके काम की है।</p>
+      </div>
+      <div class="slide-art" aria-hidden="true"><span>🪪</span><span>🏦</span><span>💳</span></div>
+    </article>
+    <article class="hero-slide slide-three">
+      <div class="slide-copy">
+        <span class="slide-kicker">SIMPLE • USEFUL • CLEAR</span>
+        <h2>हर सेवा को समझें, फिर सही कदम उठाएँ</h2>
+        <p>सेवा चुनें और एक ही जगह पढ़ें परिचय, दस्तावेज़ और प्रक्रिया।</p>
+      </div>
+      <div class="slide-art" aria-hidden="true"><span>📋</span><span>💡</span><span>✅</span></div>
+    </article>
+    <button class="carousel-arrow prev" type="button" aria-label="पिछली स्लाइड" id="heroPrev">‹</button>
+    <button class="carousel-arrow next" type="button" aria-label="अगली स्लाइड" id="heroNext">›</button>
+    <div class="carousel-dots" id="heroDots" aria-label="स्लाइड चुनें">
+      <button type="button" class="active" aria-label="स्लाइड 1" data-slide="0"></button>
+      <button type="button" aria-label="स्लाइड 2" data-slide="1"></button>
+      <button type="button" aria-label="स्लाइड 3" data-slide="2"></button>
+    </div>
+  </div>
+</section>
   <section id="allServices" class="card public-services nav-anchor">
     <h2>सभी सेवाएँ (All Services)</h2>
     <p>केवल जानकारी देखने के लिए किसी सेवा के नाम पर क्लिक करें। आधिकारिक वेबसाइट अलग से खुलेगी।</p>
@@ -134,6 +201,32 @@
     <div class="modal-actions"><button id="closeServiceModal" class="secondary" type="button">वापस जाएँ</button></div>
   </div>
 </div>
+<script>
+
+const heroSlides = Array.from(document.querySelectorAll(".hero-slide"));
+const heroDots = Array.from(document.querySelectorAll("#heroDots button"));
+let heroIndex = 0;
+let heroTimer = null;
+function showHeroSlide(index) {
+  heroIndex = (index + heroSlides.length) % heroSlides.length;
+  heroSlides.forEach((slide, i) => slide.classList.toggle("active", i === heroIndex));
+  heroDots.forEach((dot, i) => dot.classList.toggle("active", i === heroIndex));
+}
+function startHeroAutoScroll() {
+  if (heroTimer) clearInterval(heroTimer);
+  heroTimer = setInterval(() => showHeroSlide(heroIndex + 1), 4500);
+}
+document.getElementById("heroPrev")?.addEventListener("click", () => { showHeroSlide(heroIndex - 1); startHeroAutoScroll(); });
+document.getElementById("heroNext")?.addEventListener("click", () => { showHeroSlide(heroIndex + 1); startHeroAutoScroll(); });
+heroDots.forEach(dot => dot.addEventListener("click", () => { showHeroSlide(Number(dot.dataset.slide)); startHeroAutoScroll(); }));
+const heroCarousel = document.getElementById("heroCarousel");
+heroCarousel?.addEventListener("mouseenter", () => { if (heroTimer) clearInterval(heroTimer); });
+heroCarousel?.addEventListener("mouseleave", startHeroAutoScroll);
+heroCarousel?.addEventListener("touchstart", () => { if (heroTimer) clearInterval(heroTimer); }, {passive:true});
+heroCarousel?.addEventListener("touchend", startHeroAutoScroll, {passive:true});
+startHeroAutoScroll();
+
+</script>
 <script>
 const serviceInfo = {
   pmkisan: {title:"PM Kisan सम्मान निधि", description:"पात्र किसान परिवारों को आर्थिक सहायता देने वाली केंद्र सरकार की योजना।", eligibility:["किसान परिवार के पास खेती योग्य भूमि हो और योजना के नियमों के अनुसार पात्रता हो।","कुछ श्रेणियों के व्यक्ति योजना से अपात्र हो सकते हैं।"], documents:["आधार कार्ड","बैंक खाते की जानकारी","भूमि/खसरा संबंधी रिकॉर्ड","मोबाइल नंबर"], process:["किसान का विवरण और भूमि रिकॉर्ड सही होना चाहिए।","आवश्यक होने पर e-KYC पूरी करें।","लाभार्थी स्थिति और भुगतान विवरण समय-समय पर जाँचें."]},
