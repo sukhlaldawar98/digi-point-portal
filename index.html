@@ -78,7 +78,7 @@
       <button class="service-card" type="button" data-service="mponline"><strong>🖥️ MP Online</strong><span>मध्य प्रदेश की ऑनलाइन सेवाओं और आवेदन की जानकारी।</span></button>
     </div>
   </section>
-  <section id="loginArea" class="nav-anchor">
+  <section id="loginArea" class="nav-anchor hidden">
   <section id="authSection" class="card">
     <h2 id="authHeading">Login</h2>
     <div class="tabs"><button id="showLogin">Login</button><button id="showRegister" class="secondary">Retailer Registration</button></div>
@@ -157,6 +157,15 @@ function addDetailList(container, heading, items) {
   section.appendChild(ul);
   container.appendChild(section);
 }
+const loginMenuLink = document.querySelector('.topnav a[href="#loginArea"]');
+if (loginMenuLink) {
+  loginMenuLink.addEventListener("click", event => {
+    event.preventDefault();
+    const loginArea = document.getElementById("loginArea");
+    loginArea.classList.remove("hidden");
+    loginArea.scrollIntoView({behavior:"smooth", block:"start"});
+  });
+}
 document.querySelectorAll("[data-service]").forEach(button => button.addEventListener("click", () => {
   const info = serviceInfo[button.dataset.service];
   if (!info) return;
@@ -202,4 +211,43 @@ case "auth/too-many-requests":return "बहुत बार कोशिश ह
 case "auth/network-request-failed":return "Internet कनेक्शन जाँचें और फिर कोशिश करें।";
 case "auth/email-already-in-use":return "यह Email पहले से Registered है। Login करें।";
 case "auth/weak-password":return "Password कम से कम 6 अक्षरों का रखें।";
-case
+case "auth/operation-not-allowed":return "Firebase में Email/Password Sign-in चालू नहीं है।";
+default:return "कार्य पूरा नहीं हुआ: "+(error.message||error.code||"अज्ञात त्रुटि");}}
+function setButton(button,disabled,text){button.disabled=disabled;button.textContent=text;}
+$("showLogin").addEventListener("click",()=>{$("loginBox").classList.remove("hidden");$("registerBox").classList.add("hidden");$("authHeading").textContent="Login";hideMessage("authMessage");});
+$("showRegister").addEventListener("click",()=>{$("registerBox").classList.remove("hidden");$("loginBox").classList.add("hidden");$("authHeading").textContent="Retailer Registration";hideMessage("authMessage");});
+$("loginForm").addEventListener("submit",async event=>{event.preventDefault();if(busy)return;busy=true;hideMessage("authMessage");setButton($("loginButton"),true,"Login हो रहा है...");
+try{await signInWithEmailAndPassword(auth,$("loginEmail").value.trim(),$("loginPassword").value);}
+catch(error){message("authMessage",authErrorText(error),"error",true);}
+finally{busy=false;setButton($("loginButton"),false,"Login");}});
+$("registerForm").addEventListener("submit",async event=>{event.preventDefault();if(busy)return;busy=true;hideMessage("authMessage");setButton($("registerButton"),true,"Registration हो रहा है...");let createdUser=null;
+try{const name=$("retailerName").value.trim(),phone=$("retailerPhone").value.trim(),email=$("registerEmail").value.trim(),password=$("registerPassword").value;
+const credential=await createUserWithEmailAndPassword(auth,email,password);createdUser=credential.user;
+await setDoc(doc(db,"retailers",createdUser.uid),{name,phone,email:createdUser.email,status:"pending",createdAt:serverTimestamp()});
+message("authMessage","Registration सफल हुआ। Admin की मंज़ूरी मिलने तक अकाउंट Pending रहेगा।","ok",true);}
+catch(error){message("authMessage",error.code?authErrorText(error):"Registration बना, लेकिन प्रोफाइल सेव नहीं हुई। Firestore Rules जाँचें।","error",true);if(createdUser){try{await signOut(auth);}catch(_){}}}
+finally{busy=false;setButton($("registerButton"),false,"Register करें");}});
+$("forgotButton").addEventListener("click",async()=>{const email=$("loginEmail").value.trim();if(!email){message("authMessage","पहले Email लिखें, फिर पासवर्ड भूल गए पर क्लिक करें।","error");return;}
+try{await sendPasswordResetEmail(auth,email);message("authMessage","यदि इस Email पर अकाउंट है, तो Password Reset लिंक भेज दिया गया है।","ok",true);}
+catch(error){message("authMessage",authErrorText(error),"error",true);}});
+async function loadAdminRetailers(){hideMessage("adminMessage");$("retailerList").textContent="Retailer सूची लोड हो रही है...";
+try{const snapshot=await getDocs(collection(db,"retailers")),list=$("retailerList");list.replaceChildren();if(snapshot.empty){list.textContent="अभी कोई Retailer Registration नहीं है।";return;}
+snapshot.forEach(item=>{const data=item.data(),box=document.createElement("div");box.className="retailer";const details=document.createElement("p");details.textContent="नाम: "+(data.name||"—")+" | मोबाइल: "+(data.phone||"—")+" | Email: "+(data.email||"—")+" | Status: "+(data.status||"—");box.appendChild(details);
+if(data.status!=="approved"){const b=document.createElement("button");b.className="success";b.textContent="Approve";b.addEventListener("click",()=>changeRetailerStatus(item.id,"approved",b));box.appendChild(b);}
+if(data.status!=="rejected"){const b=document.createElement("button");b.className="danger";b.textContent="Reject";b.addEventListener("click",()=>changeRetailerStatus(item.id,"rejected",b));box.appendChild(b);}list.appendChild(box);});}
+catch(error){$("retailerList").textContent="";message("adminMessage","Retailer सूची नहीं खुली। Firestore Rules जाँचें। "+(error.message||""),"error");}}
+async function changeRetailerStatus(uid,status,button){button.disabled=true;try{await updateDoc(doc(db,"retailers",uid),{status});message("adminMessage","Retailer status अपडेट हो गया: "+status,"ok");await loadAdminRetailers();}
+catch(error){button.disabled=false;message("adminMessage","Status अपडेट नहीं हुआ। Firestore Rules जाँचें। "+(error.message||""),"error");}}
+$("refreshRetailersButton").addEventListener("click",loadAdminRetailers);
+async function renderUser(user){if(!user){showOnly("authSection");$("adminPanel").classList.add("hidden");$("servicesPanel").classList.add("hidden");return;}showOnly(null);
+try{const adminSnap=await getDoc(doc(db,"admins",user.uid));if(adminSnap.exists()){showOnly("dashboardSection");$("welcomeHeading").textContent="Admin Dashboard";$("accountInfo").textContent="Admin: "+user.email;$("adminPanel").classList.remove("hidden");$("servicesPanel").classList.remove("hidden");await loadAdminRetailers();return;}
+const retailerSnap=await getDoc(doc(db,"retailers",user.uid));if(!retailerSnap.exists()){await signOut(auth);showOnly("authSection");message("authMessage","इस अकाउंट की Retailer प्रोफाइल नहीं मिली। Registration करें या Admin से संपर्क करें।","error",true);return;}
+const retailer=retailerSnap.data();if(retailer.status==="approved"){showOnly("dashboardSection");$("welcomeHeading").textContent="Retailer Dashboard";$("accountInfo").textContent="Retailer: "+(retailer.name||user.email);$("adminPanel").classList.add("hidden");$("servicesPanel").classList.remove("hidden");}
+else if(retailer.status==="rejected"){showOnly("rejectedSection");}else{showOnly("pendingSection");}}
+catch(error){showOnly("authSection");message("authMessage","अकाउंट की जानकारी नहीं पढ़ सके। Firestore Rules और Internet जाँचें। "+(error.message||""),"error",true);}}
+onAuthStateChanged(auth,user=>{renderUser(user);});
+$("checkApprovalButton").addEventListener("click",async()=>{if(auth.currentUser)await renderUser(auth.currentUser);});
+document.querySelectorAll(".logoutButton").forEach(button=>button.addEventListener("click",async()=>{try{await signOut(auth);showOnly("authSection");message("authMessage","Logout सफल हुआ।","ok");}catch(error){alert("Logout नहीं हुआ: "+(error.message||""));}}));
+</script>
+</body>
+</html>
