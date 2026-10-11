@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digi Point | Digital Services</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f6fb;color:#172b4d}
+header{background:#0756a5;color:white;padding:20px 15px}
+header h1{margin:0;font-size:28px}
+header p{margin:8px 0 0}
+nav{background:white;padding:13px;display:flex;gap:18px;flex-wrap:wrap}
+nav a{color:#0756a5;text-decoration:none;font-weight:bold}
+.hero{padding:30px 18px;background:linear-gradient(135deg,#0756a5,#1689dc);color:white}
+.hero h2{font-size:27px;margin-top:0}
+.search{width:100%;padding:13px;border:0;border-radius:8px;font-size:16px}
+.container{padding:20px 15px;max-width:1000px;margin:auto}
+h2.section{font-size:22px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{background:white;border-radius:12px;padding:17px 10px;text-align:center;box-shadow:0 2px 9px #0000000c}
+.card .ico{font-size:30px}
+.card h3{font-size:15px;margin:10px 0}
+.card a{display:inline-block;background:#0756a5;color:white;padding:9px 12px;border-radius:6px;text-decoration:none;font-size:13px}
+.info{background:white;padding:18px;border-radius:12px;line-height:1.7}
+footer{margin-top:25px;background:#082d52;color:white;text-align:center;padding:22px 12px}
+@media(min-width:650px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<header>
+<h1>🔷 Digi Point</h1>
+<p>Aapka Apna Digital Services Portal</p>
+</header>
+<nav>
+<a href="#">Home</a>
+<a href="#services">All Services</a>
+<a href="#schemes">Yojana</a>
+<a href="#contact">Contact</a>
+<a href="#login">Agent Login</a>
+</nav>
+<section class="hero">
+<h2>Digital Seva, Ab Aapke Paas!</h2>
+<p>सरकारी योजनाओं और डिजिटल सेवाओं की जानकारी एक ही जगह।</p>
+<input class="search" id="search" placeholder="सर्विस खोजें..." oninput="filterServices()">
+</section>
+<main class="container">
+<h2 class="section" id="services">हमारी डिजिटल सेवाएँ</h2>
+<div class="grid" id="serviceGrid">
+<div class="card"><div class="ico">🪪</div><h3>PAN Card</h3><a href="https://www.onlineservices.nsdl.com/" target="_blank" rel="noopener">Open Service</a></div>
+<div class="card"><div class="ico">🌾</div><h3>PM Kisan</h3><a href="https://pmkisan.gov.in/" target="_blank" rel="noopener">Open Service</a></div>
+<div class="card"><div class="ico">👩</div><h3>सरकारी योजनाएँ</h3><a href="https://www.myscheme.gov.in/" target="_blank" rel="noopener">Open Service</a></div>
+<div class="card"><div class="ico">💡</div><h3>बिजली बिल</h3><a href="#contact">जानकारी लें</a></div>
+<div class="card"><div class="ico">🏦</div><h3>बैंकिंग सेवाएँ</h3><a href="#contact">जानकारी लें</a></div>
+<div class="card"><div class="ico">📱</div><h3>मोबाइल रिचार्ज</h3><a href="#contact">जानकारी लें</a></div>
+<div class="card"><div class="ico">📄</div><h3>दस्तावेज़ सेवाएँ</h3><a href="#contact">जानकारी लें</a></div>
+<div class="card"><div class="ico">🧑‍💻</div><h3>ऑनलाइन आवेदन</h3><a href="#contact">जानकारी लें</a></div>
+</div>
+<section id="schemes">
+<h2 class="section">सरकारी योजनाएँ</h2>
+<div class="info">यहाँ सरकारी योजनाओं की जानकारी और आधिकारिक वेबसाइटों के लिंक उपलब्ध होंगे। आवेदन करने से पहले पात्रता और नियम आधिकारिक पोर्टल पर जाँचें।</div>
+</section>
+<section id="login">
+<h2 class="section">Agent Login</h2>
+<div class="info">एजेंट लॉगिन सुविधा जल्द उपलब्ध होगी। यह शुरुआती होम पेज है; लॉगिन सिस्टम अभी जोड़ा नहीं गया है।</div>
+</section>
+<section id="contact">
+<h2 class="section">संपर्क करें</h2>
+<div class="info">Digi Point Digital Services<br>अपनी दुकान का मोबाइल नंबर और पता यहाँ जोड़ें।</div>
+</section>
+</main>
+<footer>© 2026 Digi Point | Digital Services Portal</footer>
+<script>
+function filterServices(){
+const q=document.getElementById('search').value.toLowerCase();
+document.querySelectorAll('#serviceGrid .card').forEach(card=>{
+card.style.display=card.innerText.toLowerCase().includes(q)?'block':'none';
+});
+}
+</script>
+</body>
+</html>
