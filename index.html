@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digi Point Portal</title>
+  <meta name="theme-color" content="#123568">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin:0; font-family:Arial,"Noto Sans Devanagari",sans-serif; background:#f0f4fa; color:#18243a; }
+    header { background:#123568; color:white; padding:22px 16px 0; }
+    .brand { padding-bottom:18px; }
+    header h1 { margin:0 0 8px; font-size:30px; }
+    header p { margin:0; font-size:15px; }
+    .topnav { display:flex; gap:8px; overflow-x:auto; padding:10px 0 12px; border-top:1px solid #ffffff35; }
+    .topnav a { flex:0 0 auto; color:white; text-decoration:none; padding:10px 12px; border-radius:9px; font-size:14px; }
+    .topnav a:hover,.topnav a:focus { background:#ffffff22; }
+    .public-services { margin-top:22px; }
+    .service-card { background:#fff; border:1px solid #dce5f0; border-radius:14px; padding:15px; text-align:left; color:#18243a; width:100%; min-height:100px; }
+    .service-card strong { display:block; font-size:17px; margin-bottom:7px; color:#123568; }
+    .service-card span { display:block; font-size:13px; color:#536477; line-height:1.45; }
+    .service-card:hover { border-color:#1758a5; box-shadow:0 5px 18px #152c4a14; }
+    .modal-backdrop { position:fixed; inset:0; z-index:1000; background:#07152bd9; display:flex; align-items:center; justify-content:center; padding:18px; }
+    .modal-box { background:white; width:min(100%,520px); max-height:85vh; overflow:auto; border-radius:18px; padding:22px; box-shadow:0 12px 40px #0005; }
+    .modal-box h2 { color:#123568; margin:0 0 12px; }
+    .modal-box p { line-height:1.6; }
+    .modal-box h3 { font-size:16px; color:#123568; margin:18px 0 7px; }
+    .modal-box ul { padding-left:22px; line-height:1.6; }
+    .modal-box li { margin-bottom:5px; }
+    .modal-actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:18px; }
+    .nav-anchor { scroll-margin-top:15px; }
+    main { max-width:800px; margin:22px auto; padding:0 14px; }
+    .hero { background:linear-gradient(120deg,#123568,#1682c4); color:white; border-radius:20px; padding:26px 22px; margin-bottom:20px; }
+    .hero h2 { margin-top:0; font-size:26px; }
+    .card { background:white; border-radius:18px; padding:22px; margin-bottom:18px; box-shadow:0 5px 20px #152c4a12; }
+    h2,h3 { margin-top:0; }
+    input,select { width:100%; padding:14px; margin:7px 0 13px; border:1px solid #cbd5e1; border-radius:10px; font-size:16px; background:white; }
+    button,.service-link { border:0; border-radius:10px; padding:13px 17px; background:#1758a5; color:white; font-size:16px; cursor:pointer; text-decoration:none; display:inline-block; }
+    button:disabled { opacity:.6; cursor:wait; }
+    .secondary { background:#536477; } .danger { background:#b42318; } .success { background:#16834a; }
+    .tabs { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:16px; }
+    .hidden { display:none !important; }
+    .message { display:none; padding:12px; margin:12px 0; border-radius:10px; overflow-wrap:anywhere; }
+    .error { display:block; background:#fee4e2; color:#912018; }
+    .ok { display:block; background:#dcfae6; color:#05603a; }
+    .info { display:block; background:#e6f0ff; color:#1849a9; }
+    .service-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(145px,1fr)); gap:12px; }
+    .service-link { text-align:center; min-height:52px; }
+    .retailer { border:1px solid #d7dfeb; padding:14px; border-radius:12px; margin:12px 0; overflow-wrap:anywhere; }
+    .retailer button { margin:5px 5px 0 0; }
+    footer { text-align:center; padding:20px; color:#617086; }
+    small { color:#536477; }
+    @media (max-width:480px) { header h1 {font-size:27px;} .hero h2 {font-size:24px;} .card {padding:18px;} .topnav a {padding:9px 10px;} }
+  
+    .hero-carousel { position:relative; min-height:280px; overflow:hidden; border-radius:24px; box-shadow:0 10px 28px #0b2a4a16; background:#e8f5ff; }
+    .hero-slide { position:absolute; inset:0; display:flex; align-items:center; justify-content:space-between; gap:10px; padding:28px 42px; opacity:0; visibility:hidden; transform:translateX(18px); transition:opacity .65s ease, transform .65s ease, visibility .65s; }
+    .hero-slide.active { position:relative; opacity:1; visibility:visible; transform:translateX(0); }
+    .slide-one { background:linear-gradient(120deg,#e6f6ff 0%,#aee5ff 55%,#51b7ec 100%); color:#10345d; }
+    .slide-two { background:linear-gradient(120deg,#fff3dc 0%,#ffd99a 54%,#ff9c4b 100%); color:#17345a; }
+    .slide-three { background:linear-gradient(120deg,#dff9f4 0%,#a4e5d8 55%,#55bf9d 100%); color:#103d3a; }
+    .slide-copy { max-width:68%; position:relative; z-index:1; }
+    .slide-kicker { display:inline-block; font-size:12px; letter-spacing:1.4px; font-weight:800; opacity:.75; margin-bottom:10px; }
+    .hero-slide h2 { margin:0 0 12px; font-size:clamp(25px,4vw,39px); line-height:1.22; }
+    .hero-slide p { margin:0; font-size:clamp(15px,2vw,19px); line-height:1.55; }
+    .slide-art { display:grid; grid-template-columns:repeat(2, minmax(48px,1fr)); gap:10px; width:30%; max-width:200px; transform:rotate(-3deg); }
+    .slide-art span { display:flex; justify-content:center; align-items:center; min-height:68px; border-radius:18px; font-size:34px; background:#ffffffb8; border:1px solid #ffffffc9; box-shadow:0 7px 16px #14385812; }
+    .slide-art span:first-child { grid-column:span 2; font-size:44px; min-height:82px; }
+    .carousel-arrow { position:absolute; top:50%; transform:translateY(-50%); width:36px; height:42px; border:0; border-radius:12px; background:#10345dbd; color:#fff; font-size:30px; line-height:1; cursor:pointer; z-index:3; padding:0; }
+    .carousel-arrow.prev { left:10px; } .carousel-arrow.next { right:10px; }
+    .carousel-dots { position:absolute; left:0; right:0; bottom:12px; display:flex; justify-content:center; gap:8px; z-index:4; }
+    .carousel-dots button { width:9px; height:9px; padding:0; border:0; border-radius:50%; background:#ffffffc9; cursor:pointer; }
+    .carousel-dots button.active { width:24px; border-radius:10px; background:#124b91; }
+    @media (max-width:600px) {
+      .hero-carousel { min-height:300px; border-radius:20px; }
+      .hero-slide { padding:24px 28px 40px; align-items:flex-start; }
+      .slide-copy { max-width:72%; }
+      .hero-slide h2 { font-size:25px; }
+      .hero-slide p { font-size:15px; }
+      .slide-art { width:28%; grid-template-columns:1fr; gap:7px; margin-top:22px; }
+      .slide-art span, .slide-art span:first-child { grid-column:auto; min-height:48px; font-size:25px; }
+      .slide-art span:first-child { min-height:58px; }
+      .carousel-arrow { width:30px; height:36px; font-size:25px; }
+      .carousel-arrow.prev { left:6px; } .carousel-arrow.next { right:6px; }
+    }
+    @media (prefers-reduced-motion: reduce) { .hero-slide { transition:none; } }
+
+  
+    .admin-stats { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:9px; margin:16px 0; }
+    .admin-stat { padding:12px 8px; border-radius:12px; background:#eef4fb; text-align:center; }
+    .admin-stat span { display:block; font-size:12px; color:#536477; }
+    .admin-stat strong { display:block; font-size:25px; color:#123568; margin-top:4px; }
+    .pending-stat { background:#fff4d6; } .approved-stat { background:#e3f8eb; } .rejected-stat { background:#ffebeb; }
+    .status-filters { display:flex; gap:7px; flex-wrap:wrap; margin:12px 0; }
+    .status-filters button { padding:8px 12px; font-size:14px; }
+    .status-filters button.active { background:#123568; color:white; }
+    .retailer { padding:14px; border:1px solid #dbe3ed; border-radius:13px; margin:12px 0; background:#fff; }
+    .retailer p { overflow-wrap:anywhere; line-height:1.55; }
+    .status-pill { display:inline-block; padding:4px 9px; border-radius:20px; font-size:12px; font-weight:700; background:#fff4d6; }
+    .status-pill.approved { background:#e3f8eb; color:#126b38; } .status-pill.rejected { background:#ffebeb; color:#a52222; }
+    .retailer-actions { display:flex; flex-wrap:wrap; gap:7px; }
+    .retailer-actions button { padding:8px 11px; font-size:14px; }
+    .activity-item { padding:11px 12px; border-bottom:1px solid #e3e9f0; line-height:1.5; overflow-wrap:anywhere; }
+    @media(max-width:480px) { .admin-stats {grid-template-columns:repeat(2,minmax(0,1fr));} }
+
+  
+    .admin-shell { padding:0 !important; overflow:hidden; background:#f4f7fc; border-radius:22px; border:1px solid #e1e9f3; }
+    .admin-top { display:flex; align-items:center; justify-content:space-between; gap:14px; padding:22px; color:#fff; background:linear-gradient(125deg,#102d55,#1766a8); }
+    .admin-top h2 { color:#fff; margin:4px 0; font-size:26px; }
+    .admin-top p { margin:0; color:#d9e9fb; font-size:14px; }
+    .admin-eyebrow { font-size:10px; letter-spacing:1.7px; font-weight:800; color:#9edaff; }
+    .refresh-admin { border:1px solid #ffffff55; background:#ffffff18; color:white; border-radius:13px; font-size:27px; width:48px; height:48px; padding:0; }
+    .admin-status-grid { padding:16px; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:11px; }
+    .admin-status-card { min-width:0; text-align:left; border:1px solid #e2e9f1; background:white; color:#1c2a40; padding:14px; border-radius:17px; box-shadow:0 4px 14px #0f29450a; position:relative; }
+    .admin-status-card .status-symbol { width:31px; height:31px; display:flex; align-items:center; justify-content:center; border-radius:10px; font-weight:800; font-size:19px; margin-bottom:10px; }
+    .admin-status-card .status-label { display:block; font-size:13px; color:#536477; font-weight:700; }
+    .admin-status-card strong { display:block; font-size:29px; line-height:1.25; margin:3px 0; color:#17263b; }
+    .admin-status-card small { color:#7b8796; font-size:11px; }
+    .approved-card .status-symbol {background:#ddf7e8;color:#16824a;} .pending-card .status-symbol {background:#fff1cc;color:#a96c00;}
+    .rejected-card .status-symbol {background:#ffe4e4;color:#c13d3d;} .active-card .status-symbol {background:#dff1ff;color:#1a70bd;}
+    .inactive-card .status-symbol {background:#e8ebf0;color:#667386;}
+    .admin-status-card.active-filter { border:2px solid #2878c9; box-shadow:0 0 0 3px #2878c918; }
+    .admin-list-panel { background:#fff; padding:20px 16px; border-top:1px solid #e3eaf3; }
+    .admin-list-heading h3 { margin:0 0 5px; color:#152c4d; font-size:20px; }
+    .admin-list-heading p { margin:0 0 15px; color:#69788b; font-size:13px; }
+    .admin-search-label { font-size:13px; font-weight:700; }
+    .retailer { padding:15px; border:1px solid #e1e8f0; border-radius:15px; margin:12px 0; background:#fff; }
+    .retailer h3 { margin:0 0 8px; font-size:18px; color:#153b67; }
+    .retailer p { white-space:pre-line; font-size:13px; color:#536477; overflow-wrap:anywhere; line-height:1.65; }
+    .retailer-actions { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
+    .retailer-actions button { padding:9px 12px; font-size:13px; border-radius:10px; }
+    .status-pill { display:inline-block; padding:5px 10px; border-radius:20px; font-size:12px; font-weight:800; background:#fff1cc; color:#8a5b00; }
+    .status-pill.approved {background:#ddf7e8;color:#167444;} .status-pill.rejected {background:#ffe4e4;color:#b02f2f;}
+    @media(min-width:600px) { .admin-status-grid {grid-template-columns:repeat(3,minmax(0,1fr));} }
+
+  
+    .login-modal-backdrop { position:fixed; inset:0; z-index:1100; background:rgba(5,18,38,.72); display:flex; align-items:center; justify-content:center; padding:16px; overflow-y:auto; }
+    .login-modal-backdrop.hidden { display:none !important; }
+    .login-popup-card { position:relative; width:min(100%,440px); max-height:calc(100vh - 32px); overflow-y:auto; margin:auto; border-radius:20px; padding:22px; box-shadow:0 18px 55px #0004; }
+    .login-popup-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:14px; }
+    .login-popup-heading h2 { margin:0; }
+    .close-login-popup { width:38px; height:38px; padding:0; border:0; border-radius:50%; background:#edf2f8; color:#20334d; font-size:27px; line-height:1; }
+    body.login-popup-open { overflow:hidden; }
+    @media(max-width:480px) { .login-popup-card { padding:18px; } }
+
+  </style>
+</head>
+<body>
+<header>
+  <div class="brand"><h1>💠 Digi Point Portal</h1><p>Admin • Retailer • Digital Services</p></div>
+  <nav class="topnav" aria-label="मुख्य मेन्यू">
+    <a href="#home">Home</a><a href="#allServices">All Services</a><a href="#loginArea" data-auth-mode="login">Retailer Login</a><a href="#loginArea" data-auth-mode="register">Retailer Registration</a><a href="#aboutPortal">About</a><a href="#contactPortal">Contact</a>
+  </nav>
+</header>
+<main>
+  <section id="home" class="hero nav-anchor">
+  <div class="hero-carousel" id="heroCarousel" aria-label="Digi Point Portal highlights">
+    <article class="hero-slide slide-one active">
+      <div class="slide-copy">
+        <span class="slide-kicker">DIGI POINT PORTAL</span>
+        <h2>सरकारी योजनाओं की सही जानकारी, आपके नज़दीक</h2>
+        <p>योजना की जानकारी • पात्रता • जरूरी दस्तावेज़ • आवेदन प्रक्रिया</p>
+      </div>
+      <div class="slide-art" aria-hidden="true"><span>🌾</span><span>👨‍👩‍👧</span><span>📱</span></div>
+    </article>
+    <article class="hero-slide slide-two">
+      <div class="slide-copy">
+        <span class="slide-kicker">DIGITAL SERVICES</span>
+        <h2>आधार से बैंकिंग तक, डिजिटल सेवाओं की जानकारी</h2>
+        <p>आसान हिंदी में समझें कि कौन-सी सेवा आपके काम की है।</p>
+      </div>
+      <div class="slide-art" aria-hidden="true"><span>🪪</span><span>🏦</span><span>💳</span></div>
+    </article>
+    <article class="hero-slide slide-three">
+      <div class="slide-copy">
+        <span class="slide-kicker">SIMPLE • USEFUL • CLEAR</span>
+        <h2>हर सेवा को समझें, फिर सही कदम उठाएँ</h2>
+        <p>सेवा चुनें और एक ही जगह पढ़ें परिचय, दस्तावेज़ और प्रक्रिया।</p>
+      </div>
+      <div class="slide-art" aria-hidden="true"><span>📋</span><span>💡</span><span>✅</span></div>
+    </article>
+    <button class="carousel-arrow prev" type="button" aria-label="पिछली स्लाइड" id="heroPrev">‹</button>
+    <button class="carousel-arrow next" type="button" aria-label="अगली स्लाइड" id="heroNext">›</button>
+    <div class="carousel-dots" id="heroDots" aria-label="स्लाइड चुनें">
+      <button type="button" class="active" aria-label="स्लाइड 1" data-slide="0"></button>
+      <button type="button" aria-label="स्लाइड 2" data-slide="1"></button>
+      <button type="button" aria-label="स्लाइड 3" data-slide="2"></button>
+    </div>
+  </div>
+</section>
+  <section id="allServices" class="card public-services nav-anchor">
+    <h2>सभी सेवाएँ (All Services)</h2>
+    <p>केवल जानकारी देखने के लिए किसी सेवा के नाम पर क्लिक करें। आधिकारिक वेबसाइट अलग से खुलेगी।</p>
+    <div class="service-grid" id="publicServiceGrid">
+      <button class="service-card" type="button" data-service="pmkisan"><strong>🌾 PM Kisan</strong><span>किसान सम्मान निधि योजना की जानकारी, पात्रता और किस्त की स्थिति।</span></button>
+      <button class="service-card" type="button" data-service="ladlibehna"><strong>👩 लाड़ली बहना योजना</strong><span>योजना, पात्रता और आवेदन/स्थिति संबंधी जानकारी।</span></button>
+      <button class="service-card" type="button" data-service="aadhaar"><strong>🪪 आधार सेवा</strong><span>आधार डाउनलोड, अपडेट और आधार से जुड़ी ऑनलाइन सेवाएँ।</span></button>
+      <button class="service-card" type="button" data-service="samagra"><strong>📄 समग्र पोर्टल</strong><span>समग्र ID और परिवार/सदस्य संबंधी जानकारी।</span></button>
+      <button class="service-card" type="button" data-service="ayushman"><strong>🏥 आयुष्मान भारत</strong><span>आयुष्मान कार्ड और योजना से संबंधित जानकारी।</span></button>
+      <button class="service-card" type="button" data-service="pan"><strong>💳 PAN Card</strong><span>PAN कार्ड आवेदन और संबंधित सेवाओं की जानकारी।</span></button>
+      <button class="service-card" type="button" data-service="voter"><strong>🗳️ Voter Services</strong><span>मतदाता सूची और वोटर ID से संबंधित जानकारी।</span></button>
+      <button class="service-card" type="button" data-service="scholarship"><strong>🎓 Scholarship</strong><span>छात्रवृत्ति पोर्टल और आवेदन की जानकारी।</span></button>
+      <button class="service-card" type="button" data-service="bankofbaroda"><strong>🏦 Bank of Baroda</strong><span>बैंक की आधिकारिक वेबसाइट और डिजिटल बैंकिंग सेवाएँ।</span></button>
+      <button class="service-card" type="button" data-service="mponline"><strong>🖥️ MP Online</strong><span>मध्य प्रदेश की ऑनलाइन सेवाओं और आवेदन की जानकारी।</span></button>
+    </div>
+  </section>
+  <section id="loginArea" class="modal-backdrop hidden login-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="authHeading">
+  <section id="authSection" class="card login-popup-card">
+    <div class="login-popup-heading"><h2 id="authHeading">Login</h2><button id="closeLoginPopup" type="button" class="close-login-popup" aria-label="बंद करें">×</button></div>
+    <div id="loginBox">
+      <form id="loginForm">
+        <label for="loginEmail">Admin Email या Retailer ID</label><input id="loginEmail" type="text" autocomplete="username" placeholder="Admin Gmail या DP10001 लिखें" required>
+        <label for="loginPassword">Password</label><input id="loginPassword" type="password" autocomplete="current-password" placeholder="Password लिखें" required>
+        <button id="loginButton" type="submit">Login</button>
+        <button id="forgotButton" class="secondary" type="button">पासवर्ड भूल गए?</button>
+      </form>
+    </div>
+    <div id="registerBox" class="hidden">
+      <form id="registerForm">
+        <label for="retailerName">पूरा नाम</label><input id="retailerName" type="text" autocomplete="name" placeholder="अपना नाम लिखें" required>
+        <label for="retailerPhone">मोबाइल नंबर</label><input id="retailerPhone" type="tel" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" placeholder="10 अंकों का मोबाइल नंबर" required>
+        <label for="registerEmail">Email</label><input id="registerEmail" type="email" autocomplete="email" placeholder="अपना Email लिखें" required>
+        <label for="registerPassword">Password (कम से कम 6 अक्षर)</label><input id="registerPassword" type="password" autocomplete="new-password" minlength="6" placeholder="Password बनाएँ" required>
+        <button id="registerButton" type="submit">Register करें</button>
+      </form>
+    </div>
+    <div id="authMessage" class="message" role="alert" aria-live="polite"></div>
+  </section>
+  </section>
+  <section id="pendingSection" class="card hidden">
+    <h2>⏳ Approval Pending</h2><p>आपका Retailer Registration हो गया है। Admin की मंज़ूरी मिलने के बाद ही सेवाएँ खुलेंगी।</p>
+    <div id="pendingMessage" class="message" role="status"></div><button id="checkApprovalButton" type="button">Approval दोबारा जाँचें</button> <button class="secondary logoutButton" type="button">Logout</button>
+  </section>
+  <section id="rejectedSection" class="card hidden">
+    <h2>Registration स्वीकृत नहीं हुआ</h2><p>आपका अकाउंट अभी सेवाओं के लिए स्वीकृत नहीं है। कृपया Admin से संपर्क करें।</p><button class="secondary logoutButton" type="button">Logout</button>
+  </section>
+  <section id="dashboardSection" class="hidden">
+    <div class="card"><h2 id="welcomeHeading">Dashboard</h2><p id="accountInfo"></p><button class="secondary logoutButton" type="button">Logout</button></div>
+    <section id="adminPanel" class="admin-shell hidden">
+      <div class="admin-top">
+        <div><span class="admin-eyebrow">DIGI POINT PORTAL</span><h2>Admin Dashboard</h2><p>Retailer accounts manage करें</p></div>
+        <button id="refreshRetailersButton" class="refresh-admin" type="button" aria-label="Refresh retailer list">↻</button>
+      </div>
+      <div class="admin-status-grid">
+        <button class="admin-status-card approved-card" type="button" data-filter="approved"><span class="status-symbol">✓</span><span class="status-label">Approval</span><strong id="countApproved">0</strong><small>स्वीकृत Retailer</small></button>
+        <button class="admin-status-card pending-card active-filter" type="button" data-filter="pending"><span class="status-symbol">◷</span><span class="status-label">Pending</span><strong id="countPending">0</strong><small>मंजूरी बाकी</small></button>
+        <button class="admin-status-card rejected-card" type="button" data-filter="rejected"><span class="status-symbol">×</span><span class="status-label">Reject</span><strong id="countRejected">0</strong><small>अस्वीकृत Retailer</small></button>
+        <button class="admin-status-card active-card" type="button" data-filter="active"><span class="status-symbol">●</span><span class="status-label">Active</span><strong id="countActive">0</strong><small>सक्रिय अकाउंट</small></button>
+        <button class="admin-status-card inactive-card" type="button" data-filter="inactive"><span class="status-symbol">Ⅱ</span><span class="status-label">Inactive</span><strong id="countInactive">0</strong><small>निष्क्रिय अकाउंट</small></button>
+      </div>
+      <div class="admin-list-panel">
+        <div class="admin-list-heading"><div><h3 id="retailerListTitle">Pending Retailers</h3><p>Retailer चुनें और उसका Status बदलें</p></div></div>
+        <label class="admin-search-label" for="retailerSearch">Retailer खोजें</label>
+        <input id="retailerSearch" type="search" placeholder="नाम, मोबाइल या Email">
+        <div id="adminMessage" class="message" role="status"></div>
+        <div id="retailerList"></div>
+      </div>
+    </section>
+    
+  </section>
+  <section id="aboutPortal" class="card nav-anchor"><h2>हमारे बारे में</h2><p>Digi Point Portal पर डिजिटल सेवाओं और सरकारी योजनाओं की शुरुआती जानकारी एक जगह देखने के लिए उपलब्ध है। यह पोर्टल सरकारी वेबसाइट नहीं है। आवेदन या अंतिम जानकारी के लिए संबंधित आधिकारिक वेबसाइट देखें।</p></section>
+  <section id="contactPortal" class="card nav-anchor"><h2>Contact</h2><p>पोर्टल या रजिस्ट्रेशन से संबंधित सहायता के लिए अपने पोर्टल Admin से संपर्क करें।</p></section>
+</main>
+<footer>Digi Point Portal • जानकारी के लिए सेवा चुनें</footer>
+<div id="serviceModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="serviceModalTitle">
+  <div class="modal-box">
+    <h2 id="serviceModalTitle">सेवा की जानकारी</h2>
+    <p id="serviceModalDescription"></p>
+    <div id="serviceModalDetails"></div>
+    <p id="serviceModalNote"><small>यह Digi Point Portal पर उपलब्ध सामान्य जानकारी है। नियम, पात्रता और दस्तावेज समय के साथ बदल सकते हैं।</small></p>
+    <div class="modal-actions"><button id="closeServiceModal" class="secondary" type="button">वापस जाएँ</button></div>
+  </div>
+</div>
+<script>
+
+const heroSlides = Array.from(document.querySelectorAll(".hero-slide"));
+const heroDots = Array.from(document.querySelectorAll("#heroDots button"));
+let heroIndex = 0;
+let heroTimer = null;
+function showHeroSlide(index) {
+  heroIndex = (index + heroSlides.length) % heroSlides.length;
+  heroSlides.forEach((slide, i) => slide.classList.toggle("active", i === heroIndex));
+  heroDots.forEach((dot, i) => dot.classList.toggle("active", i === heroIndex));
+}
+function startHeroAutoScroll() {
+  if (heroTimer) clearInterval(heroTimer);
+  heroTimer = setInterval(() => showHeroSlide(heroIndex + 1), 4500);
+}
+document.getElementById("heroPrev")?.addEventListener("click", () => { showHeroSlide(heroIndex - 1); startHeroAutoScroll(); });
+document.getElementById("heroNext")?.addEventListener("click", () => { showHeroSlide(heroIndex + 1); startHeroAutoScroll(); });
+heroDots.forEach(dot => dot.addEventListener("click", () => { showHeroSlide(Number(dot.dataset.slide)); startHeroAutoScroll(); }));
+const heroCarousel = document.getElementById("heroCarousel");
+heroCarousel?.addEventListener("mouseenter", () => { if (heroTimer) clearInterval(heroTimer); });
+heroCarousel?.addEventListener("mouseleave", startHeroAutoScroll);
+heroCarousel?.addEventListener("touchstart", () => { if (heroTimer) clearInterval(heroTimer); }, {passive:true});
+heroCarousel?.addEventListener("touchend", startHeroAutoScroll, {passive:true});
+startHeroAutoScroll();
+
+</script>
+<script>
+const serviceInfo = {
+  pmkisan: {title:"PM Kisan सम्मान निधि", description:"पात्र किसान परिवारों को आर्थिक सहायता देने वाली केंद्र सरकार की योजना।", eligibility:["किसान परिवार के पास खेती योग्य भूमि हो और योजना के नियमों के अनुसार पात्रता हो।","कुछ श्रेणियों के व्यक्ति योजना से अपात्र हो सकते हैं।"], documents:["आधार कार्ड","बैंक खाते की जानकारी","भूमि/खसरा संबंधी रिकॉर्ड","मोबाइल नंबर"], process:["किसान का विवरण और भूमि रिकॉर्ड सही होना चाहिए।","आवश्यक होने पर e-KYC पूरी करें।","लाभार्थी स्थिति और भुगतान विवरण समय-समय पर जाँचें."]},
+  ladlibehna: {title:"मुख्यमंत्री लाड़ली बहना योजना", description:"मध्य प्रदेश की पात्र महिलाओं के आर्थिक सशक्तिकरण के लिए राज्य योजना।", eligibility:["आवेदिका को मध्य प्रदेश की निवासी होना चाहिए।","आयु, वैवाहिक स्थिति, परिवार की आय और अन्य शर्तें लागू हो सकती हैं।","अंतिम पात्रता वर्तमान सरकारी नियमों से तय होती है।"], documents:["समग्र परिवार ID और सदस्य ID","आधार कार्ड","आधार से लिंक बैंक खाता","मोबाइल नंबर"], process:["समग्र और आधार में जानकारी मिलान करें।","आवेदन/ई-KYC की उपलब्ध प्रक्रिया पूरी करें।","आवेदन की स्थिति और भुगतान जानकारी जाँचें।"]},
+  aadhaar: {title:"आधार कार्ड सेवाएँ", description:"आधार डाउनलोड, विवरण जाँच और उपलब्ध अपडेट सेवाओं से जुड़ी जानकारी।", eligibility:["अपनी आधार जानकारी के लिए आधार नंबर या उपलब्ध पहचान विवरण की जरूरत हो सकती है।","कुछ अपडेट के लिए निर्धारित केंद्र पर जाना पड़ सकता है।"], documents:["आधार नंबर या EID/VID","रजिस्टर्ड मोबाइल नंबर (OTP सेवाओं के लिए)","अपडेट के प्रकार के अनुसार प्रमाण"], process:["अपडेट का प्रकार चुनें।","निर्देशों के अनुसार OTP/पहचान सत्यापन करें।","यदि केंद्र जाना जरूरी हो तो अधिकृत केंद्र पर जाएँ।"]},
+  samagra: {title:"समग्र ID", description:"मध्य प्रदेश में परिवार और सदस्य की समग्र पहचान से जुड़ी जानकारी।", eligibility:["मध्य प्रदेश के परिवार/सदस्य के रिकॉर्ड के अनुसार सेवाएँ उपलब्ध होती हैं।"], documents:["समग्र परिवार ID या सदस्य ID","आधार/मोबाइल नंबर, जहाँ आवश्यक हो","सुधार के अनुसार संबंधित प्रमाण"], process:["परिवार या सदस्य की जानकारी खोजें।","नाम, जन्मतिथि और अन्य विवरण जाँचें।","सुधार के लिए उपलब्ध आधिकारिक प्रक्रिया का पालन करें।"]},
+  ayushman: {title:"आयुष्मान भारत / PM-JAY", description:"पात्र लाभार्थियों को सूचीबद्ध अस्पतालों में निर्धारित स्वास्थ्य सेवाओं के लिए सहायता देने वाली योजना।", eligibility:["पात्रता सरकारी लाभार्थी रिकॉर्ड और लागू योजना नियमों पर निर्भर करती है।","सिर्फ कार्ड होने से हर इलाज/सेवा स्वतः कवर नहीं होती।"], documents:["आयुष्मान कार्ड उपलब्ध हो तो","आधार या अन्य मान्य पहचान पत्र","लाभार्थी रिकॉर्ड से संबंधित जानकारी"], process:["पहले अपनी पात्रता जाँचें।","पात्र होने पर कार्ड बनाने/डाउनलोड की प्रक्रिया पूरी करें।","इलाज से पहले अस्पताल में कवरेज की पुष्टि करें।"]},
+  pan: {title:"PAN Card", description:"PAN कर-संबंधी पहचान संख्या है। नया PAN, सुधार और स्थिति जाँच जैसी सेवाओं की जानकारी।", eligibility:["PAN के लिए आवेदन व्यक्ति/संस्था की जरूरत और लागू नियमों के अनुसार किया जाता है।"], documents:["पहचान प्रमाण","पते का प्रमाण","जन्मतिथि/गठन का प्रमाण, जहाँ लागू हो","मोबाइल और ईमेल"], process:["नया आवेदन या सुधार का विकल्प चुनें।","फॉर्म में जानकारी दस्तावेजों से मिलाकर भरें।","यदि लागू हो तो शुल्क और सत्यापन पूरा करें।"]},
+  voter: {title:"Voter Services", description:"मतदाता पंजीकरण, वोटर ID में सुधार और मतदाता सूची से जुड़ी सामान्य जानकारी।", eligibility:["मतदाता पंजीकरण के लिए भारतीय नागरिकता, न्यूनतम आयु और अन्य कानूनी शर्तें लागू होती हैं।"], documents:["आयु का प्रमाण","पते का प्रमाण","फोटो और संपर्क विवरण, जहाँ माँगा जाए"], process:["नया पंजीकरण या सुधार का सही फॉर्म चुनें।","विवरण और दस्तावेज जमा करें।","आवेदन की स्थिति और मतदाता सूची में नाम जाँचें।"]},
+  scholarship: {title:"Scholarship / छात्रवृत्ति", description:"विद्यार्थियों के लिए उपलब्ध छात्रवृत्ति योजनाओं, पात्रता और आवेदन प्रक्रिया की सामान्य जानकारी।", eligibility:["पात्रता योजना, कक्षा/कोर्स, अंक, आय और श्रेणी के अनुसार अलग हो सकती है।"], documents:["समग्र/आधार विवरण, जहाँ आवश्यक हो","पिछली कक्षा की अंकसूची","आय/जाति/निवास प्रमाण, जहाँ लागू हो","बैंक पासबुक और फीस रसीद"], process:["अपनी पढ़ाई और श्रेणी के अनुरूप योजना चुनें।","आवेदन की अंतिम तारीख और नियम पढ़ें।","दस्तावेज अपलोड कर आवेदन की स्थिति देखते रहें।"]},
+  bankofbaroda: {title:"Bank of Baroda सेवाएँ", description:"बैंक खाते, डिजिटल बैंकिंग, ग्राहक सहायता और बैंकिंग उत्पादों से जुड़ी सामान्य जानकारी।", eligibility:["खाता खोलने या किसी सेवा के लिए बैंक के KYC और उत्पाद-विशेष नियम लागू होते हैं।"], documents:["मान्य पहचान और पता प्रमाण","PAN या लागू घोषणा पत्र","मोबाइल नंबर और अन्य KYC विवरण"], process:["अपनी जरूरत के अनुसार सेवा चुनें।","शुल्क, पात्रता और शर्तें पढ़ें।","पासवर्ड, OTP या PIN किसी के साथ साझा न करें।"]},
+  mponline: {title:"MP Online सेवाएँ", description:"मध्य प्रदेश में उपलब्ध ऑनलाइन आवेदन, परीक्षा, प्रमाणपत्र और अन्य नागरिक सेवाओं की जानकारी।", eligibility:["हर सेवा की पात्रता और आवेदन नियम अलग हो सकते हैं।"], documents:["सेवा के अनुसार पहचान/निवास प्रमाण","फोटो, हस्ताक्षर या शैक्षणिक दस्तावेज, जहाँ लागू हों","मोबाइल नंबर और आवेदन संबंधी विवरण"], process:["सही विभाग और सेवा चुनें।","निर्देश और अंतिम तारीख पढ़ें।","आवेदन संख्या/रसीद सुरक्षित रखें।"]}
+};
+function addDetailList(container, heading, items) {
+  const section = document.createElement("section");
+  const h = document.createElement("h3");
+  h.textContent = heading;
+  section.appendChild(h);
+  const ul = document.createElement("ul");
+  items.forEach(item => { const li = document.createElement("li"); li.textContent = item; ul.appendChild(li); });
+  section.appendChild(ul);
+  container.appendChild(section);
+}
+const loginPopup = document.getElementById("loginArea");
+function openLoginPopup(mode = "login") {
+  loginPopup.classList.remove("hidden");
+  document.body.classList.add("login-popup-open");
+  const loginBox = document.getElementById("loginBox");
+  const registerBox = document.getElementById("registerBox");
+  const heading = document.getElementById("authHeading");
+  const isRegister = mode === "register";
+  loginBox.classList.toggle("hidden", isRegister);
+  registerBox.classList.toggle("hidden", !isRegister);
+  heading.textContent = isRegister ? "Retailer Registration" : "Retailer Login";
+  const messageBox = document.getElementById("authMessage");
+  if (messageBox) { messageBox.textContent = ""; messageBox.className = "message"; messageBox.style.display = "none"; }
+}
+function closeLoginPopup() {
+  loginPopup.classList.add("hidden");
+  document.body.classList.remove("login-popup-open");
+}
+document.querySelectorAll('.topnav a[data-auth-mode]').forEach(link => link.addEventListener("click", event => {
+  event.preventDefault();
+  openLoginPopup(link.dataset.authMode);
+}));
+document.getElementById("closeLoginPopup")?.addEventListener("click", closeLoginPopup);
+loginPopup?.addEventListener("click", event => {
+  if (event.target === loginPopup) closeLoginPopup();
+});
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape" && loginPopup && !loginPopup.classList.contains("hidden")) closeLoginPopup();
+});
+document.querySelectorAll("[data-service]").forEach(button => button.addEventListener("click", () => {
+  const info = serviceInfo[button.dataset.service];
+  if (!info) return;
+  document.getElementById("serviceModalTitle").textContent = info.title;
+  document.getElementById("serviceModalDescription").textContent = info.description;
+  const details = document.getElementById("serviceModalDetails");
+  details.replaceChildren();
+  addDetailList(details, "पात्रता / ध्यान देने योग्य बातें", info.eligibility);
+  addDetailList(details, "आवश्यक दस्तावेज (सेवा के अनुसार)", info.documents);
+  addDetailList(details, "कैसे आगे बढ़ें", info.process);
+  document.getElementById("serviceModal").classList.remove("hidden");
+}));
+document.getElementById("closeServiceModal").addEventListener("click", () => document.getElementById("serviceModal").classList.add("hidden"));
+document.getElementById("serviceModal").addEventListener("click", event => {
+  if (event.target.id === "serviceModal") event.currentTarget.classList.add("hidden");
+});
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") document.getElementById("serviceModal").classList.add("hidden");
+});
+</script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth,onAuthStateChanged,signInWithEmailAndPassword,signInWithCustomToken,createUserWithEmailAndPassword,sendPasswordResetEmail,signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore,doc,getDoc,setDoc,collection,getDocs,updateDoc,addDoc,serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-functions.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBRXAcmw_cIEMEUcCZ-RGlhMeDqcEJtnFs",
+  authDomain: "digi-point-portal-bf8ed.firebaseapp.com",
+  projectId: "digi-point-portal-bf8ed",
+  storageBucket: "digi-point-portal-bf8ed.firebasestorage.app",
+  messagingSenderId: "8242639848",
+  appId: "1:8242639848:web:32529f76cc47c30176aa5d"
+};
+const app=initializeApp(firebaseConfig), auth=getAuth(app), db=getFirestore(app), functions=getFunctions(app, "asia-south1");
+const loginRetailerById = httpsCallable(functions, "loginRetailerById");
+const approveRetailerFn = httpsCallable(functions, "approveRetailer");
+const setRetailerStatusFn = httpsCallable(functions, "setRetailerStatus");
+const setRetailerActiveFn = httpsCallable(functions, "setRetailerActive");
+const $=id=>document.getElementById(id); let busy=false;
+function message(id,text,type="info",popup=false){const el=$(id);el.textContent=text;el.className="message "+type;el.style.display="block";if(popup)alert(text);}
+function hideMessage(id){const el=$(id);el.textContent="";el.className="message";el.style.display="none";}
+function showOnly(sectionId){["authSection","pendingSection","rejectedSection","dashboardSection"].forEach(id=>{const el=$(id);if(el)el.classList.add("hidden");});if(sectionId){const el=$(sectionId);if(el)el.classList.remove("hidden");}}
+const publicSectionIds = ["home","allServices","loginArea","aboutPortal","contactPortal"];
+function setPublicSectionsVisible(visible) {
+  publicSectionIds.forEach(id => {
+    const el = $(id);
+    if (el) el.classList.toggle("hidden", !visible);
+  });
+}
+
+function authErrorText(error){switch(error.code){
+case "auth/invalid-credential":case "auth/wrong-password":case "auth/user-not-found":return "गलत Email या Password!";
+case "auth/invalid-email":return "Email का पता सही नहीं है।";
+case "auth/too-many-requests":return "बहुत बार कोशिश हुई है। कुछ देर बाद दोबारा प्रयास करें।";
+case "auth/network-request-failed":return "Internet कनेक्शन जाँचें और फिर कोशिश करें।";
+case "auth/email-already-in-use":return "यह Email पहले से Registered है। Login करें।";
+case "auth/weak-password":return "Password कम से कम 6 अक्षरों का रखें।";
+case "auth/operation-not-allowed":return "Firebase में Email/Password Sign-in चालू नहीं है।";
+default:return "कार्य पूरा नहीं हुआ: "+(error.message||error.code||"अज्ञात त्रुटि");}}
+function setButton(button,disabled,text){button.disabled=disabled;button.textContent=text;}
+$("loginForm").addEventListener("submit",async event=>{event.preventDefault();if(busy)return;busy=true;hideMessage("authMessage");setButton($("loginButton"),true,"Login हो रहा है...");
+try{
+  const loginId=$("loginEmail").value.trim();
+  const password=$("loginPassword").value;
+  if(/^DP[0-9]{5,}$/i.test(loginId)){
+    const result=await loginRetailerById({retailerId:loginId.toUpperCase(),password});
+    await signInWithCustomToken(auth,result.data.customToken);
+  } else {
+    await signInWithEmailAndPassword(auth,loginId,password);
+  }
+}catch(error){message("authMessage",authErrorText(error),"error",true);}
+finally{busy=false;setButton($("loginButton"),false,"Login");}});
+$("registerForm").addEventListener("submit",async event=>{event.preventDefault();if(busy)return;busy=true;hideMessage("authMessage");setButton($("registerButton"),true,"Registration हो रहा है...");let createdUser=null;
+try{const name=$("retailerName").value.trim(),phone=$("retailerPhone").value.trim(),email=$("registerEmail").value.trim(),password=$("registerPassword").value;
+const credential=await createUserWithEmailAndPassword(auth,email,password);createdUser=credential.user;
+await setDoc(doc(db,"retailers",createdUser.uid),{name,phone,email:createdUser.email,status:"pending",createdAt:serverTimestamp()});
+message("authMessage","Registration सफल हुआ। Admin की मंज़ूरी मिलने तक अकाउंट Pending रहेगा।","ok",true);}
+catch(error){message("authMessage",error.code?authErrorText(error):"Registration बना, लेकिन प्रोफाइल सेव नहीं हुई। Firestore Rules जाँचें।","error",true);if(createdUser){try{await signOut(auth);}catch(_){}}}
+finally{busy=false;setButton($("registerButton"),false,"Register करें");}});
+$("forgotButton").addEventListener("click",async()=>{const email=$("loginEmail").value.trim();if(!email || /^DP[0-9]+$/i.test(email)){message("authMessage","Password reset के लिए अपना Registered Gmail लिखें।","error");return;}
+try{await sendPasswordResetEmail(auth,email);message("authMessage","यदि इस Email पर अकाउंट है, तो Password Reset लिंक भेज दिया गया है।","ok",true);}
+catch(error){message("authMessage",authErrorText(error),"error",true);}});
+let cachedRetailers = [];
+let activeRetailerFilter = "pending";
+function prettyStatus(status) {
+  if (status === "approved") return "Approval";
+  if (status === "rejected") return "Reject";
+  return "Pending";
+}
+function isRetailerActive(data) {
+  if (typeof data.active === "boolean") return data.active;
+  return data.status === "approved";
+}
+function renderRetailerList() {
+  const list=$("retailerList"); list.replaceChildren();
+  const counts={pending:0,approved:0,rejected:0,active:0,inactive:0};
+  cachedRetailers.forEach(r=>{
+    const s=["pending","approved","rejected"].includes(r.status)?r.status:"pending";
+    counts[s]++;
+    if(isRetailerActive(r)) counts.active++; else counts.inactive++;
+  });
+  $("countPending").textContent=counts.pending;
+  $("countApproved").textContent=counts.approved;
+  $("countRejected").textContent=counts.rejected;
+  $("countActive").textContent=counts.active;
+  $("countInactive").textContent=counts.inactive;
+  const titles={pending:"Pending Retailers",approved:"Approved Retailers",rejected:"Rejected Retailers",active:"Active Retailers",inactive:"Inactive Retailers"};
+  $("retailerListTitle").textContent=titles[activeRetailerFilter]||"Pending Retailers";
+  document.querySelectorAll("#adminPanel [data-filter]").forEach(b=>b.classList.toggle("active-filter",b.dataset.filter===activeRetailerFilter));
+  const term=$("retailerSearch").value.trim().toLowerCase();
+  const shown=cachedRetailers.filter(r=>{
+    const status=["pending","approved","rejected"].includes(r.status)?r.status:"pending";
+    const active=isRetailerActive(r);
+    const statusMatch=activeRetailerFilter==="active"?active:activeRetailerFilter==="inactive"?!active:status===activeRetailerFilter;
+    return statusMatch && [r.name,r.phone,r.email,r.uid].join(" ").toLowerCase().includes(term);
+  });
+  if(!shown.length){list.textContent="इस श्रेणी में कोई Retailer नहीं मिला।";return;}
+  shown.forEach(data=>{
+    const box=document.createElement("div");box.className="retailer";
+    const title=document.createElement("h3");title.textContent=data.name||"Retailer";
+    const details=document.createElement("p");
+    details.textContent="Retailer ID: "+data.uid+"\nमोबाइल: "+(data.phone||"—")+"\nEmail: "+(data.email||"—")+"\nRegistration: "+(data.createdAtText||"तारीख उपलब्ध नहीं");
+    const status=document.createElement("span");
+    status.className="status-pill "+(data.status||"pending");
+    status.textContent="Approval Status: "+prettyStatus(data.status)+" | "+(isRetailerActive(data)?"Active":"Inactive");
+    const actions=document.createElement("div");actions.className="retailer-actions";
+    [["approved","Approval"],["pending","Pending"],["rejected","Reject"]].forEach(([next,label])=>{
+      const b=document.createElement("button");b.type="button";b.textContent=label;
+      b.className=next==="approved"?"success":next==="rejected"?"danger":"secondary";
+      b.disabled=data.status===next && next!=="approved";
+      if(next==="approved" && data.status==="approved") b.textContent="ID दोबारा भेजें";
+      b.addEventListener("click",()=>changeRetailerStatus(data.uid,next,b,data.name||data.email||data.uid));
+      actions.appendChild(b);
+    });
+    const toggle=document.createElement("button");toggle.type="button";
+    toggle.className=isRetailerActive(data)?"danger":"success";
+    toggle.textContent=isRetailerActive(data)?"Deactivate":"Activate";
+    toggle.addEventListener("click",()=>changeRetailerActive(data.uid,!isRetailerActive(data),toggle,data.name||data.email||data.uid));
+    actions.appendChild(toggle);
+    box.append(title,details,status,actions);list.appendChild(box);
+  });
+}
+async function loadAdminRetailers(){
+  hideMessage("adminMessage");$("retailerList").textContent="Retailer सूची लोड हो रही है...";
+  try{
+    const snapshot=await getDocs(collection(db,"retailers"));
+    cachedRetailers=snapshot.docs.map(item=>{
+      const data=item.data();let createdAtText="तारीख उपलब्ध नहीं";
+      if(data.createdAt&&typeof data.createdAt.toDate==="function")createdAtText=data.createdAt.toDate().toLocaleString("hi-IN");
+      return {...data,uid:item.id,createdAtText};
+    }).sort((a,b)=>(a.name||"").localeCompare(b.name||""));
+    renderRetailerList();
+  }catch(error){$("retailerList").textContent="";message("adminMessage","Retailer सूची नहीं खुली। Firestore Rules जाँचें। "+(error.message||""),"error");}
+}
+async function recordAdminActivity(uid,name,action,oldValue,newValue){
+  await addDoc(collection(db,"adminActivity"),{
+    adminUid:auth.currentUser.uid,adminEmail:auth.currentUser.email||"",
+    retailerUid:uid,retailerName:name||"",action,oldStatus:oldValue||"",
+    newStatus:newValue||"",createdAt:serverTimestamp()
+  });
+}
+async function changeRetailerStatus(uid,status,button,retailerName){
+  button.disabled=true;
+  try{
+    if(status==="approved"){
+      const result=await approveRetailerFn({retailerUid:uid});
+      const retailerId=result.data.retailerId;
+      if(result.data.emailSent) {
+        message("adminMessage",retailerName+" का Approval पूरा है। Retailer ID "+retailerId+" Gmail पर भेज दी गई।","ok",true);
+      } else {
+        message("adminMessage","Retailer ID "+retailerId+" बन गई, लेकिन Gmail नहीं भेजा जा सका। Gmail App Password और Cloud Function logs जाँचें; Approval बटन से दोबारा भेज सकते हैं।","error",true);
+      }
+    } else {
+      await setRetailerStatusFn({retailerUid:uid,status});
+      message("adminMessage",retailerName+" का Status "+prettyStatus(status)+" कर दिया गया।","ok");
+    }
+    await loadAdminRetailers();
+  }catch(error){
+    button.disabled=false;
+    message("adminMessage","Status अपडेट नहीं हुआ: "+(error.message||"Cloud Function या Firestore सेटिंग जाँचें।"),"error",true);
+  }
+}
+async function changeRetailerActive(uid,active,button,retailerName){
+  button.disabled=true;
+  try{
+    await setRetailerActiveFn({retailerUid:uid,active});
+    message("adminMessage",retailerName+" अकाउंट "+(active?"Active":"Inactive")+" कर दिया गया।","ok");
+    await loadAdminRetailers();
+  }catch(error){
+    button.disabled=false;
+    message("adminMessage","Active/Inactive अपडेट नहीं हुआ: "+(error.message||"Cloud Function या Firestore Rules जाँचें।"),"error",true);
+  }
+}
+$("retailerSearch").addEventListener("input",renderRetailerList);
+document.querySelectorAll("#adminPanel [data-filter]").forEach(button=>button.addEventListener("click",()=>{
+  activeRetailerFilter=button.dataset.filter;renderRetailerList();
+}));
+$("refreshRetailersButton").addEventListener("click",loadAdminRetailers);
+async function renderUser(user){if(!user){setPublicSectionsVisible(true);showOnly("authSection");$("adminPanel").classList.add("hidden");closeLoginPopup();return;}closeLoginPopup();showOnly(null);
+try{const adminSnap=await getDoc(doc(db,"admins",user.uid));if(adminSnap.exists()){setPublicSectionsVisible(false);showOnly("dashboardSection");$("welcomeHeading").textContent="Admin Dashboard";$("accountInfo").textContent="Admin: "+user.email;$("adminPanel").classList.remove("hidden");await loadAdminRetailers();return;}
+setPublicSectionsVisible(true);const retailerSnap=await getDoc(doc(db,"retailers",user.uid));if(!retailerSnap.exists()){await signOut(auth);showOnly("authSection");message("authMessage","इस अकाउंट की Retailer प्रोफाइल नहीं मिली। Registration करें या Admin से संपर्क करें।","error",true);return;}
+const retailer=retailerSnap.data();if(retailer.status==="approved"){showOnly("dashboardSection");$("welcomeHeading").textContent="Retailer Dashboard";$("accountInfo").textContent="Retailer: "+(retailer.name||user.email)+(retailer.retailerId?" | Retailer ID: "+retailer.retailerId:"");$("adminPanel").classList.add("hidden");}
+else if(retailer.status==="rejected"){showOnly("rejectedSection");}else{showOnly("pendingSection");}}
+catch(error){setPublicSectionsVisible(true);showOnly("authSection");message("authMessage","अकाउंट की जानकारी नहीं पढ़ सके। Firestore Rules और Internet जाँचें। "+(error.message||""),"error",true);}}
+onAuthStateChanged(auth,user=>{renderUser(user);});
+$("checkApprovalButton").addEventListener("click",async()=>{if(auth.currentUser)await renderUser(auth.currentUser);});
+document.querySelectorAll(".logoutButton").forEach(button=>button.addEventListener("click",async()=>{try{await signOut(auth);showOnly("authSection");message("authMessage","Logout सफल हुआ।","ok");}catch(error){alert("Logout नहीं हुआ: "+(error.message||""));}}));
+</script>
+</body>
+</html>
