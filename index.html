@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="hi">
 <head>
@@ -9,9 +8,27 @@
   <style>
     * { box-sizing: border-box; }
     body { margin:0; font-family:Arial,"Noto Sans Devanagari",sans-serif; background:#f0f4fa; color:#18243a; }
-    header { background:#123568; color:white; padding:22px 16px; }
+    header { background:#123568; color:white; padding:22px 16px 0; }
+    .brand { padding-bottom:18px; }
     header h1 { margin:0 0 8px; font-size:30px; }
     header p { margin:0; font-size:15px; }
+    .topnav { display:flex; gap:8px; overflow-x:auto; padding:10px 0 12px; border-top:1px solid #ffffff35; }
+    .topnav a { flex:0 0 auto; color:white; text-decoration:none; padding:10px 12px; border-radius:9px; font-size:14px; }
+    .topnav a:hover,.topnav a:focus { background:#ffffff22; }
+    .public-services { margin-top:22px; }
+    .service-card { background:#fff; border:1px solid #dce5f0; border-radius:14px; padding:15px; text-align:left; color:#18243a; width:100%; min-height:100px; }
+    .service-card strong { display:block; font-size:17px; margin-bottom:7px; color:#123568; }
+    .service-card span { display:block; font-size:13px; color:#536477; line-height:1.45; }
+    .service-card:hover { border-color:#1758a5; box-shadow:0 5px 18px #152c4a14; }
+    .modal-backdrop { position:fixed; inset:0; z-index:1000; background:#07152bd9; display:flex; align-items:center; justify-content:center; padding:18px; }
+    .modal-box { background:white; width:min(100%,520px); max-height:85vh; overflow:auto; border-radius:18px; padding:22px; box-shadow:0 12px 40px #0005; }
+    .modal-box h2 { color:#123568; margin:0 0 12px; }
+    .modal-box p { line-height:1.6; }
+    .modal-box h3 { font-size:16px; color:#123568; margin:18px 0 7px; }
+    .modal-box ul { padding-left:22px; line-height:1.6; }
+    .modal-box li { margin-bottom:5px; }
+    .modal-actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:18px; }
+    .nav-anchor { scroll-margin-top:15px; }
     main { max-width:800px; margin:22px auto; padding:0 14px; }
     .hero { background:linear-gradient(120deg,#123568,#1682c4); color:white; border-radius:20px; padding:26px 22px; margin-bottom:20px; }
     .hero h2 { margin-top:0; font-size:26px; }
@@ -33,12 +50,35 @@
     .retailer button { margin:5px 5px 0 0; }
     footer { text-align:center; padding:20px; color:#617086; }
     small { color:#536477; }
+    @media (max-width:480px) { header h1 {font-size:27px;} .hero h2 {font-size:24px;} .card {padding:18px;} .topnav a {padding:9px 10px;} }
   </style>
 </head>
 <body>
-<header><h1>💠 Digi Point Portal</h1><p>Admin • Retailer • Digital Services</p></header>
+<header>
+  <div class="brand"><h1>💠 Digi Point Portal</h1><p>Admin • Retailer • Digital Services</p></div>
+  <nav class="topnav" aria-label="मुख्य मेन्यू">
+    <a href="#home">Home</a><a href="#allServices">All Services</a><a href="#loginArea">Login / Register</a><a href="#aboutPortal">About</a><a href="#contactPortal">Contact</a>
+  </nav>
+</header>
 <main>
-  <section class="hero"><h2>आपकी डिजिटल सेवाएँ, एक ही जगह</h2><p>सुरक्षित Login करें और अपने अकाउंट के अनुसार सेवाएँ इस्तेमाल करें।</p></section>
+  <section id="home" class="hero nav-anchor"><h2>आपकी डिजिटल सेवाएँ, एक ही जगह</h2><p>सभी सेवाओं की जानकारी यहाँ देखें। सेवा पर क्लिक करने से उसकी जानकारी खुलेगी। सेवाओं का उपयोग करने के लिए जरूरत के अनुसार Login करें।</p></section>
+  <section id="allServices" class="card public-services nav-anchor">
+    <h2>सभी सेवाएँ (All Services)</h2>
+    <p>केवल जानकारी देखने के लिए किसी सेवा के नाम पर क्लिक करें। आधिकारिक वेबसाइट अलग से खुलेगी।</p>
+    <div class="service-grid" id="publicServiceGrid">
+      <button class="service-card" type="button" data-service="pmkisan"><strong>🌾 PM Kisan</strong><span>किसान सम्मान निधि योजना की जानकारी, पात्रता और किस्त की स्थिति।</span></button>
+      <button class="service-card" type="button" data-service="ladlibehna"><strong>👩 लाड़ली बहना योजना</strong><span>योजना, पात्रता और आवेदन/स्थिति संबंधी जानकारी।</span></button>
+      <button class="service-card" type="button" data-service="aadhaar"><strong>🪪 आधार सेवा</strong><span>आधार डाउनलोड, अपडेट और आधार से जुड़ी ऑनलाइन सेवाएँ।</span></button>
+      <button class="service-card" type="button" data-service="samagra"><strong>📄 समग्र पोर्टल</strong><span>समग्र ID और परिवार/सदस्य संबंधी जानकारी।</span></button>
+      <button class="service-card" type="button" data-service="ayushman"><strong>🏥 आयुष्मान भारत</strong><span>आयुष्मान कार्ड और योजना से संबंधित जानकारी।</span></button>
+      <button class="service-card" type="button" data-service="pan"><strong>💳 PAN Card</strong><span>PAN कार्ड आवेदन और संबंधित सेवाओं की जानकारी।</span></button>
+      <button class="service-card" type="button" data-service="voter"><strong>🗳️ Voter Services</strong><span>मतदाता सूची और वोटर ID से संबंधित जानकारी।</span></button>
+      <button class="service-card" type="button" data-service="scholarship"><strong>🎓 Scholarship</strong><span>छात्रवृत्ति पोर्टल और आवेदन की जानकारी।</span></button>
+      <button class="service-card" type="button" data-service="bankofbaroda"><strong>🏦 Bank of Baroda</strong><span>बैंक की आधिकारिक वेबसाइट और डिजिटल बैंकिंग सेवाएँ।</span></button>
+      <button class="service-card" type="button" data-service="mponline"><strong>🖥️ MP Online</strong><span>मध्य प्रदेश की ऑनलाइन सेवाओं और आवेदन की जानकारी।</span></button>
+    </div>
+  </section>
+  <section id="loginArea" class="nav-anchor">
   <section id="authSection" class="card">
     <h2 id="authHeading">Login</h2>
     <div class="tabs"><button id="showLogin">Login</button><button id="showRegister" class="secondary">Retailer Registration</button></div>
@@ -61,6 +101,7 @@
     </div>
     <div id="authMessage" class="message" role="alert" aria-live="polite"></div>
   </section>
+  </section>
   <section id="pendingSection" class="card hidden">
     <h2>⏳ Approval Pending</h2><p>आपका Retailer Registration हो गया है। Admin की मंज़ूरी मिलने के बाद ही सेवाएँ खुलेंगी।</p>
     <div id="pendingMessage" class="message" role="status"></div><button id="checkApprovalButton" type="button">Approval दोबारा जाँचें</button> <button class="secondary logoutButton" type="button">Logout</button>
@@ -80,8 +121,62 @@
       </div><p><small>ये बाहरी वेबसाइटें हैं। उनका Login और उनकी सेवाओं के नियम अलग हैं।</small></p>
     </section>
   </section>
+  <section id="aboutPortal" class="card nav-anchor"><h2>हमारे बारे में</h2><p>Digi Point Portal पर डिजिटल सेवाओं और सरकारी योजनाओं की शुरुआती जानकारी एक जगह देखने के लिए उपलब्ध है। यह पोर्टल सरकारी वेबसाइट नहीं है। आवेदन या अंतिम जानकारी के लिए संबंधित आधिकारिक वेबसाइट देखें।</p></section>
+  <section id="contactPortal" class="card nav-anchor"><h2>Contact</h2><p>पोर्टल या रजिस्ट्रेशन से संबंधित सहायता के लिए अपने पोर्टल Admin से संपर्क करें।</p></section>
 </main>
-<footer>Digi Point Portal</footer>
+<footer>Digi Point Portal • जानकारी के लिए सेवा चुनें</footer>
+<div id="serviceModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="serviceModalTitle">
+  <div class="modal-box">
+    <h2 id="serviceModalTitle">सेवा की जानकारी</h2>
+    <p id="serviceModalDescription"></p>
+    <div id="serviceModalDetails"></div>
+    <p id="serviceModalNote"><small>यह Digi Point Portal पर उपलब्ध सामान्य जानकारी है। नियम, पात्रता और दस्तावेज समय के साथ बदल सकते हैं।</small></p>
+    <div class="modal-actions"><button id="closeServiceModal" class="secondary" type="button">वापस जाएँ</button></div>
+  </div>
+</div>
+<script>
+const serviceInfo = {
+  pmkisan: {title:"PM Kisan सम्मान निधि", description:"पात्र किसान परिवारों को आर्थिक सहायता देने वाली केंद्र सरकार की योजना।", eligibility:["किसान परिवार के पास खेती योग्य भूमि हो और योजना के नियमों के अनुसार पात्रता हो।","कुछ श्रेणियों के व्यक्ति योजना से अपात्र हो सकते हैं।"], documents:["आधार कार्ड","बैंक खाते की जानकारी","भूमि/खसरा संबंधी रिकॉर्ड","मोबाइल नंबर"], process:["किसान का विवरण और भूमि रिकॉर्ड सही होना चाहिए।","आवश्यक होने पर e-KYC पूरी करें।","लाभार्थी स्थिति और भुगतान विवरण समय-समय पर जाँचें."]},
+  ladlibehna: {title:"मुख्यमंत्री लाड़ली बहना योजना", description:"मध्य प्रदेश की पात्र महिलाओं के आर्थिक सशक्तिकरण के लिए राज्य योजना।", eligibility:["आवेदिका को मध्य प्रदेश की निवासी होना चाहिए।","आयु, वैवाहिक स्थिति, परिवार की आय और अन्य शर्तें लागू हो सकती हैं।","अंतिम पात्रता वर्तमान सरकारी नियमों से तय होती है।"], documents:["समग्र परिवार ID और सदस्य ID","आधार कार्ड","आधार से लिंक बैंक खाता","मोबाइल नंबर"], process:["समग्र और आधार में जानकारी मिलान करें।","आवेदन/ई-KYC की उपलब्ध प्रक्रिया पूरी करें।","आवेदन की स्थिति और भुगतान जानकारी जाँचें।"]},
+  aadhaar: {title:"आधार कार्ड सेवाएँ", description:"आधार डाउनलोड, विवरण जाँच और उपलब्ध अपडेट सेवाओं से जुड़ी जानकारी।", eligibility:["अपनी आधार जानकारी के लिए आधार नंबर या उपलब्ध पहचान विवरण की जरूरत हो सकती है।","कुछ अपडेट के लिए निर्धारित केंद्र पर जाना पड़ सकता है।"], documents:["आधार नंबर या EID/VID","रजिस्टर्ड मोबाइल नंबर (OTP सेवाओं के लिए)","अपडेट के प्रकार के अनुसार प्रमाण"], process:["अपडेट का प्रकार चुनें।","निर्देशों के अनुसार OTP/पहचान सत्यापन करें।","यदि केंद्र जाना जरूरी हो तो अधिकृत केंद्र पर जाएँ।"]},
+  samagra: {title:"समग्र ID", description:"मध्य प्रदेश में परिवार और सदस्य की समग्र पहचान से जुड़ी जानकारी।", eligibility:["मध्य प्रदेश के परिवार/सदस्य के रिकॉर्ड के अनुसार सेवाएँ उपलब्ध होती हैं।"], documents:["समग्र परिवार ID या सदस्य ID","आधार/मोबाइल नंबर, जहाँ आवश्यक हो","सुधार के अनुसार संबंधित प्रमाण"], process:["परिवार या सदस्य की जानकारी खोजें।","नाम, जन्मतिथि और अन्य विवरण जाँचें।","सुधार के लिए उपलब्ध आधिकारिक प्रक्रिया का पालन करें।"]},
+  ayushman: {title:"आयुष्मान भारत / PM-JAY", description:"पात्र लाभार्थियों को सूचीबद्ध अस्पतालों में निर्धारित स्वास्थ्य सेवाओं के लिए सहायता देने वाली योजना।", eligibility:["पात्रता सरकारी लाभार्थी रिकॉर्ड और लागू योजना नियमों पर निर्भर करती है।","सिर्फ कार्ड होने से हर इलाज/सेवा स्वतः कवर नहीं होती।"], documents:["आयुष्मान कार्ड उपलब्ध हो तो","आधार या अन्य मान्य पहचान पत्र","लाभार्थी रिकॉर्ड से संबंधित जानकारी"], process:["पहले अपनी पात्रता जाँचें।","पात्र होने पर कार्ड बनाने/डाउनलोड की प्रक्रिया पूरी करें।","इलाज से पहले अस्पताल में कवरेज की पुष्टि करें।"]},
+  pan: {title:"PAN Card", description:"PAN कर-संबंधी पहचान संख्या है। नया PAN, सुधार और स्थिति जाँच जैसी सेवाओं की जानकारी।", eligibility:["PAN के लिए आवेदन व्यक्ति/संस्था की जरूरत और लागू नियमों के अनुसार किया जाता है।"], documents:["पहचान प्रमाण","पते का प्रमाण","जन्मतिथि/गठन का प्रमाण, जहाँ लागू हो","मोबाइल और ईमेल"], process:["नया आवेदन या सुधार का विकल्प चुनें।","फॉर्म में जानकारी दस्तावेजों से मिलाकर भरें।","यदि लागू हो तो शुल्क और सत्यापन पूरा करें।"]},
+  voter: {title:"Voter Services", description:"मतदाता पंजीकरण, वोटर ID में सुधार और मतदाता सूची से जुड़ी सामान्य जानकारी।", eligibility:["मतदाता पंजीकरण के लिए भारतीय नागरिकता, न्यूनतम आयु और अन्य कानूनी शर्तें लागू होती हैं।"], documents:["आयु का प्रमाण","पते का प्रमाण","फोटो और संपर्क विवरण, जहाँ माँगा जाए"], process:["नया पंजीकरण या सुधार का सही फॉर्म चुनें।","विवरण और दस्तावेज जमा करें।","आवेदन की स्थिति और मतदाता सूची में नाम जाँचें।"]},
+  scholarship: {title:"Scholarship / छात्रवृत्ति", description:"विद्यार्थियों के लिए उपलब्ध छात्रवृत्ति योजनाओं, पात्रता और आवेदन प्रक्रिया की सामान्य जानकारी।", eligibility:["पात्रता योजना, कक्षा/कोर्स, अंक, आय और श्रेणी के अनुसार अलग हो सकती है।"], documents:["समग्र/आधार विवरण, जहाँ आवश्यक हो","पिछली कक्षा की अंकसूची","आय/जाति/निवास प्रमाण, जहाँ लागू हो","बैंक पासबुक और फीस रसीद"], process:["अपनी पढ़ाई और श्रेणी के अनुरूप योजना चुनें।","आवेदन की अंतिम तारीख और नियम पढ़ें।","दस्तावेज अपलोड कर आवेदन की स्थिति देखते रहें।"]},
+  bankofbaroda: {title:"Bank of Baroda सेवाएँ", description:"बैंक खाते, डिजिटल बैंकिंग, ग्राहक सहायता और बैंकिंग उत्पादों से जुड़ी सामान्य जानकारी।", eligibility:["खाता खोलने या किसी सेवा के लिए बैंक के KYC और उत्पाद-विशेष नियम लागू होते हैं।"], documents:["मान्य पहचान और पता प्रमाण","PAN या लागू घोषणा पत्र","मोबाइल नंबर और अन्य KYC विवरण"], process:["अपनी जरूरत के अनुसार सेवा चुनें।","शुल्क, पात्रता और शर्तें पढ़ें।","पासवर्ड, OTP या PIN किसी के साथ साझा न करें।"]},
+  mponline: {title:"MP Online सेवाएँ", description:"मध्य प्रदेश में उपलब्ध ऑनलाइन आवेदन, परीक्षा, प्रमाणपत्र और अन्य नागरिक सेवाओं की जानकारी।", eligibility:["हर सेवा की पात्रता और आवेदन नियम अलग हो सकते हैं।"], documents:["सेवा के अनुसार पहचान/निवास प्रमाण","फोटो, हस्ताक्षर या शैक्षणिक दस्तावेज, जहाँ लागू हों","मोबाइल नंबर और आवेदन संबंधी विवरण"], process:["सही विभाग और सेवा चुनें।","निर्देश और अंतिम तारीख पढ़ें।","आवेदन संख्या/रसीद सुरक्षित रखें।"]}
+};
+function addDetailList(container, heading, items) {
+  const section = document.createElement("section");
+  const h = document.createElement("h3");
+  h.textContent = heading;
+  section.appendChild(h);
+  const ul = document.createElement("ul");
+  items.forEach(item => { const li = document.createElement("li"); li.textContent = item; ul.appendChild(li); });
+  section.appendChild(ul);
+  container.appendChild(section);
+}
+document.querySelectorAll("[data-service]").forEach(button => button.addEventListener("click", () => {
+  const info = serviceInfo[button.dataset.service];
+  if (!info) return;
+  document.getElementById("serviceModalTitle").textContent = info.title;
+  document.getElementById("serviceModalDescription").textContent = info.description;
+  const details = document.getElementById("serviceModalDetails");
+  details.replaceChildren();
+  addDetailList(details, "पात्रता / ध्यान देने योग्य बातें", info.eligibility);
+  addDetailList(details, "आवश्यक दस्तावेज (सेवा के अनुसार)", info.documents);
+  addDetailList(details, "कैसे आगे बढ़ें", info.process);
+  document.getElementById("serviceModal").classList.remove("hidden");
+}));
+document.getElementById("closeServiceModal").addEventListener("click", () => document.getElementById("serviceModal").classList.add("hidden"));
+document.getElementById("serviceModal").addEventListener("click", event => {
+  if (event.target.id === "serviceModal") event.currentTarget.classList.add("hidden");
+});
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") document.getElementById("serviceModal").classList.add("hidden");
+});
+</script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth,onAuthStateChanged,signInWithEmailAndPassword,createUserWithEmailAndPassword,sendPasswordResetEmail,signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
@@ -107,44 +202,4 @@ case "auth/too-many-requests":return "बहुत बार कोशिश ह
 case "auth/network-request-failed":return "Internet कनेक्शन जाँचें और फिर कोशिश करें।";
 case "auth/email-already-in-use":return "यह Email पहले से Registered है। Login करें।";
 case "auth/weak-password":return "Password कम से कम 6 अक्षरों का रखें।";
-case "auth/operation-not-allowed":return "Firebase में Email/Password Sign-in चालू नहीं है।";
-default:return "कार्य पूरा नहीं हुआ: "+(error.message||error.code||"अज्ञात त्रुटि");}}
-function setButton(button,disabled,text){button.disabled=disabled;button.textContent=text;}
-$("showLogin").addEventListener("click",()=>{$("loginBox").classList.remove("hidden");$("registerBox").classList.add("hidden");$("authHeading").textContent="Login";hideMessage("authMessage");});
-$("showRegister").addEventListener("click",()=>{$("registerBox").classList.remove("hidden");$("loginBox").classList.add("hidden");$("authHeading").textContent="Retailer Registration";hideMessage("authMessage");});
-$("loginForm").addEventListener("submit",async event=>{event.preventDefault();if(busy)return;busy=true;hideMessage("authMessage");setButton($("loginButton"),true,"Login हो रहा है...");
-try{await signInWithEmailAndPassword(auth,$("loginEmail").value.trim(),$("loginPassword").value);}
-catch(error){message("authMessage",authErrorText(error),"error",true);}
-finally{busy=false;setButton($("loginButton"),false,"Login");}});
-$("registerForm").addEventListener("submit",async event=>{event.preventDefault();if(busy)return;busy=true;hideMessage("authMessage");setButton($("registerButton"),true,"Registration हो रहा है...");let createdUser=null;
-try{const name=$("retailerName").value.trim(),phone=$("retailerPhone").value.trim(),email=$("registerEmail").value.trim(),password=$("registerPassword").value;
-const credential=await createUserWithEmailAndPassword(auth,email,password);createdUser=credential.user;
-await setDoc(doc(db,"retailers",createdUser.uid),{name,phone,email:createdUser.email,status:"pending",createdAt:serverTimestamp()});
-message("authMessage","Registration सफल हुआ। Admin की मंज़ूरी मिलने तक अकाउंट Pending रहेगा।","ok",true);}
-catch(error){message("authMessage",error.code?authErrorText(error):"Registration बना, लेकिन प्रोफाइल सेव नहीं हुई। Firestore Rules जाँचें।","error",true);if(createdUser){try{await signOut(auth);}catch(_){}}}
-finally{busy=false;setButton($("registerButton"),false,"Register करें");}});
-$("forgotButton").addEventListener("click",async()=>{const email=$("loginEmail").value.trim();if(!email){message("authMessage","पहले Email लिखें, फिर पासवर्ड भूल गए पर क्लिक करें।","error");return;}
-try{await sendPasswordResetEmail(auth,email);message("authMessage","यदि इस Email पर अकाउंट है, तो Password Reset लिंक भेज दिया गया है।","ok",true);}
-catch(error){message("authMessage",authErrorText(error),"error",true);}});
-async function loadAdminRetailers(){hideMessage("adminMessage");$("retailerList").textContent="Retailer सूची लोड हो रही है...";
-try{const snapshot=await getDocs(collection(db,"retailers")),list=$("retailerList");list.replaceChildren();if(snapshot.empty){list.textContent="अभी कोई Retailer Registration नहीं है।";return;}
-snapshot.forEach(item=>{const data=item.data(),box=document.createElement("div");box.className="retailer";const details=document.createElement("p");details.textContent="नाम: "+(data.name||"—")+" | मोबाइल: "+(data.phone||"—")+" | Email: "+(data.email||"—")+" | Status: "+(data.status||"—");box.appendChild(details);
-if(data.status!=="approved"){const b=document.createElement("button");b.className="success";b.textContent="Approve";b.addEventListener("click",()=>changeRetailerStatus(item.id,"approved",b));box.appendChild(b);}
-if(data.status!=="rejected"){const b=document.createElement("button");b.className="danger";b.textContent="Reject";b.addEventListener("click",()=>changeRetailerStatus(item.id,"rejected",b));box.appendChild(b);}list.appendChild(box);});}
-catch(error){$("retailerList").textContent="";message("adminMessage","Retailer सूची नहीं खुली। Firestore Rules जाँचें। "+(error.message||""),"error");}}
-async function changeRetailerStatus(uid,status,button){button.disabled=true;try{await updateDoc(doc(db,"retailers",uid),{status});message("adminMessage","Retailer status अपडेट हो गया: "+status,"ok");await loadAdminRetailers();}
-catch(error){button.disabled=false;message("adminMessage","Status अपडेट नहीं हुआ। Firestore Rules जाँचें। "+(error.message||""),"error");}}
-$("refreshRetailersButton").addEventListener("click",loadAdminRetailers);
-async function renderUser(user){if(!user){showOnly("authSection");$("adminPanel").classList.add("hidden");$("servicesPanel").classList.add("hidden");return;}showOnly(null);
-try{const adminSnap=await getDoc(doc(db,"admins",user.uid));if(adminSnap.exists()){showOnly("dashboardSection");$("welcomeHeading").textContent="Admin Dashboard";$("accountInfo").textContent="Admin: "+user.email;$("adminPanel").classList.remove("hidden");$("servicesPanel").classList.remove("hidden");await loadAdminRetailers();return;}
-const retailerSnap=await getDoc(doc(db,"retailers",user.uid));if(!retailerSnap.exists()){await signOut(auth);showOnly("authSection");message("authMessage","इस अकाउंट की Retailer प्रोफाइल नहीं मिली। Registration करें या Admin से संपर्क करें।","error",true);return;}
-const retailer=retailerSnap.data();if(retailer.status==="approved"){showOnly("dashboardSection");$("welcomeHeading").textContent="Retailer Dashboard";$("accountInfo").textContent="Retailer: "+(retailer.name||user.email);$("adminPanel").classList.add("hidden");$("servicesPanel").classList.remove("hidden");}
-else if(retailer.status==="rejected"){showOnly("rejectedSection");}else{showOnly("pendingSection");}}
-catch(error){showOnly("authSection");message("authMessage","अकाउंट की जानकारी नहीं पढ़ सके। Firestore Rules और Internet जाँचें। "+(error.message||""),"error",true);}}
-onAuthStateChanged(auth,user=>{renderUser(user);});
-$("checkApprovalButton").addEventListener("click",async()=>{if(auth.currentUser)await renderUser(auth.currentUser);});
-document.querySelectorAll(".logoutButton").forEach(button=>button.addEventListener("click",async()=>{try{await signOut(auth);showOnly("authSection");message("authMessage","Logout सफल हुआ।","ok");}catch(error){alert("Logout नहीं हुआ: "+(error.message||""));}}));
-</script>
-</body>
-</html>
-'''
+case
