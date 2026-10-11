@@ -357,6 +357,14 @@ const $=id=>document.getElementById(id); let busy=false;
 function message(id,text,type="info",popup=false){const el=$(id);el.textContent=text;el.className="message "+type;el.style.display="block";if(popup)alert(text);}
 function hideMessage(id){const el=$(id);el.textContent="";el.className="message";el.style.display="none";}
 function showOnly(sectionId){["authSection","pendingSection","rejectedSection","dashboardSection"].forEach(id=>{const el=$(id);if(el)el.classList.add("hidden");});if(sectionId){const el=$(sectionId);if(el)el.classList.remove("hidden");}}
+const publicSectionIds = ["home","allServices","loginArea","aboutPortal","contactPortal"];
+function setPublicSectionsVisible(visible) {
+  publicSectionIds.forEach(id => {
+    const el = $(id);
+    if (el) el.classList.toggle("hidden", !visible);
+  });
+}
+
 function authErrorText(error){switch(error.code){
 case "auth/invalid-credential":case "auth/wrong-password":case "auth/user-not-found":return "गलत Email या Password!";
 case "auth/invalid-email":return "Email का पता सही नहीं है।";
@@ -486,12 +494,12 @@ document.querySelectorAll("#adminPanel [data-filter]").forEach(button=>button.ad
   activeRetailerFilter=button.dataset.filter;renderRetailerList();
 }));
 $("refreshRetailersButton").addEventListener("click",loadAdminRetailers);
-async function renderUser(user){if(!user){showOnly("authSection");$("adminPanel").classList.add("hidden");return;}showOnly(null);
-try{const adminSnap=await getDoc(doc(db,"admins",user.uid));if(adminSnap.exists()){showOnly("dashboardSection");$("welcomeHeading").textContent="Admin Dashboard";$("accountInfo").textContent="Admin: "+user.email;$("adminPanel").classList.remove("hidden");await loadAdminRetailers();return;}
-const retailerSnap=await getDoc(doc(db,"retailers",user.uid));if(!retailerSnap.exists()){await signOut(auth);showOnly("authSection");message("authMessage","इस अकाउंट की Retailer प्रोफाइल नहीं मिली। Registration करें या Admin से संपर्क करें।","error",true);return;}
+async function renderUser(user){if(!user){setPublicSectionsVisible(true);showOnly("authSection");$("adminPanel").classList.add("hidden");return;}showOnly(null);
+try{const adminSnap=await getDoc(doc(db,"admins",user.uid));if(adminSnap.exists()){setPublicSectionsVisible(false);showOnly("dashboardSection");$("welcomeHeading").textContent="Admin Dashboard";$("accountInfo").textContent="Admin: "+user.email;$("adminPanel").classList.remove("hidden");await loadAdminRetailers();return;}
+setPublicSectionsVisible(true);const retailerSnap=await getDoc(doc(db,"retailers",user.uid));if(!retailerSnap.exists()){await signOut(auth);showOnly("authSection");message("authMessage","इस अकाउंट की Retailer प्रोफाइल नहीं मिली। Registration करें या Admin से संपर्क करें।","error",true);return;}
 const retailer=retailerSnap.data();if(retailer.status==="approved"){showOnly("dashboardSection");$("welcomeHeading").textContent="Retailer Dashboard";$("accountInfo").textContent="Retailer: "+(retailer.name||user.email);$("adminPanel").classList.add("hidden");}
 else if(retailer.status==="rejected"){showOnly("rejectedSection");}else{showOnly("pendingSection");}}
-catch(error){showOnly("authSection");message("authMessage","अकाउंट की जानकारी नहीं पढ़ सके। Firestore Rules और Internet जाँचें। "+(error.message||""),"error",true);}}
+catch(error){setPublicSectionsVisible(true);showOnly("authSection");message("authMessage","अकाउंट की जानकारी नहीं पढ़ सके। Firestore Rules और Internet जाँचें। "+(error.message||""),"error",true);}}
 onAuthStateChanged(auth,user=>{renderUser(user);});
 $("checkApprovalButton").addEventListener("click",async()=>{if(auth.currentUser)await renderUser(auth.currentUser);});
 document.querySelectorAll(".logoutButton").forEach(button=>button.addEventListener("click",async()=>{try{await signOut(auth);showOnly("authSection");message("authMessage","Logout सफल हुआ।","ok");}catch(error){alert("Logout नहीं हुआ: "+(error.message||""));}}));
