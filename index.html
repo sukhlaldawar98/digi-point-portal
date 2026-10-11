@@ -3,123 +3,160 @@
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#10366b">
 <title>Digi Point Portal</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#f2f5fb;color:#17243a}
-header{background:#10366b;color:white;padding:20px 14px}
-.head{max-width:1100px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:10px}
-header h1{font-size:23px;margin:0}
-header p{margin:6px 0 0;color:#dce9ff;font-size:13px}
+body{margin:0;font-family:Arial,sans-serif;background:#f1f5fb;color:#17243a}
+header{background:#10366b;color:#fff;padding:17px}
+.wrap{max-width:1100px;margin:auto}
 main{max-width:1100px;margin:22px auto;padding:0 13px}
-.card{background:white;padding:20px;border-radius:14px;margin-bottom:18px;box-shadow:0 3px 15px #102c5010}
-input{display:block;width:100%;padding:13px;margin:10px 0;border:1px solid #cbd5e1;border-radius:8px;font-size:16px}
-button{background:#1558a6;color:white;border:0;border-radius:8px;padding:12px 15px;margin:4px;cursor:pointer;font-size:14px}
+.card{background:#fff;padding:18px;border-radius:14px;margin-bottom:16px;box-shadow:0 3px 14px #102c5010}
+h1,h2,h3{margin-top:0}
+input{display:block;width:100%;padding:13px;margin:9px 0;border:1px solid #cbd5e1;border-radius:8px;font-size:16px}
+button{border:0;border-radius:8px;padding:11px 14px;margin:4px;background:#1558a6;color:white;cursor:pointer}
 button:disabled{opacity:.5}
-.secondary{background:#53657b}
-.reject{background:#b42318}
-.approve{background:#16803c}
-.link{color:#1558a6;text-decoration:underline;cursor:pointer}
+.approve{background:#16803c}.reject{background:#b42318}.secondary{background:#53657b}
 .hidden{display:none!important}
 .muted{color:#64748b;font-size:14px}
-.banner{background:linear-gradient(120deg,#10366b,#187ac4);color:white;border-radius:15px;padding:24px;margin-bottom:18px}
-.banner h2{margin:0 0 8px}
+.link{color:#1558a6;cursor:pointer;text-decoration:underline}
+.banner{background:linear-gradient(120deg,#10366b,#187ac4);color:white;border-radius:14px;padding:22px;margin-bottom:16px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:12px}
-.service{background:#f6f9ff;border:1px solid #dce6f4;border-radius:12px;padding:16px}
-.service h3{margin:0 0 8px}
-.row{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
-.status{padding:5px 9px;border-radius:20px;background:#fff1cc;color:#845500;font-size:12px}
-table{width:100%;border-collapse:collapse}
-td,th{text-align:left;padding:9px;border-bottom:1px solid #e2e8f0;font-size:13px}
+.stat{padding:16px;border-radius:12px;background:#f5f8ff}
+.stat strong{display:block;font-size:27px;margin-top:7px}
+.pending{background:#fff1cc;color:#845500}.approved{background:#e0f5e7;color:#16803c}.rejected{background:#fee9e7;color:#b42318}
+.service{padding:16px;border:1px solid #dce6f4;border-radius:11px;background:#f8faff}
+.service h3{margin-bottom:7px}
 .tablewrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+td,th{text-align:left;padding:10px;border-bottom:1px solid #e2e8f0;font-size:13px}
+.pill{display:inline-block;padding:6px 10px;border-radius:20px;font-size:12px}
 footer{text-align:center;padding:20px;color:#64748b}
 </style>
 </head>
 <body>
 <header>
-  <div class="head">
-    <div><h1>🔷 Digi Point</h1><p>Digital Services Portal</p></div>
-    <button id="headerLogout" class="hidden secondary">Logout</button>
-  </div>
+ <div class="wrap">
+  <h1>🔷 Digi Point Portal</h1>
+  <div>Admin • Retailer • Digital Services</div>
+  <button id="logoutBtn" class="hidden secondary">Logout</button>
+ </div>
 </header>
 
 <main>
-  <section class="banner">
-    <h2>सभी डिजिटल सेवाएँ, एक ही जगह</h2>
-    <p>लॉगिन करें, रजिस्ट्रेशन करें और अपनी सेवाएँ इस्तेमाल करें।</p>
-  </section>
+ <section class="banner">
+  <h2>आपकी डिजिटल सेवाएँ, एक ही जगह</h2>
+  <p>सुरक्षित Login करें और अपने अकाउंट के अनुसार सेवाएँ इस्तेमाल करें।</p>
+ </section>
 
-  <section id="authPanel" class="card">
-    <h2 id="formTitle">Login करें</h2>
-    <p class="muted">Admin और Customer/Retailer अपने अकाउंट से लॉगिन करें।</p>
-    <form id="authForm">
-      <input id="name" placeholder="पूरा नाम (केवल नए अकाउंट के लिए)" maxlength="80">
-      <input id="phone" type="tel" placeholder="मोबाइल नंबर (वैकल्पिक)" maxlength="15">
-      <input id="email" type="email" placeholder="ईमेल पता" autocomplete="email" required>
-      <input id="password" type="password" placeholder="पासवर्ड (कम से कम 6 अक्षर)" minlength="6" autocomplete="current-password" required>
-      <button id="submitBtn" type="submit">Login</button>
-    </form>
-    <p id="forgotRow"><span id="forgotBtn" class="link">पासवर्ड भूल गए?</span></p>
-    <p><span id="switchText">नया Customer/Retailer अकाउंट बनाना है?</span>
-    <span id="switchBtn" class="link">Register करें</span></p>
-    <p id="message" role="status" aria-live="polite"></p>
-  </section>
+ <!-- Login and registration -->
+ <section id="authPanel" class="card">
+  <h2 id="formTitle">Login</h2>
+  <div>
+   <button id="loginTab">Login</button>
+   <button id="registerTab" class="secondary">Retailer Registration</button>
+  </div>
+  <form id="authForm">
+   <input id="fullName" class="hidden" placeholder="पूरा नाम" maxlength="80">
+   <input id="phone" class="hidden" type="tel" placeholder="मोबाइल नंबर" maxlength="15">
+   <input id="email" type="email" placeholder="ईमेल पता" autocomplete="username" required>
+   <input id="password" type="password" placeholder="पासवर्ड (कम से कम 6 अक्षर)" minlength="6" autocomplete="current-password" required>
+   <button id="submitBtn" type="submit">Login</button>
+  </form>
+  <p id="forgotRow"><span id="forgotBtn" class="link">पासवर्ड भूल गए?</span></p>
+  <p id="authMessage" role="status" aria-live="polite"></p>
+ </section>
 
-  <section id="pendingPanel" class="card hidden">
-    <h2>⏳ Approval Pending</h2>
-    <p>आपका अकाउंट Admin की मंजूरी का इंतज़ार कर रहा है। मंजूरी मिलने पर सेवाएँ उपलब्ध होंगी।</p>
-    <p id="pendingEmail" class="muted"></p>
-    <button id="pendingLogout">Logout</button>
-  </section>
+ <!-- Pending retailer -->
+ <section id="pendingPanel" class="card hidden">
+  <h2>⏳ Approval Pending</h2>
+  <p>आपका Retailer अकाउंट Admin की मंजूरी का इंतज़ार कर रहा है।</p>
+  <p class="muted" id="pendingEmail"></p>
+  <span class="pill pending">Pending</span>
+ </section>
 
-  <section id="rejectedPanel" class="card hidden">
-    <h2>रजिस्ट्रेशन स्वीकृत नहीं हुआ</h2>
-    <p>आपके अकाउंट को अभी सेवाओं की अनुमति नहीं मिली है। Admin से संपर्क करें।</p>
-    <button id="rejectedLogout">Logout</button>
-  </section>
+ <!-- Rejected retailer -->
+ <section id="rejectedPanel" class="card hidden">
+  <h2>आवेदन अस्वीकृत</h2>
+  <p>आपके अकाउंट को अभी सेवाओं की अनुमति नहीं मिली है। Admin से संपर्क करें।</p>
+  <span class="pill rejected">Rejected</span>
+ </section>
 
-  <section id="profilePanel" class="card hidden">
-    <h2>अकाउंट की जाँच आवश्यक</h2>
-    <p>इस अकाउंट की Retailer प्रोफाइल नहीं मिली। कृपया Admin से संपर्क करें।</p>
-    <button id="profileLogout">Logout</button>
-  </section>
+ <section id="profilePanel" class="card hidden">
+  <h2>अकाउंट की जाँच आवश्यक</h2>
+  <p id="profileMessage">आपकी प्रोफाइल उपलब्ध नहीं है। Admin से संपर्क करें।</p>
+ </section>
 
-  <section id="customerPanel" class="hidden">
-    <div class="card row">
-      <div><h2>Customer / Retailer Dashboard</h2><p id="customerEmail" class="muted"></p></div>
-      <span class="status">Approved</span>
-    </div>
-    <div class="card">
-      <h2>सभी सेवाएँ</h2>
-      <div class="grid">
-        <div class="service"><h3>🧑‍🌾 PM Kisan</h3><p class="muted">किसान योजना</p><button data-url="https://pmkisan.gov.in/" class="serviceBtn">पोर्टल खोलें</button></div>
-        <div class="service"><h3>🪪 Aadhaar</h3><p class="muted">आधिकारिक आधार पोर्टल</p><button data-url="https://myaadhaar.uidai.gov.in/" class="serviceBtn">पोर्टल खोलें</button></div>
-        <div class="service"><h3>👩 Ladli Behna</h3><p class="muted">मध्य प्रदेश योजना</p><button data-url="https://cmladlibahna.mp.gov.in/" class="serviceBtn">पोर्टल खोलें</button></div>
-        <div class="service"><h3>🏦 Bank of Baroda</h3><p class="muted">बैंक की आधिकारिक वेबसाइट</p><button data-url="https://www.bankofbaroda.in/" class="serviceBtn">पोर्टल खोलें</button></div>
-        <div class="service"><h3>🌐 MyScheme</h3><p class="muted">सरकारी योजनाओं की जानकारी</p><button data-url="https://www.myscheme.gov.in/" class="serviceBtn">पोर्टल खोलें</button></div>
-        <div class="service"><h3>🖨️ Digital Services</h3><p class="muted">अन्य सेवाएँ जल्द जोड़ी जाएँगी</p></div>
-      </div>
-    </div>
-  </section>
+ <!-- Retailer Dashboard -->
+ <section id="retailerPanel" class="hidden">
+  <div class="card">
+   <h2>🧑‍💼 Retailer Dashboard</h2>
+   <p id="retailerEmail" class="muted"></p>
+   <span class="pill approved">✓ Approved Retailer</span>
+  </div>
 
-  <section id="adminPanel" class="hidden">
-    <div class="card">
-      <div class="row"><div><h2>🛡️ Admin Dashboard</h2><p id="adminEmail" class="muted"></p></div><span class="status">ADMIN</span></div>
-      <p>रजिस्ट्रेशन जाँचें और Approve या Reject करें।</p>
-      <button id="refreshBtn">सूची Refresh करें</button>
-      <p id="adminMessage" role="status"></p>
-    </div>
-    <div class="card">
-      <h3>Pending Registrations</h3>
-      <div class="tablewrap"><table><thead><tr><th>नाम / ईमेल</th><th>मोबाइल</th><th>Action</th></tr></thead><tbody id="pendingList"></tbody></table></div>
-    </div>
-    <div class="card">
-      <h3>सभी Customer / Retailer</h3>
-      <div class="tablewrap"><table><thead><tr><th>नाम / ईमेल</th><th>स्थिति</th><th>Action</th></tr></thead><tbody id="allUsersList"></tbody></table></div>
-    </div>
-  </section>
+  <div class="card">
+   <h2>📋 All Services</h2>
+   <div class="grid">
+    <div class="service"><h3>PM Kisan</h3><p class="muted">किसान योजना</p><button class="serviceBtn" data-url="https://pmkisan.gov.in/">Open Service</button></div>
+    <div class="service"><h3>Aadhaar</h3><p class="muted">आधिकारिक आधार पोर्टल</p><button class="serviceBtn" data-url="https://myaadhaar.uidai.gov.in/">Open Service</button></div>
+    <div class="service"><h3>Ladli Behna</h3><p class="muted">मध्य प्रदेश योजना</p><button class="serviceBtn" data-url="https://cmladlibahna.mp.gov.in/">Open Service</button></div>
+    <div class="service"><h3>Bank of Baroda</h3><p class="muted">बैंक की वेबसाइट</p><button class="serviceBtn" data-url="https://www.bankofbaroda.in/">Open Service</button></div>
+    <div class="service"><h3>MyScheme</h3><p class="muted">सरकारी योजनाओं की जानकारी</p><button class="serviceBtn" data-url="https://www.myscheme.gov.in/">Open Service</button></div>
+   </div>
+  </div>
+  <div class="card">
+   <h3>My Profile</h3>
+   <p id="retailerName"></p>
+   <p id="retailerPhone"></p>
+   <p id="retailerProfileEmail" class="muted"></p>
+  </div>
+ </section>
+
+ <!-- Admin Dashboard -->
+ <section id="adminPanel" class="hidden">
+  <div class="card">
+   <h2>🛡️ Admin Dashboard</h2>
+   <p id="adminEmail" class="muted"></p>
+   <button id="refreshBtn">Refresh Status</button>
+   <p id="adminMessage" role="status" aria-live="polite"></p>
+  </div>
+
+  <div class="card">
+   <h3>Application Status</h3>
+   <div class="grid">
+    <div class="stat pending">Pending<strong id="pendingCount">0</strong></div>
+    <div class="stat approved">Approved<strong id="approvedCount">0</strong></div>
+    <div class="stat rejected">Rejected<strong id="rejectedCount">0</strong></div>
+    <div class="stat">Total Retailers<strong id="totalCount">0</strong></div>
+   </div>
+  </div>
+
+  <div class="card">
+   <h3>⏳ Pending Approval</h3>
+   <div class="tablewrap">
+    <table><thead><tr><th>Retailer</th><th>Mobile</th><th>Action</th></tr></thead><tbody id="pendingList"></tbody></table>
+   </div>
+  </div>
+
+  <div class="card">
+   <h3>👥 All Retailers</h3>
+   <div class="tablewrap">
+    <table><thead><tr><th>Retailer</th><th>Status</th><th>Action</th></tr></thead><tbody id="allList"></tbody></table>
+   </div>
+  </div>
+
+  <div class="card">
+   <h3>🧰 Admin Services</h3>
+   <div class="grid">
+    <div class="service"><h3>PM Kisan</h3><button class="serviceBtn" data-url="https://pmkisan.gov.in/">Open Service</button></div>
+    <div class="service"><h3>Aadhaar</h3><button class="serviceBtn" data-url="https://myaadhaar.uidai.gov.in/">Open Service</button></div>
+    <div class="service"><h3>Ladli Behna</h3><button class="serviceBtn" data-url="https://cmladlibahna.mp.gov.in/">Open Service</button></div>
+    <div class="service"><h3>Bank of Baroda</h3><button class="serviceBtn" data-url="https://www.bankofbaroda.in/">Open Service</button></div>
+   </div>
+  </div>
+ </section>
 </main>
 <footer>© <span id="year"></span> Digi Point Portal</footer>
 
@@ -130,7 +167,7 @@ import {
  signInWithEmailAndPassword,sendPasswordResetEmail,signOut
 } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
 import {
- getFirestore,doc,getDoc,setDoc,collection,getDocs,query,where,
+ getFirestore,doc,getDoc,setDoc,collection,getDocs,
  updateDoc,serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
 
@@ -150,162 +187,239 @@ const $=id=>document.getElementById(id);
 let signupMode=false;
 let busy=false;
 
-function msg(t){$("message").textContent=t}
-function adminMsg(t){$("adminMessage").textContent=t}
-function showOnly(id){
- ["authPanel","pendingPanel","rejectedPanel","profilePanel","customerPanel","adminPanel"]
- .forEach(x=>$(x).classList.toggle("hidden",x!==id));
- $("headerLogout").classList.toggle("hidden",id==="authPanel");
+const panelIds=[
+ "authPanel","pendingPanel","rejectedPanel","profilePanel",
+ "retailerPanel","adminPanel"
+];
+
+function showPanel(id){
+ panelIds.forEach(p=>$(p).classList.toggle("hidden",p!==id));
+ $("logoutBtn").classList.toggle("hidden",id==="authPanel");
 }
-function formMode(signup){
- signupMode=signup;
- $("name").classList.toggle("hidden",!signup);
- $("phone").classList.toggle("hidden",!signup);
- $("formTitle").textContent=signup?"Customer / Retailer Register":"Login करें";
- $("submitBtn").textContent=signup?"Register करें":"Login";
- $("switchText").textContent=signup?"पहले से अकाउंट है?":"नया Customer/Retailer अकाउंट बनाना है?";
- $("switchBtn").textContent=signup?"Login करें":"Register करें";
- $("forgotRow").classList.toggle("hidden",signup);
- $("password").autocomplete=signup?"new-password":"current-password";
- msg("");
-}
-function niceError(e){
- const m={
- "auth/invalid-email":"ईमेल सही नहीं है।",
- "auth/invalid-credential":"ईमेल या पासवर्ड गलत है।",
- "auth/email-already-in-use":"यह ईमेल पहले से रजिस्टर है। Login करें।",
- "auth/weak-password":"पासवर्ड कम से कम 6 अक्षर का रखें।",
- "auth/too-many-requests":"बहुत बार कोशिश हुई है। कुछ देर बाद कोशिश करें।",
- "auth/network-request-failed":"इंटरनेट कनेक्शन जाँचें।",
- "auth/operation-not-allowed":"Firebase में Email/Password चालू करें।",
- "permission-denied":"Firestore Rules जाँचें। सुरक्षित Rules प्रकाशित करें।"
+function authMsg(text){$("authMessage").textContent=text}
+function adminMsg(text){$("adminMessage").textContent=text}
+
+function errorText(e){
+ const known={
+  "auth/invalid-credential":"ईमेल या पासवर्ड गलत है।",
+  "auth/email-already-in-use":"यह ईमेल पहले से रजिस्टर है। Login करें।",
+  "auth/weak-password":"पासवर्ड कम से कम 6 अक्षर का रखें।",
+  "auth/operation-not-allowed":"Firebase Authentication में Email/Password चालू करें।",
+  "auth/network-request-failed":"इंटरनेट कनेक्शन जाँचें।",
+  "permission-denied":"Firestore Rules या Admin UID जाँचें।"
  };
- return m[e.code]||"समस्या हुई: "+e.message;
+ return known[e.code]||("समस्या: "+(e.message||"कृपया फिर प्रयास करें।"));
 }
-async function logout(){await signOut(auth)}
-["pendingLogout","rejectedLogout","profileLogout","headerLogout"].forEach(id=>{
- $(id).addEventListener("click",()=>logout().catch(e=>msg(niceError(e))));
-});
-$("switchBtn").addEventListener("click",()=>formMode(!signupMode));
+
+function setMode(register){
+ signupMode=register;
+ $("formTitle").textContent=register?"Retailer Registration":"Login";
+ $("submitBtn").textContent=register?"Register":"Login";
+ $("fullName").classList.toggle("hidden",!register);
+ $("phone").classList.toggle("hidden",!register);
+ $("forgotRow").classList.toggle("hidden",register);
+ $("password").autocomplete=register?"new-password":"current-password";
+ authMsg("");
+}
+$("loginTab").addEventListener("click",()=>setMode(false));
+$("registerTab").addEventListener("click",()=>setMode(true));
 
 $("forgotBtn").addEventListener("click",async()=>{
  const email=$("email").value.trim();
- if(!email){msg("पहले ईमेल पता भरें।");return}
- try{await sendPasswordResetEmail(auth,email);msg("Password reset लिंक ईमेल पर भेज दिया गया है।")}
- catch(e){msg(niceError(e))}
+ if(!email){authMsg("पहले ईमेल पता भरें।");return}
+ try{
+  await sendPasswordResetEmail(auth,email);
+  authMsg("Password reset लिंक आपके ईमेल पर भेजा गया है।");
+ }catch(e){authMsg(errorText(e))}
 });
+
+async function logout(){
+ await signOut(auth);
+}
+$("logoutBtn").addEventListener("click",()=>logout().catch(e=>authMsg(errorText(e))));
 
 $("authForm").addEventListener("submit",async e=>{
  e.preventDefault();
  if(busy)return;
- busy=true;$("submitBtn").disabled=true;
+ busy=true;
+ $("submitBtn").disabled=true;
  try{
   const email=$("email").value.trim();
   const password=$("password").value;
+
   if(signupMode){
-   const name=$("name").value.trim();
+   const name=$("fullName").value.trim();
    const phone=$("phone").value.trim();
-   if(!name){msg("कृपया अपना पूरा नाम भरें।");return}
+   if(!name){authMsg("कृपया पूरा नाम भरें।");return}
+
    const cred=await createUserWithEmailAndPassword(auth,email,password);
-   await setDoc(doc(db,"users",cred.user.uid),{
-    uid:cred.user.uid,name,email,phone,role:"customer",
-    status:"pending",createdAt:serverTimestamp()
-   });
-   msg("Registration हो गया। Admin approval के बाद सेवाएँ खुलेंगी।");
+   try{
+    await setDoc(doc(db,"users",cred.user.uid),{
+     uid:cred.user.uid,
+     name,
+     email,
+     phone,
+     role:"retailer",
+     status:"pending",
+     createdAt:serverTimestamp()
+    });
+   }catch(err){
+    await signOut(auth);
+    throw err;
+   }
+   authMsg("Registration पूरा हुआ। Admin Approval के बाद Login करें।");
   }else{
    await signInWithEmailAndPassword(auth,email,password);
   }
- }catch(e){msg(niceError(e))}
+ }catch(e){authMsg(errorText(e))}
  finally{busy=false;$("submitBtn").disabled=false}
 });
 
-async function renderAdmin(){
- showOnly("adminPanel");
- $("adminEmail").textContent=auth.currentUser?.email||"";
- await loadUsers();
-}
-async function loadUsers(){
- $("pendingList").replaceChildren();
- $("allUsersList").replaceChildren();
- adminMsg("सूची लोड हो रही है...");
- try{
-  const snap=await getDocs(collection(db,"users"));
-  const users=snap.docs.map(d=>({id:d.id,...d.data()}));
-  const pending=users.filter(u=>u.status==="pending");
-  if(!pending.length){
-   const tr=document.createElement("tr"),td=document.createElement("td");
-   td.colSpan=3;td.textContent="कोई Pending Registration नहीं है।";tr.append(td);$("pendingList").append(tr);
-  }
-  for(const u of pending){
-   const tr=document.createElement("tr");
-   const info=document.createElement("td");info.textContent=(u.name||"")+"\n"+(u.email||"");
-   const phone=document.createElement("td");phone.textContent=u.phone||"-";
-   const action=document.createElement("td");
-   const yes=document.createElement("button");yes.textContent="Approve";yes.className="approve";
-   yes.addEventListener("click",()=>changeStatus(u.id,"approved"));
-   const no=document.createElement("button");no.textContent="Reject";no.className="reject";
-   no.addEventListener("click",()=>changeStatus(u.id,"rejected"));
-   action.append(yes,no);tr.append(info,phone,action);$("pendingList").append(tr);
-  }
-  for(const u of users){
-   const tr=document.createElement("tr");
-   const info=document.createElement("td");info.textContent=(u.name||"")+"\n"+(u.email||"");
-   const state=document.createElement("td");state.textContent=u.status||"unknown";
-   const action=document.createElement("td");
-   if(u.status!=="pending"){
-    const back=document.createElement("button");back.textContent="Pending करें";back.className="secondary";
-    back.addEventListener("click",()=>changeStatus(u.id,"pending"));action.append(back);
-   }
-   tr.append(info,state,action);$("allUsersList").append(tr);
-  }
-  adminMsg("कुल अकाउंट: "+users.length+" | Pending: "+pending.length);
- }catch(e){adminMsg(niceError(e))}
-}
 async function changeStatus(uid,status){
  try{
-  await updateDoc(doc(db,"users",uid),{status,updatedAt:serverTimestamp()});
-  adminMsg("स्थिति अपडेट हो गई: "+status);
-  await loadUsers();
- }catch(e){adminMsg(niceError(e))}
+  await updateDoc(doc(db,"users",uid),{
+   status,
+   updatedAt:serverTimestamp()
+  });
+  adminMsg("Retailer status अपडेट हुआ: "+status);
+  await loadRetailers();
+ }catch(e){adminMsg(errorText(e))}
 }
-$("refreshBtn").addEventListener("click",()=>loadUsers());
+
+function emptyRow(tbodyId,text,columns){
+ const tr=document.createElement("tr");
+ const td=document.createElement("td");
+ td.colSpan=columns;td.textContent=text;
+ tr.append(td);$(tbodyId).append(tr);
+}
+
+async function loadRetailers(){
+ $("pendingList").replaceChildren();
+ $("allList").replaceChildren();
+ adminMsg("Retailers की सूची लोड हो रही है...");
+ try{
+  const snap=await getDocs(collection(db,"users"));
+  const users=snap.docs.map(d=>({id:d.id,...d.data()}))
+   .filter(u=>u.role==="retailer");
+
+  const pending=users.filter(u=>u.status==="pending");
+  const approved=users.filter(u=>u.status==="approved");
+  const rejected=users.filter(u=>u.status==="rejected");
+
+  $("pendingCount").textContent=pending.length;
+  $("approvedCount").textContent=approved.length;
+  $("rejectedCount").textContent=rejected.length;
+  $("totalCount").textContent=users.length;
+
+  if(!pending.length)emptyRow("pendingList","कोई Pending Retailer नहीं है।",3);
+
+  for(const u of pending){
+   const tr=document.createElement("tr");
+   const name=document.createElement("td");
+   name.textContent=(u.name||"")+"\n"+(u.email||"");
+   const phone=document.createElement("td");
+   phone.textContent=u.phone||"-";
+   const action=document.createElement("td");
+   const yes=document.createElement("button");
+   yes.textContent="Approve";yes.className="approve";
+   yes.addEventListener("click",()=>changeStatus(u.id,"approved"));
+   const no=document.createElement("button");
+   no.textContent="Reject";no.className="reject";
+   no.addEventListener("click",()=>changeStatus(u.id,"rejected"));
+   action.append(yes,no);tr.append(name,phone,action);
+   $("pendingList").append(tr);
+  }
+
+  if(!users.length)emptyRow("allList","अभी कोई Retailer नहीं है।",3);
+
+  for(const u of users){
+   const tr=document.createElement("tr");
+   const name=document.createElement("td");
+   name.textContent=(u.name||"")+"\n"+(u.email||"");
+   const status=document.createElement("td");
+   status.textContent=u.status||"unknown";
+   const action=document.createElement("td");
+
+   if(u.status!=="approved"){
+    const yes=document.createElement("button");
+    yes.textContent="Approve";yes.className="approve";
+    yes.addEventListener("click",()=>changeStatus(u.id,"approved"));
+    action.append(yes);
+   }
+   if(u.status!=="rejected"){
+    const no=document.createElement("button");
+    no.textContent="Reject";no.className="reject";
+    no.addEventListener("click",()=>changeStatus(u.id,"rejected"));
+    action.append(no);
+   }
+   tr.append(name,status,action);$("allList").append(tr);
+  }
+  adminMsg("Status अपडेट हो गया। कुल Retailers: "+users.length);
+ }catch(e){adminMsg(errorText(e))}
+}
+
+$("refreshBtn").addEventListener("click",loadRetailers);
 
 onAuthStateChanged(auth,async user=>{
- if(!user){showOnly("authPanel");formMode(false);return}
- showOnly("profilePanel");
+ if(!user){
+  showPanel("authPanel");
+  setMode(false);
+  return;
+ }
+ showPanel("profilePanel");
+ $("profileMessage").textContent="अकाउंट की जाँच हो रही है...";
+
  try{
-  const adminSnap=await getDoc(doc(db,"admins",user.uid));
-  if(adminSnap.exists() && adminSnap.data().role==="admin"){
-   await renderAdmin();return;
-  }
-  const userSnap=await getDoc(doc(db,"users",user.uid));
-  if(!userSnap.exists()){
-   $("profilePanel").classList.remove("hidden");
+  const adminRef=doc(db,"admins",user.uid);
+  const adminSnap=await getDoc(adminRef);
+
+  if(adminSnap.exists()&&adminSnap.data().role==="admin"){
+   $("adminEmail").textContent=user.email||"";
+   showPanel("adminPanel");
+   await loadRetailers();
    return;
   }
-  const profile=userSnap.data();
-  if(profile.status==="approved"){
-   showOnly("customerPanel");$("customerEmail").textContent=profile.email||user.email||"";
-  }else if(profile.status==="rejected"){
-   showOnly("rejectedPanel");
+
+  const retailerSnap=await getDoc(doc(db,"users",user.uid));
+  if(!retailerSnap.exists()){
+   $("profileMessage").textContent="Retailer प्रोफाइल नहीं मिली। Admin से संपर्क करें।";
+   return;
+  }
+
+  const retailer=retailerSnap.data();
+
+  if(retailer.role!=="retailer"){
+   $("profileMessage").textContent="इस अकाउंट को Retailer की अनुमति नहीं है।";
+   return;
+  }
+
+  if(retailer.status==="approved"){
+   $("retailerEmail").textContent=retailer.email||user.email||"";
+   $("retailerName").textContent="नाम: "+(retailer.name||"-");
+   $("retailerPhone").textContent="मोबाइल: "+(retailer.phone||"-");
+   $("retailerProfileEmail").textContent="ईमेल: "+(retailer.email||user.email||"-");
+   showPanel("retailerPanel");
+  }else if(retailer.status==="rejected"){
+   showPanel("rejectedPanel");
   }else{
-   showOnly("pendingPanel");$("pendingEmail").textContent=profile.email||user.email||"";
+   $("pendingEmail").textContent=retailer.email||user.email||"";
+   showPanel("pendingPanel");
   }
  }catch(e){
-  showOnly("profilePanel");
-  const p=$("profilePanel").querySelector("p");
-  p.textContent=niceError(e);
+  showPanel("profilePanel");
+  $("profileMessage").textContent=errorText(e);
  }
 });
 
-document.querySelectorAll(".serviceBtn").forEach(b=>{
- b.addEventListener("click",()=>{
-  const url=b.dataset.url;
+document.querySelectorAll(".serviceBtn").forEach(btn=>{
+ btn.addEventListener("click",()=>{
+  const url=btn.dataset.url;
   if(url)window.open(url,"_blank","noopener,noreferrer");
  });
 });
+
 $("year").textContent=new Date().getFullYear();
-formMode(false);
+setMode(false);
 </script>
 </body>
 </html>
