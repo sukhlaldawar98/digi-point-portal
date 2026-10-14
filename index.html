@@ -47,7 +47,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-const firebaseConfig={apiKey:"AIzaSyBRXAcmWcIEMEUcCZ-RGlMeDqcEJtnFs",authDomain:"digi-point-portal-bf8ed.firebaseapp.com",projectId:"digi-point-portal-bf8ed",storageBucket:"digi-point-portal-bf8ed.firebasestorage.app",messagingSenderId:"8242639848",appId:"1:8242639848:web:32529f76cc47c30176aa5d"};
+const firebaseConfig={apiKey:"AIzaSyBRXAcmw_cIEMEUcCZ-RGlhMeDqcEJtnFs",authDomain:"digi-point-portal-bf8ed.firebaseapp.com",projectId:"digi-point-portal-bf8ed",storageBucket:"digi-point-portal-bf8ed.firebasestorage.app",messagingSenderId:"8242639848",appId:"1:8242639848:web:32529f76cc47c30176aa5d"};
 const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
 const ADMIN_EMAIL="jpscomputer143@gmail.com";
 const categories=["सभी पोस्ट","सरकारी भर्ती","सरकारी योजना","स्कॉलरशिप","एडमिट कार्ड","रिजल्ट","महत्वपूर्ण अपडेट"];
