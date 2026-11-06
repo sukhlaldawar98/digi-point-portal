@@ -57,10 +57,10 @@
 <footer><div class="wrap foot"><div><strong>Digi Point Portal</strong><br>स्वतंत्र सूचना पोर्टल — सरकारी विभाग की आधिकारिक वेबसाइट नहीं।</div><div>जानकारी की पुष्टि संबंधित विभाग की वेबसाइट से करें।<br><button class="footerLink" id="adminFooter">Admin Login</button></div></div></footer>
 
 <div class="modal hidden" id="postModal"><div class="dialog"><div class="dialogTop"><h2 id="detailTitle">पोस्ट विवरण</h2><button class="secondary" data-close="postModal">बंद करें ✕</button></div><div id="detailContent"></div></div></div>
-<div class="modal hidden" id="loginModal"><div class="dialog" style="max-width:430px"><div class="dialogTop"><h2>Admin Login</h2><button class="secondary" data-close="loginModal">बंद करें ✕</button></div><p class="small">केवल अधिकृत एडमिन लॉगिन करें।</p><form id="loginForm" class="formgrid"><div class="field full"><label class="label">ईमेल</label><input type="email" id="adminEmail" required autocomplete="username"></div><div class="field full"><label class="label">पासवर्ड</label><input type="password" id="adminPassword" required autocomplete="current-password"></div><div class="field full"><button type="submit">लॉगिन करें</button></div><div class="field full dangerText" id="loginError"></div></form></div></div>
+<div class="modal hidden" id="loginModal"><div class="dialog" style="max-width:430px"><div class="dialogTop"><h2>Login</h2><button class="secondary" data-close="loginModal">बंद करें ✕</button></div><p class="small">केवल अधिकृत लॉगिन करें।</p><form id="loginForm" class="formgrid"><div class="field full"><label class="label">ईमेल</label><input type="email" id="adminEmail" required autocomplete="username"></div><div class="field full"><label class="label">पासवर्ड</label><input type="password" id="adminPassword" required autocomplete="current-password"></div><div class="field full"><button type="submit">लॉगिन करें</button></div><div class="field full dangerText" id="loginError"></div></form></div></div>
 
 <div class="modal hidden" id="adminModal"><div class="dialog">
-<div class="dialogTop"><h2>Admin Dashboard</h2><div class="inline"><button class="secondary" id="logoutBtn">Logout</button><button class="secondary" data-close="adminModal">बंद करें ✕</button></div></div>
+<div class="dialogTop"><h2>Dashboard</h2><div class="inline"><button class="secondary" id="logoutBtn">Logout</button><button class="secondary" data-close="adminModal">बंद करें ✕</button></div></div>
 <p class="small">पोस्ट, विजिट, यूजर और त्योहार संदेश का प्रबंधन।</p>
 <div class="stats">
  <div class="stat"><strong id="statTotalVisits">—</strong><span>कुल विजिट</span></div>
@@ -118,8 +118,7 @@
 
 <div class="modal hidden" id="cardMakerModal">
  <div class="dialog">
-  <div class="dialogTop"><h2>🪪 Digi Point Card Maker</h2><button class="secondary" id="cardMakerClose">बंद करें ✕</button></div>
-  <div class="cardmaker-note"><b>BC सत्यापन:</b> ग्राहक के मूल दस्तावेज़ देखकर ही विवरण भरें। बैंक लोगो केवल बैंक की पहचान के लिए दिखेगा। यह Digi Point का ग्राहक विवरण एवं BC सत्यापन रिकॉर्ड है; बैंक की पासबुक, ATM कार्ड या बैंक द्वारा जारी आधिकारिक दस्तावेज़ नहीं।</div>
+  <div class="dialogTop"><h2>🪪 Digi Point Card Maker</h2><button class="secondary" id="cardMakerClose">बंद करें ✕</button></div
   <div class="formgrid" style="margin-top:14px">
    <div class="field"><label class="label" for="cmType">कार्ड का प्रकार</label><select id="cmType"><option value="voter">Voter जानकारी कॉपी</option><option value="sambal">Sambal जानकारी कॉपी</option><option value="bank">Bank Account जानकारी कॉपी</option></select></div>
    <div class="field"><label class="label" for="cmPhoto">फोटो (वैकल्पिक)</label><input id="cmPhoto" type="file" accept="image/*"></div>
@@ -134,13 +133,13 @@
     
     <div class="field hidden" id="cmCifField"><label class="label" for="cmCif">CIF Number</label><input id="cmCif" maxlength="30"></div>
     <div class="field hidden" id="cmAadhaarField"><label class="label" for="cmAadhaar">Aadhaar Number (पूरा नंबर)</label><input id="cmAadhaar" inputmode="numeric" maxlength="12" placeholder="12 अंकों का आधार नंबर"></div>
-    <div class="field hidden" id="cmAadhaarConsentField"><label style="display:flex;gap:8px;align-items:flex-start;font-weight:600"><input id="cmAadhaarConsent" type="checkbox" style="width:auto;margin-top:4px"> ग्राहक ने पूरा Aadhaar नंबर प्रिंट करने की सहमति दी है और यह बैंक/BC प्रक्रिया के अनुसार आवश्यक है।</label></div>
+    <div class="field hidden" id="cmAadhaarConsentField"><label style="display:flex;gap:8px;align-items:flex-start;font-weight:600"><input id="cmAadhaarConsent" type="checkbox" style="width:auto;margin-top:4px">
     <div class="field hidden" id="cmMobileField"><label class="label" for="cmMobile">Mobile Number</label><input id="cmMobile" inputmode="numeric" maxlength="15"></div>
     <div class="field hidden" id="cmAccountTypeField"><label class="label" for="cmAccountType">Account Type</label><select id="cmAccountType"><option>Saving Account</option><option>Current Account</option><option>Other</option></select></div>
 <div class="field hidden" id="cmBcNameField"><label class="label" for="cmBcName">BC Agent का नाम</label><input id="cmBcName" maxlength="100" placeholder="BC Agent का नाम"></div>
-    <div class="field hidden" id="cmBcIdField"><label class="label" for="cmBcId">BC ID / CSP ID</label><input id="cmBcId" maxlength="40" placeholder="BC ID"></div>
+    <div class="field hidden" id="cmBcIdField"><label class="label" for="cmBcId">BC ID</label><input id="cmBcId" maxlength="40" placeholder="BC ID"></div>
     <div class="field hidden" id="cmBcDateField"><label class="label" for="cmBcDate">सत्यापन की तारीख</label><input id="cmBcDate" type="date"></div>
-    <div class="field hidden" id="cmBcBranchField"><label class="label" for="cmBcBranch">BC केंद्र / शाखा का पता</label><input id="cmBcBranch" maxlength="150" placeholder="केंद्र / शाखा का पता"></div>
+    <div class="field hidden" id="cmBcBranchField"><label class="label" for="cmBcBranch">BC केंद्र का पता</label><input id="cmBcBranch" maxlength="150" placeholder="केंद्र / शाखा का पता"></div>
    <div class="field full"><button type="button" id="cmPreviewBtn">Preview बनाएँ</button></div>
   </div>
   <div id="cardPrintArea" class="hidden">
@@ -157,7 +156,7 @@
      <div><small>BC Agent</small><br><b id="cmPreviewBcName">—</b><br><small>BC ID: <span id="cmPreviewBcId">—</span></small><br><small>केंद्र: <span id="cmPreviewBcBranch">—</span></small><br><small>सत्यापन: <span id="cmPreviewBcDate">—</span></small></div>
      <div style="text-align:center;min-height:70px;border:1px dashed #94a3b8;border-radius:8px;padding:10px"><b>BC Agent के हस्ताक्षर / अधिकृत सील</b><br><small>मूल दस्तावेज़ जाँच के बाद</small></div>
     </div>
-    <div class="cm-foot">Digi Point ग्राहक विवरण एवं BC सत्यापन रिकॉर्ड — बैंक द्वारा जारी पासबुक या आधिकारिक बैंक कार्ड नहीं।</div>
+   
    </div>
    <div class="inline" style="justify-content:center;margin:10px 0"><button type="button" class="green" id="cmPrintBtn">Print / PDF सेव करें</button></div>
   </div>
