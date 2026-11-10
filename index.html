@@ -70,13 +70,13 @@
   <article class="post"><span class="tag">पात्रता जाँच</span><h3>MP योजना पात्रता डैशबोर्ड</h3><p>अपनी जानकारी के आधार पर मध्य प्रदेश शासन की योजनाओं से जुड़ी पात्रता और लाभ की जानकारी देखें।</p><div class="actions"><a href="https://www.cmhelpline.mp.gov.in/entitleDashboard.aspx" target="_blank" rel="noopener"><button class="green">पात्रता जाँचें ↗</button></a></div></article>
   <article class="post"><span class="tag">भारत सरकार</span><h3>India.gov.in – सरकारी योजनाएँ</h3><p>केंद्र सरकार की योजनाओं, लाभार्थी वर्गों और सरकारी सेवाओं की जानकारी प्राप्त करें।</p><div class="actions"><a href="https://www.india.gov.in/my-government/schemes" target="_blank" rel="noopener"><button class="green">सरकारी योजनाएँ देखें ↗</button></a></div></article>
  </div>
- <p class="smallmuted" style="margin-top:12px">Digi Point Portal स्वतंत्र सूचना पोर्टल है। यह किसी सरकारी विभाग की आधिकारिक वेबसाइट नहीं है।</p>
+ <p class="smallmuted" style="margin-top:12px">Digi Point Portal स्वतंत्र सूचना पोर्टल है।</p>
 </section>
 
 
 <section class="sidebox" id="shoppingDeals" style="margin:18px 0">
  <div class="sectionHead"><div><h2>🛍️ Digi Point Shopping Deals</h2><p>हमारे रिटेलर्स के उत्पाद सीधे ग्राहकों के लिए</p></div></div>
- <div class="notice" style="margin-bottom:12px">COD (घर पहुँचने पर भुगतान)। ऑर्डर की पुष्टि के लिए ग्राहक से फोन पर संपर्क किया जाएगा। कमीशन केवल Admin द्वारा Delivered दर्ज किए गए ऑर्डर पर गणना होगा।</div>
+ <div class="notice" style="margin-bottom:12px">COD (घर पहुँचने पर भुगतान)।</div>
  <div class="inline" style="margin-bottom:12px"><input id="marketSearch" placeholder="प्रोडक्ट खोजें..." style="flex:1;min-width:180px"><button id="marketSearchBtn">खोजें</button></div>
  <div class="cards" id="marketProductCards"><div class="empty">प्रोडक्ट लोड हो रहे हैं...</div></div>
  <p class="smallmuted" style="margin-top:10px">Digi Point Portal एक स्वतंत्र marketplace सुविधा है। उत्पाद की गुणवत्ता, उपलब्धता, डिलीवरी और ग्राहक सेवा संबंधित Retailer की जिम्मेदारी होगी।</p>
@@ -138,7 +138,7 @@
  <h3>सभी पोस्ट</h3><div class="adminlist" id="adminPostList"></div><p id="adminMessage" class="small"></p>
 </section>
 <section id="usersTab" class="hidden">
- <h3>Admin द्वारा यूजर बनाएँ</h3><p class="small">सार्वजनिक Registration उपलब्ध नहीं है। यूजर केवल Admin बनाएगा।</p>
+ <h3>Admin द्वारा यूजर बनाएँ</h3><p class="small"></p>
  <form id="userForm" class="formgrid">
   <div class="field"><label class="label">पूरा नाम *</label><input id="userName" required maxlength="100"></div>
   <div class="field"><label class="label">मोबाइल नंबर</label><input id="userPhone" inputmode="numeric" maxlength="15"></div>
@@ -579,7 +579,6 @@ makeNav();makeQuick();renderSide();loadPosts();loadFestivalPublic();loadMarketPr
    const fullAccount=raw||"—";
    const aadhaar=$("cmAadhaar")?String($("cmAadhaar").value||"").replace(/\D/g,""):"";
    if(aadhaar && aadhaar.length!==12){alert("Aadhaar Number 12 अंकों का होना चाहिए।");$("cmAadhaar").focus();return}
-   if(aadhaar && !$("cmAadhaarConsent").checked){alert("पूरा Aadhaar प्रिंट करने से पहले ग्राहक की सहमति लें और चेकबॉक्स चुनें।");$("cmAadhaarConsent").focus();return}
    const fullAadhaar=aadhaar||"—";
    fields=addField("Account Holder",name)
     +addField("Account Number",fullAccount)
