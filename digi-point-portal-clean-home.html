@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101b3f">
+<title>Digi Point Portal | Digital Services</title>
+<style>
+:root{--navy:#101b3f;--navy2:#172957;--blue:#315efb;--cyan:#18b6c9;--ink:#17213a;--muted:#71809c;--bg:#f4f7fc;--line:#e7ecf5;--white:#fff;--shadow:0 12px 32px rgba(23,42,85,.08)}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--ink)}button,input{font:inherit}button{cursor:pointer}
+.topbar{background:var(--navy);color:#dce6ff;font-size:12px;padding:9px 5.5%;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+header{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}.nav{max-width:1240px;margin:auto;padding:15px 22px;display:flex;align-items:center;gap:24px}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink);min-width:225px}.logo{width:43px;height:43px;border-radius:13px;background:linear-gradient(135deg,#2449d8,#16b9c8);display:grid;place-items:center;color:#fff;font-weight:900;font-size:17px;box-shadow:0 7px 16px #315efb35}.brand strong{display:block;font-size:19px;letter-spacing:-.5px}.brand small{color:var(--muted);font-size:10px;letter-spacing:1.4px;text-transform:uppercase}
+.navlinks{display:flex;gap:22px;margin:auto}.navlinks a{font-size:13px;color:#53617c;text-decoration:none;font-weight:650}.navlinks a:hover{color:var(--blue)}
+.navactions{display:flex;gap:9px}.btn{border:0;border-radius:10px;padding:11px 16px;font-weight:750;font-size:13px}.btn-outline{background:#fff;border:1px solid #dce4f2;color:var(--navy)}.btn-primary{background:var(--blue);color:#fff;box-shadow:0 7px 16px #315efb30}.menu{display:none;border:1px solid var(--line);background:white;border-radius:9px;padding:9px}
+main{max-width:1240px;margin:auto;padding:0 22px}
+.hero{margin:28px 0 22px;border-radius:25px;overflow:hidden;background:radial-gradient(circle at 88% 15%,#2f62d9 0,transparent 32%),linear-gradient(115deg,#101b3f 0%,#172d62 68%,#124f76 100%);color:white;padding:48px 48px 43px;position:relative}
+.hero:after{content:"DP";position:absolute;right:8%;top:12%;font-size:180px;font-weight:950;color:#ffffff0b;letter-spacing:-18px;pointer-events:none}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:#ffffff16;border:1px solid #ffffff24;padding:7px 12px;border-radius:30px;font-size:11px;letter-spacing:1.3px;text-transform:uppercase;color:#d8e5ff}
+.dot{width:7px;height:7px;background:#37d5bd;border-radius:50%;box-shadow:0 0 0 4px #37d5bd20}.hero h1{font-size:clamp(30px,4vw,48px);line-height:1.13;letter-spacing:-1.5px;max-width:660px;margin:18px 0 12px}.hero h1 span{color:#69dbe3}.hero p{color:#c5d2ed;max-width:600px;font-size:15px;line-height:1.7;margin:0 0 25px}.hero-actions{display:flex;gap:11px;flex-wrap:wrap}
+/* Hide the highlighted homepage call-to-action and information panels */
+.hero-actions{display:none!important}
+#retailerAccessMessage,#about{display:none!important}.hero .btn{padding:13px 19px}.btn-light{background:white;color:var(--navy)}.btn-glass{background:#ffffff14;color:#fff;border:1px solid #ffffff42}
+.stats{display:flex;gap:26px;margin-top:30px;flex-wrap:wrap}.stat{border-left:2px solid #5cd1d7;padding-left:11px}.stat b{font-size:19px;display:block}.stat small{font-size:11px;color:#b7c7e7}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:15px;margin:34px 0 16px}.section-head h2{font-size:23px;letter-spacing:-.6px;margin:0 0 5px}.section-head p{margin:0;color:var(--muted);font-size:13px}.count{font-size:12px;color:#52617e;background:#e9eefb;padding:8px 12px;border-radius:30px;font-weight:750}
+.searchrow{display:flex;gap:12px;margin-bottom:18px}.searchbox{flex:1;position:relative}.searchbox span{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:#8190aa;font-size:18px}.searchbox input{width:100%;border:1px solid var(--line);border-radius:12px;padding:14px 16px 14px 46px;background:white;outline:none;box-shadow:0 3px 12px #17295708}.searchbox input:focus{border-color:#8da5ff;box-shadow:0 0 0 3px #315efb13}.select{border:1px solid var(--line);background:#fff;border-radius:12px;padding:0 14px;color:#4b5a77;font-weight:650;min-width:180px}
+.category-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:0 0 25px}.cat{background:#fff;border:1px solid var(--line);border-radius:15px;padding:16px;text-align:left;transition:.2s;min-height:115px}.cat:hover,.cat.active{border-color:#9eb0ff;box-shadow:0 8px 20px #315efb12;transform:translateY(-2px)}.cat.active{background:#f1f4ff}.cat-icon{width:37px;height:37px;border-radius:11px;background:#edf2ff;display:grid;place-items:center;font-size:18px;margin-bottom:10px}.cat strong{display:block;font-size:13px}.cat small{display:block;color:var(--muted);font-size:11px;margin-top:4px}
+.services{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:42px}.service{background:#fff;border:1px solid var(--line);border-radius:15px;padding:17px;display:flex;flex-direction:column;min-height:174px;transition:.2s}.service:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:#d5def4}.service-top{display:flex;align-items:center;justify-content:space-between}.service-icon{width:40px;height:40px;border-radius:12px;background:#f0f4ff;display:grid;place-items:center;font-size:19px}.tag{font-size:9px;text-transform:uppercase;letter-spacing:.7px;color:#7584a0;background:#f3f5f9;border-radius:20px;padding:5px 8px;font-weight:800}.service h3{font-size:14px;margin:13px 0 5px}.service p{font-size:11px;color:var(--muted);margin:0 0 15px;line-height:1.5}.service button{margin-top:auto;text-align:left;border:0;background:transparent;color:var(--blue);font-weight:800;font-size:12px;padding:0}.empty{grid-column:1/-1;text-align:center;padding:40px;color:var(--muted);background:white;border:1px dashed #ccd5e6;border-radius:15px}
+.info-strip{background:#eaf7fa;border:1px solid #d5eff2;border-radius:16px;padding:18px 22px;display:flex;gap:14px;align-items:center;margin-bottom:38px}.info-icon{font-size:25px}.info-strip strong{font-size:13px}.info-strip p{font-size:12px;color:#60758b;margin:4px 0 0;line-height:1.5}
+footer{background:#101b3f;color:#c3cde1;padding:30px 22px}.footer-inner{max-width:1240px;margin:auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.footer-inner strong{color:#fff}.footer-inner small{font-size:11px;color:#9eaccb}
+.modal-backdrop{position:fixed;inset:0;background:#0b1538a8;display:none;align-items:center;justify-content:center;padding:18px;z-index:50}.modal-backdrop.show{display:flex}.modal{width:min(440px,100%);background:white;border-radius:19px;padding:25px;box-shadow:0 25px 80px #07102c55}.modal-head{display:flex;justify-content:space-between;align-items:center}.modal h2{font-size:20px;margin:0}.close{border:0;background:#f1f4fa;border-radius:9px;width:33px;height:33px;font-size:20px;color:#52617e}.modal p{font-size:13px;line-height:1.6;color:var(--muted)}.field{display:block;margin:14px 0}.field[hidden]{display:none!important}.field label{display:block;font-size:12px;font-weight:750;margin-bottom:6px}.field input{width:100%;border:1px solid var(--line);border-radius:10px;padding:12px;outline:none}.notice{font-size:11px;color:#77849b;background:#f5f7fb;padding:11px;border-radius:9px;margin-top:14px}
+
+/* Retailer dashboard */
+#retailerDashboard{display:none;margin:22px 0 30px}
+.dash-head{background:linear-gradient(120deg,#101b3f,#244b9c);color:#fff;border-radius:20px;padding:25px 28px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;box-shadow:0 12px 28px #17295718}
+.dash-head h2{margin:0 0 6px;font-size:24px}.dash-head p{margin:0;color:#d2def7;font-size:13px}.dash-id{background:#ffffff18;border:1px solid #ffffff35;border-radius:12px;padding:10px 14px;font-size:12px;color:#eaf0ff}
+.dash-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin:16px 0}.dash-stat{background:#fff;border:1px solid var(--line);border-radius:15px;padding:17px;display:flex;gap:12px;align-items:center}.dash-stat .ds-icon{width:42px;height:42px;border-radius:12px;background:#edf2ff;display:grid;place-items:center;font-size:20px}.dash-stat b{display:block;font-size:18px}.dash-stat small{color:var(--muted);font-size:11px}
+.dash-nav{display:flex;gap:9px;flex-wrap:wrap;margin:17px 0}.dash-nav button{border:1px solid #dfe6f2;background:#fff;color:#42516e;border-radius:10px;padding:10px 14px;font-size:12px;font-weight:750}.dash-nav button.active,.dash-nav button:hover{background:#edf2ff;border-color:#a9baff;color:#244bd4}
+.dash-panel{display:none;background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;margin:12px 0 22px}.dash-panel.active{display:block}.dash-panel h3{margin:0 0 14px;font-size:17px}.profile-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.profile-item{background:#f7f9fd;border-radius:11px;padding:12px}.profile-item small{display:block;color:var(--muted);font-size:11px;margin-bottom:5px}.profile-item b{font-size:13px;overflow-wrap:anywhere}.dash-help{color:var(--muted);font-size:13px;line-height:1.7}.logout-btn{background:#fff!important;color:#b42318!important;border:1px solid #f0c7c4!important;box-shadow:none!important}
+.dash-overview-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:16px 0}
+.overview-card{background:#f8faff;border:1px solid #e3eaf6;border-radius:14px;padding:17px;text-align:left;display:flex;flex-direction:column;gap:7px;color:var(--ink);min-height:150px}
+.overview-card:hover{border-color:#a9baff;transform:translateY(-2px);box-shadow:var(--shadow)}
+.overview-card span{font-size:23px}.overview-card b{font-size:14px}.overview-card small{color:var(--muted);font-size:11px;line-height:1.5}.overview-card strong{color:var(--blue);font-size:12px;margin-top:auto}
+.dash-welcome-note,.support-note{padding:15px;border-radius:12px;background:#eef7fb;border:1px solid #dceef4;font-size:13px}.dash-welcome-note p,.support-note p{margin:6px 0;color:#60758b;font-size:12px}.support-note small{color:var(--muted)}
+.history-list{display:grid;gap:9px;margin:14px 0}.history-item{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px;border:1px solid var(--line);border-radius:11px;background:#fbfcff}.history-item b{font-size:13px}.history-item small{color:var(--muted);font-size:11px}
+@media(max-width:900px){.dash-overview-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){.dash-overview-grid{grid-template-columns:1fr 1fr}.overview-card{padding:13px;min-height:145px}.history-item{align-items:flex-start;flex-direction:column}}
+@media(max-width:620px){.dash-head{padding:20px}.dash-head h2{font-size:20px}.dash-stats{grid-template-columns:1fr}.profile-grid{grid-template-columns:1fr}.dash-nav button{flex:1 1 calc(50% - 9px)}}
+@media(max-width:900px){.navlinks{display:none}.services{grid-template-columns:repeat(3,1fr)}.category-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:620px){.topbar{padding:8px 16px}.nav{padding:12px 16px;justify-content:space-between}.brand{min-width:0}.brand strong{font-size:16px}.navactions .btn-outline{display:none}.menu{display:block}main{padding:0 15px}.hero{padding:31px 23px;border-radius:19px;margin-top:18px}.hero:after{font-size:120px;right:2%;top:30%}.hero p{font-size:13px}.stats{gap:16px}.stat b{font-size:17px}.section-head h2{font-size:20px}.searchrow{flex-direction:column}.select{height:45px}.category-grid{grid-template-columns:repeat(2,1fr);gap:9px}.cat{padding:13px;min-height:106px}.services{grid-template-columns:repeat(2,1fr);gap:9px}.service{padding:13px;min-height:173px}.service h3{font-size:13px}.footer-inner{display:block}.footer-inner small{display:block;margin-top:9px}}
+@media(max-width:370px){.services{grid-template-columns:1fr}.category-grid{grid-template-columns:1fr 1fr}}
+
+.tool-modal{width:min(620px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:19px;padding:24px;box-shadow:0 25px 80px #07102c55}
+.tool-modal h2{margin:0;font-size:21px}.tool-modal .tool-desc{font-size:13px;color:#71809c;line-height:1.6}
+.tool-modal .field input[type=file]{padding:10px;background:#f8faff}
+.tool-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.tool-status{margin-top:13px;padding:11px;border-radius:9px;background:#f2f6ff;color:#435578;font-size:12px;line-height:1.5;display:none}
+.tool-status.ok{display:block;background:#eaf8f1;color:#17633d}.tool-status.err{display:block;background:#fff0ef;color:#a3342b}
+.tool-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:520px){.tool-row{grid-template-columns:1fr}.tool-modal{padding:19px}}
+
+.doc-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.doc-form .field textarea{width:100%;min-height:78px;border:1px solid var(--line);border-radius:10px;padding:11px;font:inherit;resize:vertical}.doc-form .field input{width:100%;min-height:42px;border:1px solid var(--line);border-radius:10px;padding:10px;font:inherit}.doc-form .field label{display:block;font-size:13px;font-weight:650;margin-bottom:6px}.tool-desc{color:var(--muted);line-height:1.6}@media(max-width:650px){.doc-form{grid-template-columns:1fr}}
+
+.mock-meta{display:flex;justify-content:space-between;font-weight:700;color:var(--muted);font-size:13px}.mock-progress{height:8px;background:var(--line);border-radius:20px;margin:12px 0 22px;overflow:hidden}.mock-progress span{display:block;height:100%;background:var(--primary,#315efb);border-radius:20px}.mock-question{font-size:19px;line-height:1.5;margin:14px 0}.mock-options{display:grid;gap:10px}.mock-option{padding:13px 14px;border:1px solid var(--line);border-radius:12px;background:var(--card,#fff);text-align:left;font:inherit;cursor:pointer;color:inherit}.mock-option:disabled{cursor:default;opacity:1}.mock-option.correct{border-color:#16a34a;background:#ecfdf3}.mock-option.wrong{border-color:#dc2626;background:#fef2f2}.mock-note{font-size:12px;color:var(--muted);margin-top:18px}.mock-result{text-align:center;padding:24px 8px}.mock-trophy{font-size:48px}.mock-score{font-size:42px;font-weight:800;margin:12px 0;color:var(--primary,#315efb)}
+</style>
+</head>
+<body>
+<div class="topbar"><span>✦ आपका डिजिटल सर्विस पार्टनर</span><span>Professional Tools • Simple • Fast</span></div>
+<header><nav class="nav">
+<a class="brand" href="#" aria-label="Digi Point Home"><div class="logo">DP</div><div><strong>Digi Point</strong><small>Digital Services Portal</small></div></a>
+<div class="navlinks"><a href="#home">Home</a><a href="#categories">Categories</a><a href="#services">All Services</a><a href="#about">About</a></div>
+<div class="navactions"><button class="btn btn-outline" onclick="openModal('register')">Retailer Registration</button><button class="btn btn-primary" onclick="openModal('login')">Retailer Login ↗</button></div>
+<button class="menu" onclick="document.getElementById('categories').scrollIntoView({behavior:'smooth'})" aria-label="Go to categories">☰</button>
+</nav></header>
+<main id="home">
+<section class="hero">
+<div class="eyebrow"><span class="dot"></span> SMART DIGITAL WORKSPACE</div>
+<h1>आपकी सभी डिजिटल सेवाएँ,<br><span>एक ही जगह पर।</span></h1>
+<p>Digi Point Portal पर Document, Converter, Calculator, Mock Test और Utility Tools का उपयोग आसान और तेज़ तरीके से करें।</p>
+<div class="hero-actions"><button class="btn btn-light" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">Explore Services&nbsp; →</button><button class="btn btn-glass" onclick="openModal('login')">Retailer Login</button></div>
+<div class="stats"><div class="stat"><b>47</b><small>Digital Services</small></div><div class="stat"><b>05</b><small>Service Categories</small></div><div class="stat"><b>24×7</b><small>Online Access</small></div></div>
+</section>
+<div class="section-head" id="categories" style="display:none"><div><h2>Explore Categories</h2><p>अपनी जरूरत के अनुसार कैटेगरी चुनें</p></div><span class="count">05 Categories</span></div>
+<section id="retailerDashboard">
+ <div class="dash-head"><div><div class="eyebrow"><span class="dot"></span> RETAILER WORKSPACE</div><h2 id="dashGreeting">नमस्ते, Retailer</h2><p>आपके Digi Point Retailer Dashboard में स्वागत है।</p></div><div class="dash-id">Retailer ID: <b id="dashRetailerId">—</b><br><span id="dashStatus">Account: Approved</span></div></div>
+ <div class="dash-stats"><div class="dash-stat"><div class="ds-icon">🧰</div><div><b>47</b><small>कुल उपलब्ध Services</small></div></div><div class="dash-stat"><div class="ds-icon">🗂️</div><div><b>05</b><small>Service Categories</small></div></div><div class="dash-stat"><div class="ds-icon">✓</div><div><b>Active</b><small>Retailer Account</small></div></div></div>
+ <div class="dash-nav"><button class="active" data-dash-tab="homePanel">🏠 Dashboard</button><button data-dash-tab="servicesPanel">🧰 All Services</button><button data-dash-tab="profilePanel">👤 My Profile</button><button data-dash-tab="historyPanel">🕘 My History</button><button data-dash-tab="supportPanel">💬 Help & Support</button><button class="logout-btn" onclick="retailerLogout()">↪ Logout</button></div>
+ <section class="dash-panel active" id="homePanel">
+  <h3>Dashboard Overview</h3>
+  <p class="dash-help">यहाँ से अपनी सेवाओं और अकाउंट की जानकारी देखें।</p>
+  <div class="dash-overview-grid">
+   <button class="overview-card" data-go-tab="servicesPanel"><span>🧰</span><b>All Services</b><small>उपलब्ध डिजिटल टूल्स खोलें</small><strong>सेवाएँ देखें →</strong></button>
+   <button class="overview-card" data-go-tab="profilePanel"><span>👤</span><b>My Profile</b><small>अपनी Retailer जानकारी देखें</small><strong>प्रोफाइल देखें →</strong></button>
+   <button class="overview-card" data-go-tab="historyPanel"><span>🕘</span><b>My History</b><small>इस ब्राउज़र में खोली गई सेवाएँ</small><strong>History देखें →</strong></button>
+   <button class="overview-card" data-go-tab="supportPanel"><span>💬</span><b>Help & Support</b><small>सहायता और संपर्क जानकारी</small><strong>सहायता देखें →</strong></button>
+  </div>
+  <div class="dash-welcome-note"><b>शुरू कैसे करें?</b><p>All Services पर जाएँ, अपनी जरूरत की सेवा खोजें और Open Service पर क्लिक करें।</p></div>
+ </section>
+ <section class="dash-panel" id="servicesPanel">
+  <h3>All Digital Services</h3>
+  <p class="dash-help" style="margin-top:-6px">अपनी जरूरत की Service चुनें या Search करें।</p>
+  <div id="protectedServices">
+   <div class="category-grid" id="categoryGrid"></div>
+   <div class="section-head" id="services"><div><h2>All Digital Services</h2><p>सभी उपलब्ध टूल्स एक ही जगह</p></div><span class="count" id="resultCount">47 Services</span></div>
+   <div class="searchrow" id="serviceSearchRow"><div class="searchbox"><span>⌕</span><input id="search" type="search" placeholder="Search service... जैसे Resume, PDF, Age Calculator" aria-label="Search services"></div><select class="select" id="categorySelect" aria-label="Filter category"><option value="all">All Categories</option></select></div>
+   <div class="services" id="serviceGrid"></div>
+  </div>
+ </section>
+ <section class="dash-panel" id="profilePanel"><h3>My Profile</h3><div class="profile-grid"><div class="profile-item"><small>पूरा नाम</small><b id="profileName">—</b></div><div class="profile-item"><small>Retailer ID</small><b id="profileRetailerId">—</b></div><div class="profile-item"><small>Email</small><b id="profileEmail">—</b></div><div class="profile-item"><small>मोबाइल नंबर</small><b id="profilePhone">—</b></div><div class="profile-item"><small>Account Status</small><b id="profileStatus" style="color:#16834a">Approved / Active</b></div></div></section>
+ <section class="dash-panel" id="historyPanel"><h3>My History</h3><p class="dash-help">आपके इस ब्राउज़र में खोले गए हाल के Services यहाँ दिखेंगे। यह रिकॉर्ड इसी डिवाइस/ब्राउज़र में रहेगा।</p><div id="historyList" class="history-list"><div class="empty">अभी कोई Service History नहीं है।</div></div><button class="btn btn-outline" type="button" onclick="clearServiceHistory()">Clear History</button></section>
+ <section class="dash-panel" id="supportPanel"><h3>Help & Support</h3><p class="dash-help">Digi Point Portal की किसी Service या Account में समस्या होने पर अपने Portal Administrator से संपर्क करें।</p><div class="support-note"><b>सहायता के लिए तैयार रखें</b><p>अपना Retailer ID, Registered Email और समस्या का स्क्रीनशॉट।</p><small>WhatsApp / फोन सहायता लिंक Admin का संपर्क नंबर उपलब्ध होने पर जोड़ा जाएगा।</small></div></section>
+</section>
+<div id="retailerAccessMessage" class="info-strip" style="margin:16px 0"><div class="info-icon">🔐</div><div><strong>Retailer Login आवश्यक</strong><p>Services देखने और इस्तेमाल करने के लिए Retailer Login करें। नया Registration Admin Approval के बाद सक्रिय होगा।</p><button class="btn btn-primary" onclick="openModal('login')">Retailer Login</button></div></div>
+<div class="info-strip" id="about"><div class="info-icon">🛡️</div><div><strong>Simple और सुरक्षित उपयोग</strong><p>यह पोर्टल फ्रंट-एंड सर्विस कैटलॉग है। जिन टूल्स को स्थानीय रूप से चलाया जा सकता है, उन्हें बिना Paid API बनाया जा सकता है। सरकारी/बैंकिंग सेवाओं के लिए संबंधित अधिकृत पोर्टल और उसकी अनुमति आवश्यक होगी।</p></div></div>
+</main>
+<footer><div class="footer-inner"><div><strong>Digi Point Portal</strong><br><small>Digital Services made simple.</small></div><small>© <span id="year"></span> Digi Point Portal. All rights reserved.</small></div></footer>
+<div class="modal-backdrop" id="toolBackdrop" role="dialog" aria-modal="true" onclick="if(event.target===this)closeTool()"><div class="tool-modal"><div class="modal-head"><h2 id="toolTitle">Service Tool</h2><button class="close" onclick="closeTool()" aria-label="Close">×</button></div><div id="toolHost"></div></div></div>
+<div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle" onclick="if(event.target===this)closeModal()"><div class="modal"><div class="modal-head"><h2 id="modalTitle">Retailer Login</h2><button class="close" onclick="closeModal()" aria-label="Close">×</button></div><p id="modalDesc">अपने Retailer Account में लॉगिन करें।</p><form id="retailerAuthForm"><div class="field" id="regNameWrap" hidden><label>पूरा नाम</label><input id="regName" autocomplete="name"></div><div class="field" id="regPhoneWrap" hidden><label>मोबाइल नंबर</label><input id="regPhone" inputmode="numeric" maxlength="10"></div><div class="field"><label>Email</label><input id="authEmail" type="email" autocomplete="username" required placeholder="अपना Email डालें"></div><div class="field"><label>Password</label><input id="authPassword" type="password" autocomplete="current-password" required minlength="6" placeholder="Password (कम से कम 6 अक्षर)"></div><button class="btn btn-primary" style="width:100%" type="submit" id="modalSubmit">Login</button><p id="authMessage" role="status" style="margin-top:12px"></p></form><div class="notice" id="authNotice">Registration के बाद Admin Approval जरूरी है।</div></div></div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+const categories=[
+ {id:'document',name:'Document',icon:'📄',desc:'Documents और Forms'},
+ {id:'converters',name:'Converters',icon:'🔄',desc:'PDF और Image Conversion'},
+ {id:'calculator',name:'Calculator',icon:'🧮',desc:'रोजमर्रा की गणना'},
+ {id:'mock',name:'Mock Test',icon:'🎓',desc:'Exam Practice और Test'},
+ {id:'utilities',name:'Utilities',icon:'🛠️',desc:'काम के Smart Tools'}
+];
+const services=[
+['Resume Maker','document','📝','Professional Resume तैयार करें'],
+['Marriage Biodata','document','💍','शादी के लिए Biodata बनाएँ'],
+['Invoice Generator','document','🧾','Business Invoice तैयार करें'],
+['Add Watermark','document','🔖','Document या Image पर Watermark'],
+['Admit Card Manager','document','🎫','Admit Card तैयार और व्यवस्थित करें'],
+['ID Card Maker','document','🪪','ID Card Design बनाएँ'],
+['Certificate Maker','document','🏅','Certificate Design तैयार करें'],
+['Application / Letter Maker','document','✉️','आवेदन और पत्र का प्रारूप बनाएँ'],
+['Visiting Card Maker','document','💼','Professional Visiting Card बनाएँ'],
+['Quotation Generator','document','📑','Quotation तैयार करें'],
+['JPG to PDF','converters','🖼️','Image को PDF में बदलें'],
+['Image Resize','converters','↔️','Image का Size और Dimension बदलें'],
+['PDF Resize','converters','📐','PDF Page Size बदलें'],
+['PDF to JPG','converters','📷','PDF Pages को Image में बदलें'],
+['PDF Compressor','converters','🗜️','PDF File का Size कम करें'],
+['Word to PDF','converters','📃','Word Document को PDF बनाएँ'],
+['Image Converter Pro','converters','🌄','Image Format Convert करें'],
+['PNG to JPG','converters','🖼️','PNG को JPG में बदलें'],
+['JPG to PNG','converters','🌅','JPG को PNG में बदलें'],
+['HEIC to JPG','converters','📸','HEIC Photo को JPG में बदलें'],
+['Age Calculator','calculator','🎂','जन्मतिथि से उम्र निकालें'],
+['Percentage Calculator','calculator','％','प्रतिशत की गणना करें'],
+['Loan EMI Calculator','calculator','🏦','Loan की EMI निकालें'],
+['GST Calculator','calculator','🧮','GST जोड़ें या घटाएँ'],
+['Date Calculator','calculator','📅','तारीखों के बीच अंतर निकालें'],
+['Gold & Silver Calculator','calculator','🥇','Gold और Silver मूल्य का अनुमान'],
+['Discount Calculator','calculator','🏷️','Discount और Final Price निकालें'],
+['Profit & Loss Calculator','calculator','📈','लाभ और नुकसान की गणना'],
+['Salary Calculator','calculator','💰','Salary का हिसाब लगाएँ'],
+['Interest Calculator','calculator','📊','ब्याज की गणना करें'],
+['CPCT Mock Test','mock','⌨️','CPCT परीक्षा की तैयारी'],
+['MP Police Mock Test','mock','👮','MP Police परीक्षा अभ्यास'],
+['Patwari Mock Test','mock','📚','पटवारी परीक्षा अभ्यास'],
+['SSC Mock Test','mock','📝','SSC परीक्षा अभ्यास'],
+['Railway Mock Test','mock','🚆','Railway परीक्षा अभ्यास'],
+['Banking Mock Test','mock','🏛️','Banking परीक्षा अभ्यास'],
+['General Knowledge Test','mock','🌐','सामान्य ज्ञान का अभ्यास'],
+['PDF Merge','utilities','📚','कई PDF को एक में जोड़ें'],
+['PDF Splitter','utilities','✂️','PDF के Pages अलग करें'],
+['PDF Lock','utilities','🔒','PDF पर Password सुरक्षा'],
+['PDF Unlock','utilities','🔓','अनुमति होने पर PDF सुरक्षा हटाएँ'],
+['Image Cropper','utilities','✂️','Image को Crop करें'],
+['QR Code Generator','utilities','▦','Text या Link का QR Code बनाएँ'],
+['Word Counter','utilities','🔢','शब्द और अक्षर गिनें'],
+['Text Case Converter','utilities','🔠','Text का Case बदलें'],
+['Age & Date Difference','utilities','🗓️','तारीख और उम्र का अंतर'],
+['Typing Practice','utilities','⌨️','Typing Speed का अभ्यास']
+];
+let activeCategory='all';
+let retailerApproved=false;
+let enabledServices={};
+function renderCategories(){
+ const grid=document.getElementById('categoryGrid');
+ grid.innerHTML=`<button class="cat ${activeCategory==='all'?'active':''}" onclick="setCategory('all')"><div class="cat-icon">✨</div><strong>All Services</strong><small>सभी 47 Services</small></button>`+
+ categories.map(c=>`<button class="cat ${activeCategory===c.id?'active':''}" onclick="setCategory('${c.id}')"><div class="cat-icon">${c.icon}</div><strong>${c.name}</strong><small>${c.desc}</small></button>`).join('');
+}
+function renderSelect(){document.getElementById('categorySelect').innerHTML='<option value="all">All Categories</option>'+categories.map(c=>`<option value="${c.id}">${c.name}</option>`).join('');}
+function renderServices(){
+ const q=document.getElementById('search').value.trim().toLowerCase();
+ const cat=document.getElementById('categorySelect').value;
+ const filtered=services.filter(s=>isServiceEnabled(s[0])&&(activeCategory==='all'||s[1]===activeCategory)&&(cat==='all'||s[1]===cat)&&(s[0]+' '+s[3]).toLowerCase().includes(q));
+ document.getElementById('resultCount').textContent=filtered.length+' Services';
+ document.getElementById('serviceGrid').innerHTML=filtered.length?filtered.map(s=>`<article class="service"><div class="service-top"><div class="service-icon">${s[2]}</div><span class="tag">${categories.find(c=>c.id===s[1]).name}</span></div><h3>${s[0]}</h3><p>${s[3]}</p><button onclick="openService('${s[0].replace(/'/g,"\\'")}')">Open Service&nbsp; →</button></article>`).join(''):'<div class="empty">इस नाम की कोई सर्विस नहीं मिली। दूसरा नाम खोजें।</div>';
+}
+function isServiceEnabled(name){
+ const aliases={'CPCT Mock Test':'CPCT','MP Police Mock Test':'MP Police','Patwari Mock Test':'Patwari','SSC Mock Test':'SSC','Railway Mock Test':'Railway','Banking Mock Test':'Banking','General Knowledge Test':'General Knowledge','Add Watermark':'Add Watermark','Gold & Silver Calculator':'Gold & Silver Calculator'};
+ const key=aliases[name]||name;
+ return enabledServices[key] !== false;
+}
+function setCategory(id){activeCategory=id;document.getElementById('categorySelect').value='all';renderCategories();renderServices();document.getElementById('services').scrollIntoView({behavior:'smooth'});}
+document.getElementById('search').addEventListener('input',renderServices);
+document.getElementById('categorySelect').addEventListener('change',e=>{activeCategory='all';renderCategories();renderServices();});
+function openModal(type){const reg=type==='register';document.getElementById('modalTitle').textContent=reg?'Retailer Registration':'Retailer Login';document.getElementById('modalDesc').textContent=reg?'नया Retailer Account बनाने के लिए जानकारी भरें।':'अपने Retailer Account में लॉगिन करें।';document.getElementById('modalSubmit').textContent=reg?'Register':'Login';document.getElementById('modalBackdrop').classList.add('show');}
+function closeModal(){document.getElementById('modalBackdrop').classList.remove('show');}
+
+const workingTools = ['JPG to PDF','PDF Merge','PDF Splitter','PDF Compressor','Image Resize','PDF to JPG','PNG to JPG','JPG to PNG','HEIC to JPG','Image Converter Pro','PDF Lock','PDF Unlock','Image Cropper','QR Code Generator','Word Counter','Age Calculator','Percentage Calculator','Loan EMI Calculator','GST Calculator','Date Calculator','Gold & Silver Calculator','Discount Calculator','Profit & Loss Calculator','Salary Calculator','Interest Calculator','PDF Resize','Word to PDF','CPCT','MP Police','Patwari','SSC','Railway','Banking','General Knowledge','Resume Maker','Marriage Biodata','Invoice Generator','Add Watermark','Admit Card Manager','ID Card Maker','Certificate Maker','Application / Letter Maker','Visiting Card Maker','Quotation Generator'];
+function openService(name){
+ if(!retailerApproved){openModal('login');return;}
+ if(typeof window.recordServiceUsage==='function') window.recordServiceUsage(name);
+ const mockAliases={'CPCT Mock Test':'CPCT','MP Police Mock Test':'MP Police','Patwari Mock Test':'Patwari','SSC Mock Test':'SSC','Railway Mock Test':'Railway','Banking Mock Test':'Banking','General Knowledge Test':'General Knowledge'};
+ if(mockAliases[name]){openMockTest(mockAliases[name]);return;}
+ if(['CPCT','MP Police','Patwari','SSC','Railway','Banking','General Knowledge'].includes(name)){openMockTest(name);return;}
+ if(['Resume Maker','Marriage Biodata','Invoice Generator','Add Watermark','Admit Card Manager','ID Card Maker','Certificate Maker','Application / Letter Maker','Visiting Card Maker','Quotation Generator'].includes(name)){openDocumentTool(name);return;}
+ if(!workingTools.includes(name)){alert(name+'\\nयह टूल अगले चरण में जोड़ा जाएगा।');return;}
+ const host=document.getElementById('toolHost');
+ document.getElementById('toolBackdrop').classList.add('show');
+ document.getElementById('toolTitle').textContent=name;
+ const descriptions={
+  'JPG to PDF':'एक या कई JPG / PNG फोटो को एक PDF फाइल में बदलें।',
+  'PDF Merge':'दो या अधिक PDF फाइलों को एक PDF में जोड़ें।',
+  'PDF Splitter':'PDF के चुने हुए पेज अलग PDF में निकालें।',
+  'PDF Compressor':'PDF को दोबारा सेव करके फाइल का आकार कम करने की कोशिश करें।',
+  'Image Resize':'फोटो की चौड़ाई और ऊँचाई बदलें और नई इमेज डाउनलोड करें।',
+  'PDF to JPG':'PDF के हर पेज को अलग JPG इमेज में डाउनलोड करें।',
+  'PNG to JPG':'PNG फोटो को JPG में बदलें।',
+  'JPG to PNG':'JPG फोटो को PNG में बदलें।',
+  'HEIC to JPG':'HEIC / HEIF फोटो को JPG में बदलें।',
+  'Image Converter Pro':'फोटो को JPG, PNG या WEBP में बदलें।',
+  'PDF Lock':'PDF पर पासवर्ड सुरक्षा लगाने के लिए।',
+  'PDF Unlock':'अपने PDF की पासवर्ड सुरक्षा हटाने के लिए (सही पासवर्ड आवश्यक)।',
+  'Image Cropper':'फोटो का चुना हुआ हिस्सा Crop करें।',
+  'QR Code Generator':'Text, मोबाइल नंबर या Website Link का QR Code बनाएँ।',
+  'Word Counter':'Text के शब्द, अक्षर और वाक्य गिनें।',
+  'Age Calculator':'जन्मतिथि से उम्र निकालें।',
+  'Percentage Calculator':'कुल अंक में प्राप्त अंकों का प्रतिशत निकालें।',
+  'Loan EMI Calculator':'लोन राशि, ब्याज और अवधि से EMI निकालें।',
+  'GST Calculator':'राशि पर GST जोड़ें या GST अलग करें।',
+  'Date Calculator':'दो तारीखों के बीच दिनों का अंतर निकालें।',
+  'Gold & Silver Calculator':'वजन और प्रति ग्राम रेट से अनुमानित मूल्य निकालें।',
+  'Discount Calculator':'छूट प्रतिशत के बाद अंतिम कीमत निकालें।',
+  'Profit & Loss Calculator':'Cost और Selling Price से लाभ या हानि निकालें।',
+  'Salary Calculator':'Basic Salary और भत्तों से अनुमानित कुल वेतन निकालें।',
+  'Interest Calculator':'मूलधन, दर और समय से साधारण ब्याज निकालें।'
+ };
+ let fields='';
+ if(name==='JPG to PDF') fields='<label class="field"><label>फोटो चुनें (एक या अधिक)</label><input id="toolFiles" type="file" accept="image/jpeg,image/png" multiple></label>';
+ if(name==='PDF Merge') fields='<label class="field"><label>PDF फाइलें चुनें (कम से कम 2)</label><input id="toolFiles" type="file" accept="application/pdf" multiple></label>';
+ if(name==='PDF Splitter') fields='<label class="field"><label>PDF फाइल चुनें</label><input id="toolFiles" type="file" accept="application/pdf"></label><div class="field"><label>पेज नंबर / रेंज (उदाहरण: 1,3,5-7)</label><input id="pageRange" placeholder="1-3"></div>';
+ if(name==='PDF Compressor') fields='<label class="field"><label>PDF फाइल चुनें</label><input id="toolFiles" type="file" accept="application/pdf"></label>';
+ if(name==='PDF Resize') fields='<label class="field"><label>PDF फाइल चुनें</label><input id="toolFiles" type="file" accept="application/pdf"></label><div class="field"><label>नया Page Size</label><select id="pdfPageSize" class="select"><option value="a4">A4</option><option value="a5">A5</option><option value="letter">Letter</option><option value="legal">Legal</option></select></div>';
+ if(name==='Word to PDF') fields='<label class="field"><label>Word DOCX फाइल चुनें</label><input id="toolFiles" type="file" accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document"></label><div class="notice">DOCX फाइल सपोर्ट है। फाइल कन्वर्जन के बाद Print में Save as PDF चुनें।</div>';
+ if(name==='Image Resize') fields='<label class="field"><label>फोटो चुनें</label><input id="toolFiles" type="file" accept="image/*"></label><div class="tool-row"><div class="field"><label>Width (px)</label><input id="resizeW" type="number" min="1" max="10000" placeholder="उदाहरण: 600"></div><div class="field"><label>Height (px)</label><input id="resizeH" type="number" min="1" max="10000" placeholder="उदाहरण: 800"></div></div><label style="font-size:12px"><input type="checkbox" id="keepRatio" checked> फोटो का अनुपात बनाए रखें</label><div class="field"><label>Output Format</label><select id="resizeFormat" class="select"><option value="image/jpeg">JPG</option><option value="image/png">PNG</option></select></div>';
+ if(name==='PDF to JPG') fields='<label class="field"><label>PDF फाइल चुनें</label><input id="toolFiles" type="file" accept="application/pdf"></label><div class="field"><label>Image Quality</label><select id="pdfQuality" class="select"><option value="1">Standard</option><option value="1.5" selected>High</option><option value="2">Very High</option></select></div>';
+ if(['PNG to JPG','JPG to PNG','HEIC to JPG','Image Converter Pro'].includes(name)) fields='<label class="field"><label>Image फाइल चुनें</label><input id="toolFiles" type="file" accept="image/*,.heic,.heif"></label><div class="field"><label>Output Format</label><select id="imageFormat" class="select"><option value="image/jpeg">JPG</option><option value="image/png">PNG</option><option value="image/webp">WEBP</option></select></div>';
+ if(name==='PDF Lock'||name==='PDF Unlock') fields='<div class="notice">PDF में असली password encryption / decryption के लिए प्रमाणित PDF security engine जरूरी है। इस संस्करण में हम नकली password protection नहीं दिखाएँगे। यह टूल अभी सक्रिय नहीं है।</div>';
+ if(name==='Image Cropper') fields='<label class="field"><label>फोटो चुनें</label><input id="toolFiles" type="file" accept="image/*"></label><div id="cropPreviewWrap" style="display:none;margin:12px 0"><img id="cropPreview" style="max-width:100%;max-height:240px;object-fit:contain;border:1px solid #e2e8f0;border-radius:10px"></div><div class="tool-row"><div class="field"><label>Left (px)</label><input id="cropX" type="number" min="0" value="0"></div><div class="field"><label>Top (px)</label><input id="cropY" type="number" min="0" value="0"></div><div class="field"><label>Width (px)</label><input id="cropW" type="number" min="1" placeholder="Crop width"></div><div class="field"><label>Height (px)</label><input id="cropH" type="number" min="1" placeholder="Crop height"></div></div>';
+ if(name==='QR Code Generator') fields='<div class="field"><label>Text / Website URL / Mobile Number</label><input id="qrText" placeholder="https://example.com"></div><div class="field"><label>QR Size</label><select id="qrSize" class="select"><option value="200">200 × 200</option><option value="300" selected>300 × 300</option><option value="500">500 × 500</option></select></div><div id="qrOutput" style="margin:12px 0;text-align:center"></div>';
+ if(name==='Word Counter') fields='<div class="field"><label>अपना Text लिखें या Paste करें</label><textarea id="countText" rows="7" style="width:100%;border:1px solid #e7ecf5;border-radius:10px;padding:12px" placeholder="यहाँ अपना टेक्स्ट लिखें..."></textarea></div><div id="wordStats" class="notice">शब्द: 0 | अक्षर: 0 | वाक्य: 0</div>';
+ if(name==='Age Calculator') fields='<div class="field"><label>जन्मतिथि</label><input id="birthDate" type="date"></div><div id="calcResult" class="notice">जन्मतिथि चुनें।</div>';
+ if(name==='Percentage Calculator') fields='<div class="tool-row"><div class="field"><label>प्राप्त अंक</label><input id="obtained" type="number" min="0" placeholder="उदाहरण: 420"></div><div class="field"><label>कुल अंक</label><input id="totalMarks" type="number" min="1" placeholder="उदाहरण: 500"></div></div><div id="calcResult" class="notice">अंक भरें।</div>';
+ if(name==='Loan EMI Calculator') fields='<div class="field"><label>Loan Amount (₹)</label><input id="loanAmount" type="number" min="1" placeholder="500000"></div><div class="tool-row"><div class="field"><label>Annual Interest (%)</label><input id="loanRate" type="number" min="0" step="0.01" placeholder="10"></div><div class="field"><label>Tenure (Years)</label><input id="loanYears" type="number" min="1" placeholder="5"></div></div><div id="calcResult" class="notice">लोन की जानकारी भरें।</div>';
+ if(name==='GST Calculator') fields='<div class="field"><label>Amount (₹)</label><input id="gstAmount" type="number" min="0" placeholder="1000"></div><div class="tool-row"><div class="field"><label>GST Rate</label><select id="gstRate" class="select"><option>5</option><option>12</option><option selected>18</option><option>28</option></select></div><div class="field"><label>Calculation</label><select id="gstMode" class="select"><option value="add">Add GST</option><option value="remove">Remove GST</option></select></div></div><div id="calcResult" class="notice">राशि भरें।</div>';
+ if(name==='Date Calculator') fields='<div class="tool-row"><div class="field"><label>Start Date</label><input id="dateStart" type="date"></div><div class="field"><label>End Date</label><input id="dateEnd" type="date"></div></div><div id="calcResult" class="notice">दो तारीखें चुनें।</div>';
+ if(name==='Gold & Silver Calculator') fields='<div class="tool-row"><div class="field"><label>Metal</label><select id="metalType" class="select"><option>Gold</option><option>Silver</option></select></div><div class="field"><label>Weight (grams)</label><input id="metalWeight" type="number" min="0" step="0.001" placeholder="10"></div></div><div class="field"><label>Rate per gram (₹)</label><input id="metalRate" type="number" min="0" step="0.01" placeholder="7000"></div><div id="calcResult" class="notice">वजन और आज का रेट भरें।</div>';
+ if(name==='Discount Calculator') fields='<div class="tool-row"><div class="field"><label>Original Price (₹)</label><input id="originalPrice" type="number" min="0"></div><div class="field"><label>Discount (%)</label><input id="discountPct" type="number" min="0" max="100" step="0.01"></div></div><div id="calcResult" class="notice">कीमत और छूट भरें।</div>';
+ if(name==='Profit & Loss Calculator') fields='<div class="tool-row"><div class="field"><label>Cost Price (₹)</label><input id="costPrice" type="number" min="0"></div><div class="field"><label>Selling Price (₹)</label><input id="sellingPrice" type="number" min="0"></div></div><div id="calcResult" class="notice">दोनों कीमतें भरें।</div>';
+ if(name==='Salary Calculator') fields='<div class="tool-row"><div class="field"><label>Basic Salary (₹)</label><input id="basicSalary" type="number" min="0"></div><div class="field"><label>Allowances (₹)</label><input id="allowances" type="number" min="0"></div><div class="field"><label>Deductions (₹)</label><input id="deductions" type="number" min="0"></div></div><div id="calcResult" class="notice">वेतन की जानकारी भरें।</div>';
+ if(name==='Interest Calculator') fields='<div class="tool-row"><div class="field"><label>Principal (₹)</label><input id="principal" type="number" min="0"></div><div class="field"><label>Annual Rate (%)</label><input id="interestRate" type="number" min="0" step="0.01"></div><div class="field"><label>Time (Years)</label><input id="interestYears" type="number" min="0" step="0.1"></div></div><div id="calcResult" class="notice">जानकारी भरें।</div>';
+
+ host.innerHTML='<p class="tool-desc">'+descriptions[name]+'</p>'+fields+'<div class="tool-actions"><button class="btn btn-primary" data-tool="'+name+'" onclick="runTool(this.dataset.tool)">'+(name.includes('Calculator')||name==='Date Calculator'?'Calculate':'Process & Download')+'</button><button class="btn btn-outline" onclick="closeTool()">Close</button></div><div class="tool-status" id="toolStatus"></div>';
+ if(name==='Image Cropper'){document.getElementById('toolFiles').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const u=URL.createObjectURL(f);const im=document.getElementById('cropPreview');im.onload=()=>{document.getElementById('cropPreviewWrap').style.display='block';document.getElementById('cropW').value=im.naturalWidth;document.getElementById('cropH').value=im.naturalHeight;};im.src=u;});}
+ if(name==='Word Counter'){document.getElementById('countText').addEventListener('input',updateWordStats);}
+ if(name==='QR Code Generator'){document.getElementById('qrText').addEventListener('input',()=>renderQR(false));}
+
+}
+
+function escDoc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+const documentFields={
+ 'Resume Maker':[['fullName','पूरा नाम','text'],['phone','मोबाइल नंबर','tel'],['email','ईमेल','email'],['address','पता','textarea'],['objective','Career Objective','textarea'],['education','शिक्षा / योग्यता','textarea'],['skills','कौशल','textarea'],['experience','कार्य अनुभव','textarea']],
+ 'Marriage Biodata':[['fullName','पूरा नाम','text'],['dob','जन्मतिथि','date'],['height','ऊँचाई','text'],['education','शिक्षा','textarea'],['occupation','व्यवसाय / नौकरी','text'],['income','वार्षिक आय','text'],['family','परिवार का विवरण','textarea'],['address','पता','textarea'],['phone','मोबाइल नंबर','tel']],
+ 'Invoice Generator':[['invoiceNo','Invoice Number','text'],['invoiceDate','दिनांक','date'],['seller','विक्रेता का नाम / पता','textarea'],['buyer','ग्राहक का नाम / पता','textarea'],['items','सामान (हर लाइन: नाम, मात्रा, रेट)','textarea'],['gst','GST % (यदि लागू हो)','number']],
+ 'Admit Card Manager':[['student','विद्यार्थी का नाम','text'],['father','पिता का नाम','text'],['roll','रोल नंबर','text'],['exam','परीक्षा का नाम','text'],['center','परीक्षा केंद्र','textarea'],['date','परीक्षा दिनांक','date'],['time','समय','text'],['instructions','निर्देश','textarea']],
+ 'ID Card Maker':[['fullName','नाम','text'],['idNo','ID / कर्मचारी नंबर','text'],['role','पद / कक्षा','text'],['organization','संस्था / दुकान','text'],['phone','मोबाइल नंबर','tel'],['address','पता','textarea']],
+ 'Certificate Maker':[['recipient','प्रमाणपत्र प्राप्तकर्ता का नाम','text'],['title','प्रमाणपत्र का शीर्षक','text'],['description','विवरण / उपलब्धि','textarea'],['date','दिनांक','date'],['issuer','जारीकर्ता / संस्था','text'],['place','स्थान','text']],
+ 'Application / Letter Maker':[['to','सेवा में (प्राप्तकर्ता)','textarea'],['subject','विषय','text'],['body','पत्र का विवरण','textarea'],['sender','आवेदक का नाम','text'],['address','पता','textarea'],['phone','मोबाइल नंबर','tel']],
+ 'Visiting Card Maker':[['fullName','नाम','text'],['designation','पद','text'],['business','दुकान / व्यवसाय','text'],['phone','मोबाइल नंबर','tel'],['email','ईमेल','email'],['address','पता','textarea'],['website','वेबसाइट','text']],
+ 'Quotation Generator':[['quoteNo','Quotation Number','text'],['quoteDate','दिनांक','date'],['seller','आपकी दुकान / कंपनी का नाम व पता','textarea'],['customer','ग्राहक का नाम / पता','textarea'],['items','सामान (हर लाइन: नाम, मात्रा, रेट)','textarea'],['validity','कोटेशन की वैधता','text']]
+};
+function openDocumentTool(name){
+ document.getElementById('toolBackdrop').classList.add('show');
+ document.getElementById('toolTitle').textContent=name;
+ const host=document.getElementById('toolHost');
+ if(name==='Add Watermark'){
+  host.innerHTML='<p class="tool-desc">अपनी फोटो पर टेक्स्ट वॉटरमार्क लगाएँ और नई इमेज डाउनलोड करें।</p><div class="field"><label>फोटो चुनें</label><input id="wmFile" type="file" accept="image/*"></div><div class="field"><label>Watermark Text</label><input id="wmText" placeholder="Digi Point Portal"></div><div class="tool-row"><div class="field"><label>Opacity (%)</label><input id="wmOpacity" type="number" min="5" max="100" value="35"></div><div class="field"><label>Font Size</label><input id="wmSize" type="number" min="12" max="200" value="42"></div></div><div class="field"><label>Position</label><select id="wmPosition" class="select"><option value="center">Center</option><option value="bottom">Bottom</option><option value="top">Top</option></select></div><button class="primary-btn" onclick="runDocumentTool(\'Add Watermark\')">Watermark लगाएँ और डाउनलोड करें</button><div id="toolStatus" class="tool-status"></div>';
+  return;
+ }
+ const fields=documentFields[name]||[];
+ let form=fields.map(([id,label,type])=>'<div class="field"><label>'+escDoc(label)+'</label>'+(type==='textarea'?'<textarea id="doc_'+id+'" rows="3" placeholder="'+escDoc(label)+'"></textarea>':'<input id="doc_'+id+'" type="'+type+'" placeholder="'+escDoc(label)+'">')+'</div>').join('');
+ host.innerHTML='<p class="tool-desc">जानकारी भरें। Print बटन से प्रिंट करें या “Save as PDF” चुनकर PDF सेव करें। हिंदी टेक्स्ट भी प्रिंट में सपोर्ट होगा।</p><div class="doc-form">'+form+'</div><button class="primary-btn" onclick="runDocumentTool('+JSON.stringify(name)+')">Preview / Print / Save PDF</button><div id="toolStatus" class="tool-status"></div>';
+}
+function runDocumentTool(name){
+ if(name==='Add Watermark'){
+  const f=document.getElementById('wmFile').files[0], label=document.getElementById('wmText').value.trim();
+  if(!f||!label){statusTool('फोटो चुनें और Watermark Text लिखें।','err');return;}
+  const reader=new FileReader();reader.onload=()=>{const img=new Image();img.onload=()=>{const c=document.createElement('canvas');c.width=img.naturalWidth;c.height=img.naturalHeight;const x=c.getContext('2d');x.drawImage(img,0,0);const size=Math.max(12,Number(document.getElementById('wmSize').value)||42);x.save();x.globalAlpha=Math.min(100,Math.max(5,Number(document.getElementById('wmOpacity').value)||35))/100;x.fillStyle='#ffffff';x.strokeStyle='#111827';x.lineWidth=Math.max(1,size/18);x.font='bold '+size+'px Arial';x.textAlign='center';const pos=document.getElementById('wmPosition').value;const y=pos==='top'?size+20:pos==='bottom'?c.height-20:c.height/2;x.strokeText(label,c.width/2,y);x.fillText(label,c.width/2,y);x.restore();c.toBlob(b=>{downloadBlob(b,'digi-point-watermark.png');statusTool('Watermark वाली इमेज डाउनलोड हो गई।','ok');},'image/png');};img.src=reader.result;};reader.readAsDataURL(f);return;
+ }
+ const fields=documentFields[name]||[];
+ const values=fields.map(([id,label])=>({label,value:document.getElementById('doc_'+id)?.value||''}));
+ if(!values.some(x=>x.value.trim())){statusTool('कृपया जानकारी भरें।','err');return;}
+ let body='';
+ if(name==='Invoice Generator'||name==='Quotation Generator'){
+  const itemField=values.find(x=>x.label.startsWith('सामान'));
+  let rows=(itemField?.value||'').split(/\n/).filter(Boolean).map(line=>{const a=line.split(',');const q=Number(a[1])||0,r=Number(a[2])||0;return {item:a[0]||'',qty:q,rate:r,amount:q*r};});
+  const subtotal=rows.reduce((s,r)=>s+r.amount,0),gst= name==='Invoice Generator'?(Number(values.find(x=>x.label.startsWith('GST'))?.value)||0):0,total=subtotal+subtotal*gst/100;
+  body='<table><tr><th>विवरण</th><th>मात्रा</th><th>दर</th><th>राशि</th></tr>'+rows.map(r=>'<tr><td>'+escDoc(r.item)+'</td><td>'+r.qty+'</td><td>'+r.rate.toFixed(2)+'</td><td>'+r.amount.toFixed(2)+'</td></tr>').join('')+'</table><h3>Subtotal: ₹'+subtotal.toFixed(2)+'</h3><h3>GST: '+gst+'% | Total: ₹'+total.toFixed(2)+'</h3>';
+  body+=values.filter(x=>!x.label.startsWith('सामान')&&!x.label.startsWith('GST')).map(x=>'<p><b>'+escDoc(x.label)+':</b> '+escDoc(x.value).replace(/\n/g,'<br>')+'</p>').join('');
+ }else{
+  body=values.map(x=>'<section><b>'+escDoc(x.label)+'</b><p>'+escDoc(x.value).replace(/\n/g,'<br>')+'</p></section>').join('');
+ }
+ const title=escDoc(name),printHtml='<!doctype html><html lang="hi"><meta charset="utf-8"><title>'+title+'</title><style>body{font-family:Arial,"Noto Sans Devanagari",sans-serif;color:#17213a;margin:35px;line-height:1.55}h1{text-align:center;color:#17336f;border-bottom:2px solid #315efb;padding-bottom:12px}section{margin:14px 0}section p{margin:4px 0 0;white-space:pre-wrap}table{width:100%;border-collapse:collapse;margin:20px 0}td,th{border:1px solid #999;padding:8px;text-align:left}th{background:#edf2ff}.sign{margin-top:55px;text-align:right}@media print{button{display:none}}</style><h1>'+title+'</h1>'+body+'<div class="sign">हस्ताक्षर: __________________</div><button onclick="window.print()">Print / Save as PDF</button><script>setTimeout(()=>window.print(),500)<\/script></html>';
+ const w=window.open('','_blank');if(!w){statusTool('Popup blocked है। Browser में Pop-ups allow करके फिर प्रयास करें।','err');return;}w.document.open();w.document.write(printHtml);w.document.close();statusTool('Preview खुल गया है। Print में Destination: Save as PDF चुनें।','ok');
+}
+
+
+const mockQuestionBank={
+'CPCT':[
+['कंप्यूटर में CPU का पूरा नाम क्या है?',['Central Processing Unit','Computer Personal Unit','Central Program Utility','Control Processing User'],0],
+['कॉपी करने की शॉर्टकट कुंजी कौन-सी है?',['Ctrl + X','Ctrl + C','Ctrl + V','Ctrl + P'],1],
+['1 KB में सामान्यतः कितने Bytes माने जाते हैं?',['100','512','1024','2048'],2],
+['ई-मेल भेजने के लिए किसकी आवश्यकता होती है?',['ई-मेल पता','प्रिंटर','स्कैनर','पेन ड्राइव'],0],
+['MS Word में फाइल सेव करने की शॉर्टकट कुंजी है?',['Ctrl + A','Ctrl + S','Ctrl + Z','Ctrl + N'],1]
+],
+'MP Police':[
+['भारत में आपातकालीन सहायता का एकीकृत नंबर क्या है?',['100','101','112','108'],2],
+['मध्य प्रदेश की राजधानी कौन-सी है?',['इंदौर','भोपाल','जबलपुर','ग्वालियर'],1],
+['FIR का पूरा नाम क्या है?',['First Information Report','Final Investigation Record','First Inquiry Register','Formal Incident Record'],0],
+['भारत का राष्ट्रीय पशु कौन-सा है?',['शेर','हाथी','बाघ','तेंदुआ'],2],
+['ट्रैफिक सिग्नल में लाल बत्ती का अर्थ है?',['जाएँ','रुकें','धीरे चलें','मुड़ें'],1]
+],
+'Patwari':[
+['खसरा मुख्यतः किसका विवरण रखता है?',['भूमि/खेत का','वाहन का','बैंक खाते का','स्कूल का'],0],
+['मध्य प्रदेश में पटवारी किससे संबंधित राजस्व कार्य करता है?',['ग्राम स्तर','जिला न्यायालय','रेलवे','डाक विभाग'],0],
+['एक हेक्टेयर में कितने वर्ग मीटर होते हैं?',['1000','5000','10000','100000'],2],
+['नामांतरण का संबंध किससे है?',['भूमि अभिलेख में नाम परिवर्तन','जन्म प्रमाणपत्र','वाहन पंजीयन','बिजली कनेक्शन'],0],
+['भारत में भूमि अभिलेख किस राज्य विषय के अंतर्गत आते हैं?',['संघ सूची','राज्य सूची','समवर्ती सूची','इनमें से कोई नहीं'],1]
+],
+'SSC':[
+['भारत का संविधान कब लागू हुआ?',['15 अगस्त 1947','26 जनवरी 1950','26 नवंबर 1949','2 अक्टूबर 1950'],1],
+['श्रृंखला पूरी करें: 2, 4, 8, 16, ?',['18','24','30','32'],3],
+['भारत के प्रथम राष्ट्रपति कौन थे?',['डॉ. राजेंद्र प्रसाद','डॉ. राधाकृष्णन','जवाहरलाल नेहरू','सरदार पटेल'],0],
+['पानी का रासायनिक सूत्र क्या है?',['CO2','O2','H2O','NaCl'],2],
+['कंप्यूटर का मस्तिष्क किसे कहा जाता है?',['मॉनिटर','CPU','कीबोर्ड','माउस'],1]
+],
+'Railway':[
+['रेलवे में लाल सिग्नल का अर्थ क्या है?',['रुकना','तेज चलना','हॉर्न देना','प्लेटफॉर्म बदलना'],0],
+['भारत की पहली यात्री ट्रेन कब चली थी?',['1853','1885','1901','1947'],0],
+['रेलवे ट्रैक की चौड़ाई को क्या कहते हैं?',['गेज','वोल्टेज','लंबाई','स्लीपर'],0],
+['बल की SI इकाई क्या है?',['जूल','न्यूटन','वाट','पास्कल'],1],
+['सौरमंडल का सबसे बड़ा ग्रह कौन-सा है?',['पृथ्वी','मंगल','बृहस्पति','शुक्र'],2]
+],
+'Banking':[
+['RBI का मुख्यालय कहाँ है?',['नई दिल्ली','मुंबई','चेन्नई','कोलकाता'],1],
+['बचत खाते में जमा धन पर सामान्यतः क्या मिलता है?',['ब्याज','किराया','टैक्स','जुर्माना'],0],
+['UPI का पूरा नाम क्या है?',['Unified Payments Interface','Universal Payment Index','United Payment Internet','Unique Personal Identification'],0],
+['ATM का पूरा नाम क्या है?',['Any Time Money','Automated Teller Machine','Automatic Transfer Mode','All Time Machine'],1],
+['NEFT का उपयोग किसके लिए होता है?',['इलेक्ट्रॉनिक फंड ट्रांसफर','मोबाइल रिचार्ज','चेक प्रिंट','पासबुक अपडेट'],0]
+],
+'General Knowledge':[
+['भारत की राजधानी कौन-सी है?',['मुंबई','नई दिल्ली','कोलकाता','चेन्नई'],1],
+['विश्व पर्यावरण दिवस कब मनाया जाता है?',['5 जून','15 अगस्त','2 अक्टूबर','14 नवंबर'],0],
+['मध्य प्रदेश का स्थापना दिवस कब है?',['1 नवंबर','15 अगस्त','26 जनवरी','2 अक्टूबर'],0],
+['भारत का राष्ट्रीय फूल कौन-सा है?',['गुलाब','कमल','गेंदा','चमेली'],1],
+['सौरमंडल में कितने ग्रह हैं?',['7','8','9','10'],1]
+]
+};
+let activeMockName='',activeMockIndex=0,activeMockScore=0,activeMockAnswers=[];
+function openMockTest(name){
+ activeMockName=name;activeMockIndex=0;activeMockScore=0;activeMockAnswers=[];
+ document.getElementById('toolBackdrop').classList.add('show');
+ document.getElementById('toolTitle').textContent=name+' Mock Test';
+ renderMockQuestion();
+}
+function renderMockQuestion(){
+ const qs=mockQuestionBank[activeMockName],q=qs[activeMockIndex],host=document.getElementById('toolHost');
+ host.innerHTML='<div class="mock-meta"><span>प्रश्न '+(activeMockIndex+1)+' / '+qs.length+'</span><span>अंक: '+activeMockScore+'</span></div><div class="mock-progress"><span style="width:'+((activeMockIndex)/qs.length*100)+'%"></span></div><h3 class="mock-question">'+q[0]+'</h3><div class="mock-options">'+q[1].map((v,i)=>'<button class="mock-option" id="mockOpt'+i+'" onclick="answerMock('+i+')">'+String.fromCharCode(65+i)+'. '+v+'</button>').join('')+'</div><div id="mockFeedback" class="tool-status"></div><button id="mockNext" class="primary-btn" style="display:none;margin-top:14px" onclick="nextMockQuestion()">'+(activeMockIndex===qs.length-1?'Result देखें':'अगला प्रश्न')+'</button><p class="mock-note">यह अभ्यास के लिए नमूना प्रश्न हैं, आधिकारिक प्रश्नपत्र नहीं।</p>';
+}
+function answerMock(choice){
+ if(activeMockAnswers[activeMockIndex]!==undefined)return;
+ const q=mockQuestionBank[activeMockName][activeMockIndex],correct=q[2];
+ activeMockAnswers[activeMockIndex]=choice;
+ if(choice===correct)activeMockScore++;
+ q[1].forEach((v,i)=>{const b=document.getElementById('mockOpt'+i);b.disabled=true;if(i===correct)b.classList.add('correct');if(i===choice&&choice!==correct)b.classList.add('wrong');});
+ const fb=document.getElementById('mockFeedback');
+ fb.textContent=choice===correct?'सही जवाब!':'गलत जवाब। सही उत्तर: '+q[1][correct];
+ fb.className='tool-status '+(choice===correct?'ok':'err');
+ document.getElementById('mockNext').style.display='inline-flex';
+}
+function nextMockQuestion(){
+ if(activeMockIndex<mockQuestionBank[activeMockName].length-1){activeMockIndex++;renderMockQuestion();return;}
+ const total=mockQuestionBank[activeMockName].length,percent=Math.round(activeMockScore/total*100);
+ document.getElementById('toolHost').innerHTML='<div class="mock-result"><div class="mock-trophy">🏆</div><h2>टेस्ट पूरा हुआ!</h2><div class="mock-score">'+activeMockScore+' / '+total+'</div><p>आपका स्कोर: '+percent+'%</p><p>'+ (percent>=80?'बहुत अच्छा! अभ्यास जारी रखें।':percent>=50?'अच्छा प्रयास! और अभ्यास करें।':'अभ्यास करते रहें, आप बेहतर करेंगे।')+'</p><button class="primary-btn" onclick="openMockTest('+JSON.stringify(activeMockName)+')">फिर से टेस्ट दें</button></div>';
+}
+
+function closeTool(){document.getElementById('toolBackdrop').classList.remove('show');}
+function statusTool(message,type){const el=document.getElementById('toolStatus');el.textContent=message;el.className='tool-status '+(type||'');}
+function downloadBlob(blob,name){const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);}
+
+async function ensurePdfLib(){
+ if(window.PDFLib && window.PDFLib.PDFDocument) return window.PDFLib;
+ const urls=[
+  'https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js',
+  'https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js'
+ ];
+ for(const url of urls){
+  try{
+   await new Promise((resolve,reject)=>{
+    const script=document.createElement('script');
+    script.src=url;script.onload=resolve;script.onerror=()=>reject(new Error('Library load failed'));
+    document.head.appendChild(script);
+   });
+   if(window.PDFLib && window.PDFLib.PDFDocument) return window.PDFLib;
+  }catch(e){}
+ }
+ throw new Error('PDF Merge / Split के लिए PDF Library लोड नहीं हुई। इंटरनेट कनेक्शन जाँचें या CDN access की अनुमति दें।');
+}
+
+
+async function loadScriptOnce(url, test){
+ if(test()) return;
+ await new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=url;s.onload=resolve;s.onerror=()=>reject(new Error('Conversion library load नहीं हुई।'));document.head.appendChild(s);});
+ if(!test()) throw new Error('Conversion library उपलब्ध नहीं है।');
+}
+async function getImageForConversion(file){
+ if(/\.heic$|\.heif$/i.test(file.name)||/image\/hei[cf]/i.test(file.type)){
+  await loadScriptOnce('https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js',()=>typeof window.heic2any==='function');
+  const converted=await window.heic2any({blob:file,toType:'image/png',quality:0.95});
+  return loadImage(URL.createObjectURL(Array.isArray(converted)?converted[0]:converted));
+ }
+ return loadImage(URL.createObjectURL(file));
+}
+async function convertImageFile(file,mime,name){
+ const img=await getImageForConversion(file);const canvas=document.createElement('canvas');canvas.width=img.naturalWidth||img.width;canvas.height=img.naturalHeight||img.height;
+ const ctx=canvas.getContext('2d');if(mime==='image/jpeg'){ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);}ctx.drawImage(img,0,0);
+ const blob=await new Promise(resolve=>canvas.toBlob(resolve,mime,0.92));if(!blob)throw new Error('इस फॉर्मेट में इमेज तैयार नहीं हो सकी।');
+ const ext=mime==='image/png'?'png':mime==='image/webp'?'webp':'jpg';downloadBlob(blob,name+'.'+ext);
+}
+
+
+function updateWordStats(){
+ const t=document.getElementById('countText')?.value||'';
+ const words=t.trim()?t.trim().split(/\s+/u).length:0;
+ const chars=[...t].length;
+ const sentences=(t.match(/[.!?।]+/g)||[]).length;
+ document.getElementById('wordStats').textContent='शब्द: '+words+' | अक्षर: '+chars+' | वाक्य: '+sentences;
+}
+async function renderQR(download){
+ const value=document.getElementById('qrText')?.value.trim();if(!value){if(download)statusTool('पहले Text या URL लिखें।','err');return;}
+ try{
+  await loadScriptOnce('https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js',()=>typeof window.QRCode==='function');
+  const box=document.getElementById('qrOutput');box.innerHTML='';
+  new QRCode(box,{text:value,width:parseInt(document.getElementById('qrSize').value,10),height:parseInt(document.getElementById('qrSize').value,10),correctLevel:QRCode.CorrectLevel.H});
+  if(download){setTimeout(()=>{const img=box.querySelector('img');const canvas=box.querySelector('canvas');const data=img?.src||canvas?.toDataURL('image/png');if(!data){statusTool('QR Code तैयार नहीं हुआ।','err');return;}const a=document.createElement('a');a.href=data;a.download='digi-point-qr.png';a.click();statusTool('QR Code डाउनलोड हो गया।','ok');},250);}
+ }catch(e){statusTool(e.message,'err');}
+}
+
+
+function val(id){return Number(document.getElementById(id)?.value||0);}
+function money(n){return '₹'+n.toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function calculateTool(name){
+ const out=document.getElementById('calcResult');let result='';
+ if(name==='Age Calculator'){
+  const v=document.getElementById('birthDate').value;if(!v){statusTool('जन्मतिथि चुनें।','err');return;}
+  const b=new Date(v+'T00:00:00'),now=new Date();if(b>now){statusTool('जन्मतिथि भविष्य की नहीं हो सकती।','err');return;}
+  let y=now.getFullYear()-b.getFullYear(),m=now.getMonth()-b.getMonth(),d=now.getDate()-b.getDate();if(d<0){m--;d+=new Date(now.getFullYear(),now.getMonth(),0).getDate();}if(m<0){y--;m+=12;}result='उम्र: '+y+' वर्ष, '+m+' महीने, '+d+' दिन';
+ }else if(name==='Percentage Calculator'){
+  const a=val('obtained'),b=val('totalMarks');if(b<=0||a<0||a>b){statusTool('प्राप्त अंक कुल अंकों से अधिक नहीं होने चाहिए।','err');return;}result='प्रतिशत: '+(a/b*100).toFixed(2)+'%';
+ }else if(name==='Loan EMI Calculator'){
+  const p=val('loanAmount'),r=val('loanRate')/1200,n=val('loanYears')*12;if(p<=0||n<=0||r<0){statusTool('सही Loan Amount, Rate और Tenure भरें।','err');return;}const emi=r===0?p/n:p*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);result='मासिक EMI: '+money(emi)+' | कुल भुगतान: '+money(emi*n)+' | कुल ब्याज: '+money(emi*n-p);
+ }else if(name==='GST Calculator'){
+  const a=val('gstAmount'),r=val('gstRate')/100;if(a<0){statusTool('सही राशि भरें।','err');return;}if(document.getElementById('gstMode').value==='add'){result='GST: '+money(a*r)+' | कुल राशि: '+money(a*(1+r));}else{const base=a/(1+r);result='मूल राशि: '+money(base)+' | शामिल GST: '+money(a-base);}
+ }else if(name==='Date Calculator'){
+  const a=document.getElementById('dateStart').value,b=document.getElementById('dateEnd').value;if(!a||!b){statusTool('दोनों तारीखें चुनें।','err');return;}const days=Math.abs((new Date(b+'T00:00:00')-new Date(a+'T00:00:00'))/86400000);result='तारीखों के बीच अंतर: '+days+' दिन';
+ }else if(name==='Gold & Silver Calculator'){
+  const w=val('metalWeight'),r=val('metalRate');if(w<=0||r<=0){statusTool('वजन और प्रति ग्राम रेट भरें।','err');return;}result=document.getElementById('metalType').value+' का अनुमानित मूल्य: '+money(w*r)+' (मेकिंग चार्ज/टैक्स अलग)';
+ }else if(name==='Discount Calculator'){
+  const p=val('originalPrice'),d=val('discountPct');if(p<0||d<0||d>100){statusTool('सही कीमत और 0–100% छूट भरें।','err');return;}result='छूट: '+money(p*d/100)+' | अंतिम कीमत: '+money(p*(1-d/100));
+ }else if(name==='Profit & Loss Calculator'){
+  const c=val('costPrice'),s=val('sellingPrice');if(c<=0||s<0){statusTool('सही Cost Price और Selling Price भरें।','err');return;}const diff=s-c;result=diff>=0?'लाभ: '+money(diff)+' ('+(diff/c*100).toFixed(2)+'%)':'हानि: '+money(-diff)+' ('+((-diff)/c*100).toFixed(2)+'%)';
+ }else if(name==='Salary Calculator'){
+  const b=val('basicSalary'),a=val('allowances'),d=val('deductions');if(b<0||a<0||d<0||b+a<d){statusTool('वेतन की राशि सही भरें।','err');return;}result='Gross Salary: '+money(b+a)+' | अनुमानित Net Salary: '+money(b+a-d);
+ }else if(name==='Interest Calculator'){
+  const p=val('principal'),r=val('interestRate'),t=val('interestYears');if(p<0||r<0||t<0){statusTool('सही मूलधन, ब्याज दर और समय भरें।','err');return;}const i=p*r*t/100;result='साधारण ब्याज: '+money(i)+' | कुल राशि: '+money(p+i);
+ }
+ out.textContent=result;statusTool('गणना पूरी हुई।','ok');
+}
+
+async function runTool(name){
+
+ if(['Age Calculator','Percentage Calculator','Loan EMI Calculator','GST Calculator','Date Calculator','Gold & Silver Calculator','Discount Calculator','Profit & Loss Calculator','Salary Calculator','Interest Calculator'].includes(name)){calculateTool(name);return;}
+ if(name==='Word Counter'){updateWordStats();statusTool('Text की गिनती अपडेट हो गई।','ok');return;}
+ if(name==='QR Code Generator'){await renderQR(true);return;}
+ if(name==='PDF Lock'||name==='PDF Unlock'){statusTool('यह सुविधा अभी सक्रिय नहीं है। गलत या नकली password protection देने से बचने के लिए इसे बंद रखा गया है।','err');return;}
+ const input=document.getElementById('toolFiles');
+ if(!input||!input.files.length){statusTool('कृपया पहले फाइल चुनें।','err');return;}
+ try{
+  if(!window.PDFLib && !['JPG to PDF','Image Resize','Word to PDF'].includes(name)) throw new Error('PDF टूल लाइब्रेरी लोड नहीं हुई। इंटरनेट कनेक्शन जाँचें और दोबारा प्रयास करें।');
+
+  if(name==='PDF Resize'){
+   const src=await PDFLib.PDFDocument.load(await input.files[0].arrayBuffer());
+   const sizes={a4:[595.28,841.89],a5:[419.53,595.28],letter:[612,792],legal:[612,1008]};
+   const [tw,th]=sizes[document.getElementById('pdfPageSize').value];
+   src.getPages().forEach(page=>{const old=page.getSize();const landscape=old.width>old.height;const w=landscape?th:tw,h=landscape?tw:th;page.scaleContent(w/old.width,h/old.height);page.setSize(w,h);});
+   const bytes=await src.save({useObjectStreams:true});
+   downloadBlob(new Blob([bytes],{type:'application/pdf'}),'digi-point-resized.pdf');
+   statusTool('सफल! PDF के सभी पेज चुने गए आकार में बदलकर डाउनलोड हुए।','ok');
+  }
+  if(name==='Word to PDF'){
+   const file=input.files[0];
+   if(!file.name.toLowerCase().endsWith('.docx')) throw new Error('कृपया .docx Word फाइल चुनें। पुराने .doc फॉर्मेट का सपोर्ट नहीं है।');
+   if(!window.mammoth){
+    await new Promise((resolve,reject)=>{const sc=document.createElement('script');sc.src='https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.8.0/mammoth.browser.min.js';sc.onload=resolve;sc.onerror=()=>reject(new Error('Word converter library लोड नहीं हुई। इंटरनेट कनेक्शन जाँचें।'));document.head.appendChild(sc);});
+   }
+   const result=await window.mammoth.convertToHtml({arrayBuffer:await file.arrayBuffer()});
+   const safeHtml=result.value||'<p>(दस्तावेज़ खाली है)</p>';
+   const w=window.open('','_blank');if(!w)throw new Error('Popup blocked है। Browser में Pop-ups allow करके फिर प्रयास करें।');
+   w.document.open();w.document.write('<!doctype html><html lang="hi"><meta charset="utf-8"><title>Word to PDF</title><style>body{font-family:Arial,"Noto Sans Devanagari",sans-serif;margin:28mm 22mm;line-height:1.5;color:#111}img{max-width:100%}table{border-collapse:collapse;width:100%}td,th{border:1px solid #888;padding:6px}@media print{body{margin:18mm}}</style>'+safeHtml+'<script>setTimeout(()=>window.print(),700)<\/script></html>');
+   w.document.close();statusTool('Word फाइल खुल गई है। Print में Destination: Save as PDF चुनें।','ok');
+  }
+  if(name==='JPG to PDF'){
+   if(!window.jspdf) throw new Error('PDF कन्वर्टर लोड नहीं हुआ। इंटरनेट कनेक्शन जाँचें।');
+   const files=[...input.files];const {jsPDF}=window.jspdf;let doc=null;
+   for(let i=0;i<files.length;i++){const data=await readDataURL(files[i]);const img=await loadImage(data);const orient=img.width>img.height?'landscape':'portrait';if(!doc)doc=new jsPDF({orientation:orient,unit:'pt',format:[img.width,img.height]});else doc.addPage([img.width,img.height],orient);doc.addImage(data,files[i].type==='image/png'?'PNG':'JPEG',0,0,img.width,img.height);}
+   downloadBlob(doc.output('blob'),'digi-point-images.pdf');statusTool('सफल! PDF डाउनलोड हो गई।','ok');
+  }
+  if(name==='PDF Merge'){
+   const files=[...input.files];if(files.length<2)throw new Error('कम से कम 2 PDF चुनें।');
+   const merged=await PDFLib.PDFDocument.create();
+   for(const f of files){const src=await PDFLib.PDFDocument.load(await f.arrayBuffer());const pages=await merged.copyPages(src,src.getPageIndices());pages.forEach(pg=>merged.addPage(pg));}
+   downloadBlob(new Blob([await merged.save()],{type:'application/pdf'}),'digi-point-merged.pdf');statusTool('सफल! सभी PDF एक फाइल में जोड़ दी गईं।','ok');
+  }
+  if(name==='PDF Splitter'){
+   const src=await PDFLib.PDFDocument.load(await input.files[0].arrayBuffer());const total=src.getPageCount();const raw=document.getElementById('pageRange').value.trim();if(!raw)throw new Error('पेज नंबर या रेंज लिखें। उदाहरण: 1-3');
+   const indexes=new Set();raw.split(',').forEach(part=>{const bits=part.trim().split('-').map(x=>parseInt(x.trim(),10));if(bits.length===1&&Number.isInteger(bits[0]))indexes.add(bits[0]-1);else if(bits.length===2&&bits.every(Number.isInteger)){for(let n=Math.min(...bits);n<=Math.max(...bits);n++)indexes.add(n-1);}else throw new Error('पेज रेंज सही लिखें।');});
+   const chosen=[...indexes].sort((a,b)=>a-b);if(!chosen.length||chosen.some(n=>n<0||n>=total))throw new Error('पेज नंबर PDF में उपलब्ध पेजों के अंदर होना चाहिए (कुल '+total+' पेज)।');
+   const out=await PDFLib.PDFDocument.create();const pages=await out.copyPages(src,chosen);pages.forEach(pg=>out.addPage(pg));downloadBlob(new Blob([await out.save()],{type:'application/pdf'}),'digi-point-pages.pdf');statusTool(chosen.length+' पेज की नई PDF डाउनलोड हो गई।','ok');
+  }
+  if(name==='PDF Compressor'){
+   const src=await PDFLib.PDFDocument.load(await input.files[0].arrayBuffer());const bytes=await src.save({useObjectStreams:true,addDefaultPage:false,objectsPerTick:50});downloadBlob(new Blob([bytes],{type:'application/pdf'}),'digi-point-compressed.pdf');statusTool('PDF दोबारा सेव करके डाउनलोड की गई। बचत PDF की सामग्री पर निर्भर करती है; हर PDF का आकार कम होना निश्चित नहीं है।','ok');
+  }
+  if(name==='Image Resize'){
+   const file=input.files[0];const img=await loadImage(URL.createObjectURL(file));let w=parseInt(document.getElementById('resizeW').value,10)||img.width;let h=parseInt(document.getElementById('resizeH').value,10)||img.height;
+   if(document.getElementById('keepRatio').checked){if(document.getElementById('resizeW').value)h=Math.round(w*img.height/img.width);else if(document.getElementById('resizeH').value)w=Math.round(h*img.width/img.height);}
+   if(w<1||h<1||w>10000||h>10000)throw new Error('Width और Height 1 से 10000 px के बीच रखें।');
+   const canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;canvas.getContext('2d').drawImage(img,0,0,w,h);const mime=document.getElementById('resizeFormat').value;canvas.toBlob(blob=>{if(!blob){statusTool('इमेज तैयार नहीं हो सकी।','err');return;}downloadBlob(blob,mime==='image/png'?'digi-point-resized.png':'digi-point-resized.jpg');statusTool('सफल! '+w+' × '+h+' px इमेज डाउनलोड हो गई।','ok');},mime,.92);
+  }
+ 
+
+  if(name==='Image Cropper'){
+   const img=await loadImage(URL.createObjectURL(input.files[0]));const x=parseInt(document.getElementById('cropX').value,10)||0;const y=parseInt(document.getElementById('cropY').value,10)||0;const w=parseInt(document.getElementById('cropW').value,10);const h=parseInt(document.getElementById('cropH').value,10);
+   if(w<1||h<1||x<0||y<0||x+w>img.width||y+h>img.height)throw new Error('Crop coordinates फोटो के आकार के अंदर रखें।');
+   const canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;canvas.getContext('2d').drawImage(img,x,y,w,h,0,0,w,h);const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/png'));downloadBlob(blob,'digi-point-cropped.png');statusTool('Cropped Image डाउनलोड हो गई।','ok');
+  }
+  if(name==='PDF to JPG'){
+   await loadScriptOnce('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js',()=>!!window.pdfjsLib);
+   pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+   const data=new Uint8Array(await input.files[0].arrayBuffer());const pdf=await pdfjsLib.getDocument({data}).promise;const scale=parseFloat(document.getElementById('pdfQuality').value)||1.5;
+   for(let i=1;i<=pdf.numPages;i++){const page=await pdf.getPage(i);const viewport=page.getViewport({scale});const canvas=document.createElement('canvas');canvas.width=Math.ceil(viewport.width);canvas.height=Math.ceil(viewport.height);await page.render({canvasContext:canvas.getContext('2d'),viewport}).promise;const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/jpeg',0.92));downloadBlob(blob,'digi-point-page-'+i+'.jpg');}
+   statusTool(pdf.numPages+' पेज JPG इमेज के रूप में डाउनलोड किए गए।','ok');
+  }
+  if(['PNG to JPG','JPG to PNG','HEIC to JPG','Image Converter Pro'].includes(name)){
+   let mime=document.getElementById('imageFormat').value;
+   if(name==='PNG to JPG'||name==='HEIC to JPG')mime='image/jpeg';
+   if(name==='JPG to PNG')mime='image/png';
+   const base=input.files[0].name.replace(/\.[^.]+$/,'');await convertImageFile(input.files[0],mime,'digi-point-'+base);
+   statusTool('सफल! नई इमेज डाउनलोड हो गई।','ok');
+  }
+}catch(err){statusTool(err.message||'प्रोसेसिंग में समस्या आई।','err');}
+}
+function readDataURL(file){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(file);});}
+function loadImage(src){return new Promise((resolve,reject)=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=()=>reject(new Error('इमेज फाइल पढ़ी नहीं जा सकी।'));img.src=src;});}
+
+document.getElementById('year').textContent=new Date().getFullYear();
+renderSelect();renderCategories();renderServices();
+</script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+const firebaseConfig = {
+ apiKey: "AIzaSyBRXAcmw_cIEMEUcCZ-RGlhMeDqcEJtnFs",
+ authDomain: "digi-point-portal-bf8ed.firebaseapp.com",
+ projectId: "digi-point-portal-bf8ed",
+ storageBucket: "digi-point-portal-bf8ed.firebasestorage.app",
+ messagingSenderId: "8242639848",
+ appId: "1:8242639848:web:32529f76cc47c30176aa5d"
+};
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+let settingsUnsubscribe = null;
+let authMode = "login";
+let registrationInProgress = false;
+setTimeout(()=>setDashboardView(false),0);
+
+window.openModal = function(mode){
+ authMode = mode === "register" ? "register" : "login";
+ document.getElementById("modalTitle").textContent = authMode === "register" ? "Retailer Registration" : "Retailer Login";
+ document.getElementById("modalDesc").textContent = authMode === "register" ? "नया Retailer Account बनाने के लिए जानकारी भरें।" : "अपने Retailer Email और Password से Login करें।";
+ document.getElementById("modalSubmit").textContent = authMode === "register" ? "Register" : "Login";
+ document.getElementById("regNameWrap").hidden = authMode !== "register";
+ document.getElementById("regPhoneWrap").hidden = authMode !== "register";
+ document.getElementById("regName").required = authMode === "register";
+ document.getElementById("regPhone").required = authMode === "register";
+ document.getElementById("authMessage").textContent = "";
+ document.getElementById("modalBackdrop").classList.add("show");
+};
+window.closeModal = function(){ document.getElementById("modalBackdrop").classList.remove("show"); };
+
+document.getElementById("retailerAuthForm").addEventListener("submit", async e=>{
+ e.preventDefault();
+ const btn=document.getElementById("modalSubmit"), msg=document.getElementById("authMessage");
+ const email=document.getElementById("authEmail").value.trim().toLowerCase();
+ const password=document.getElementById("authPassword").value;
+ btn.disabled=true; msg.textContent="कृपया प्रतीक्षा करें...";
+ try{
+  if(authMode==="register"){
+   registrationInProgress=true;
+   const name=document.getElementById("regName").value.trim();
+   const phone=document.getElementById("regPhone").value.trim();
+   if(!name || !/^[0-9]{10}$/.test(phone)) throw new Error("सही नाम और 10 अंकों का मोबाइल नंबर भरें।");
+   const cred=await createUserWithEmailAndPassword(auth,email,password);
+   const retailerId="DP"+Date.now();
+   await setDoc(doc(db,"retailers",cred.user.uid),{
+    name,phone,email,retailerId,role:"retailer",status:"pending",active:false,createdAt:serverTimestamp()
+   });
+   await signOut(auth);
+   registrationInProgress=false;
+   msg.textContent="Registration सफल! Admin Approval के बाद Login कर सकेंगे।";
+   document.getElementById("retailerAuthForm").reset();
+  }else{
+   await signInWithEmailAndPassword(auth,email,password);
+   closeModal();
+  }
+ }catch(err){
+  registrationInProgress=false;
+  msg.textContent = err.code==="auth/email-already-in-use" ? "यह Email पहले से Registered है। Login करें।" :
+   err.code==="auth/invalid-credential" ? "Email या Password गलत है।" :
+   err.code==="auth/weak-password" ? "Password कम से कम 6 अक्षर का रखें।" :
+   (err.message || "प्रक्रिया पूरी नहीं हो सकी।");
+ }finally{btn.disabled=false;}
+});
+
+function setDashboardView(isLoggedIn){
+ document.getElementById("retailerDashboard").style.display=isLoggedIn?"block":"none";
+ document.querySelector(".hero").style.display=isLoggedIn?"none":"block";
+ document.querySelector(".navactions").style.display=isLoggedIn?"none":"flex";
+ document.querySelector(".menu").style.display=isLoggedIn?"none":"";
+ document.querySelector(".navlinks").style.display=isLoggedIn?"none":"";
+ document.querySelector(".hero-actions").style.display=isLoggedIn?"none":"flex";
+ document.getElementById("about").style.display=isLoggedIn?"none":"flex";
+ document.getElementById("retailerAccessMessage").style.display=isLoggedIn?"none":"flex";
+ document.getElementById("protectedServices").style.display=isLoggedIn?"block":"none";
+}
+function activateDashboardTab(tabId){
+ document.querySelectorAll("[data-dash-tab]").forEach(b=>b.classList.toggle("active",b.dataset.dashTab===tabId));
+ document.querySelectorAll(".dash-panel").forEach(p=>p.classList.toggle("active",p.id===tabId));
+ if(tabId==="historyPanel" && typeof window.renderServiceHistory==="function") window.renderServiceHistory();
+ const panel=document.getElementById(tabId);
+ if(panel) panel.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+document.querySelectorAll("[data-dash-tab]").forEach(btn=>btn.addEventListener("click",()=>activateDashboardTab(btn.dataset.dashTab)));
+document.querySelectorAll("[data-go-tab]").forEach(btn=>btn.addEventListener("click",()=>activateDashboardTab(btn.dataset.goTab)));
+
+function showRetailerGate(message){
+ retailerApproved=false;
+ document.getElementById("protectedServices").style.display="none";
+ document.getElementById("retailerAccessMessage").style.display="flex";
+ document.getElementById("retailerAccessMessage").querySelector("strong").textContent="Retailer Access";
+ document.getElementById("retailerAccessMessage").querySelector("p").textContent=message;
+ setDashboardView(false);
+}
+onAuthStateChanged(auth, async user=>{
+ if(registrationInProgress) return;
+ if(settingsUnsubscribe){settingsUnsubscribe();settingsUnsubscribe=null;}
+ if(!user){showRetailerGate("Services देखने और इस्तेमाल करने के लिए Retailer Login करें। Registration के बाद Admin Approval जरूरी है।");return;}
+ try{
+  const snap=await getDoc(doc(db,"retailers",user.uid));
+  if(!snap.exists()){await signOut(auth);showRetailerGate("Retailer Profile नहीं मिला। Admin से संपर्क करें।");return;}
+  const profile=snap.data();
+  if(profile.status!=="approved" || profile.active!==true){
+   await signOut(auth);
+   showRetailerGate(profile.status==="pending" ? "आपका Registration Pending है। Admin Approval के बाद Services खुलेंगी।" : "आपका Retailer Account सक्रिय नहीं है। Admin से संपर्क करें।");
+   return;
+  }
+  retailerApproved=true;
+  document.getElementById("retailerAccessMessage").style.display="none";
+  document.getElementById("protectedServices").style.display="block";
+  setDashboardView(true);
+  activateDashboardTab("homePanel");
+  window.currentRetailerKey=user.uid;
+  const displayName=profile.name||"Retailer";
+  const rid=profile.retailerId||"Retailer";
+  document.getElementById("dashGreeting").textContent="नमस्ते, "+displayName;
+  document.getElementById("dashRetailerId").textContent=rid;
+  document.getElementById("dashStatus").textContent="Account: Approved & Active";
+  document.getElementById("profileName").textContent=displayName;
+  document.getElementById("profileRetailerId").textContent=rid;
+  document.getElementById("profileEmail").textContent=profile.email||user.email||"—";
+  document.getElementById("profilePhone").textContent=profile.phone||"—";
+  document.getElementById("profileStatus").textContent="Approved / Active";
+  settingsUnsubscribe=onSnapshot(doc(db,"portalSettings","services"),s=>{
+   enabledServices=s.exists()?(s.data().enabledServices||{}):{};
+   renderCategories();renderServices();
+  },err=>console.error("Service settings listener:",err));
+ }catch(err){
+  console.error(err);
+  showRetailerGate("Firebase से जानकारी नहीं मिल सकी। Firestore Rules और Internet कनेक्शन जाँचें।");
+ }
+});
+window.recordServiceUsage=function(name){
+ try{
+  const key="digiPointHistory_"+(window.currentRetailerKey||"guest");
+  const rows=JSON.parse(localStorage.getItem(key)||"[]");
+  rows.unshift({name,at:new Date().toISOString()});
+  localStorage.setItem(key,JSON.stringify(rows.slice(0,50)));
+ }catch(e){console.warn("Local history unavailable",e);}
+};
+window.renderServiceHistory=function(){
+ const host=document.getElementById("historyList");
+ try{
+  const key="digiPointHistory_"+(window.currentRetailerKey||"guest");
+  const rows=JSON.parse(localStorage.getItem(key)||"[]");
+  host.innerHTML=rows.length?rows.map(r=>`<div class="history-item"><b>${String(r.name).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}</b><small>${new Date(r.at).toLocaleString("hi-IN")}</small></div>`).join(""):'<div class="empty">अभी कोई Service History नहीं है।</div>';
+ }catch(e){host.innerHTML='<div class="empty">History इस ब्राउज़र में उपलब्ध नहीं है।</div>';}
+};
+window.clearServiceHistory=function(){
+ if(!confirm("क्या आप इस ब्राउज़र की Service History मिटाना चाहते हैं?"))return;
+ try{localStorage.removeItem("digiPointHistory_"+(window.currentRetailerKey||"guest"));}catch(e){}
+ window.renderServiceHistory();
+};
+window.retailerLogout=async function(){try{await signOut(auth);window.currentRetailerKey=null;}catch(e){alert(e.message||"Logout नहीं हुआ");}};
+</script>
+
+</body></html>
